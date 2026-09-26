@@ -1,0 +1,57 @@
+<% layout("/layouts/boilerplate") %>
+<div class="login">
+<div class="">
+  <div class="logo">
+    <i class="fa-solid fa-user fa-2xl" style="color:#6e5efc ;"></i>
+  </div>
+  <h1 class="create">Login</h1>
+  <div class="name">
+    <form action="/login" method="POST" class="needs-validation" novalidation>
+      <div class="name">
+        <label for="username" class="form-label"></label>
+        <div class="input-group">
+    <span class="input-group-text">
+      <i class="fa-solid fa-user" style="color: rgb(110, 94, 252);"></i>
+    </span>
+        <input
+          name="username"
+          id="username"
+          type="text"
+          class="form-control"
+          placeholder= "Enter  your  username"
+          required
+          
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+    </div>
+      
+      <div class="name">
+        <label for="password" class="form-label"></label>
+        <div class="input-group">
+    <span class="input-group-text">
+      <i class="fa-solid fa-lock" style="color: rgb(110, 94, 252);"></i>
+    </span>
+        <input
+          name="password"
+          id="password"
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          required
+        />
+
+      </div>
+    </div>
+      <button class="btn btn-success login-btn">Login</button>
+      <p class="text-center or">or sign in with</p>
+     
+  <a href="/auth/google" class="btn ">
+    <button type="button" class="login-with-google-btn" >
+  Sign in with Google
+</button>
+  </a>
+<h6 style=" text-align:center; padding-top: 1rem;">Don't have an account ? <a style="color:#6e5efc;text-decoration: none;" href="/signup">Sign Up</a></h6>
+    </form>
+  </div>
+</div></div>
