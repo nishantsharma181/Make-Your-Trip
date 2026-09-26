@@ -1,0 +1,218 @@
+
+  <% layout("/layouts/boilerplate") %>
+
+<!-- FontAwesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<div class="stay-detail-page">
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="breadcrumb-nav">
+    <a href="/listings">Home</a>
+    <span class="crumb-separator">&gt;</span>
+    <a href="/listings?category=rooms">Rooms</a>
+    <span class="crumb-separator">&gt;</span>
+    <span class="current-crumb"><%= listing.title %></span>
+  </nav>
+
+  <!-- Main Hero Card (2-Column Showcase) -->
+  <div class="stay-showcase-card">
+
+    <!-- Left Gallery Column -->
+    <div class="gallery-column">
+      
+      <!-- Primary Main Stage Image -->
+      <div class="stage-image-box">
+        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="main-display-img" id="mainDisplayImg" />
+        <button type="button" class="floating-heart-btn" aria-label="Save to Wishlist">
+          <i class="fa-solid fa-heart"></i>
+        </button>
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div class="thumbnail-strip">
+        <div class="thumb-slot active">
+          <img src="<%= listing.image.url %>" alt="Room Angle 1" />
+        </div>
+        <div class="thumb-slot">
+          <img src="<%= listing.image.url %>" alt="Room Angle 2" />
+        </div>
+        <div class="thumb-slot">
+          <img src="<%= listing.image.url %>" alt="Room Angle 3" />
+        </div>
+        <div class="thumb-slot">
+          <img src="<%= listing.image.url %>" alt="Room Angle 4" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Information Column -->
+    <div class="details-column">
+
+      <!-- Category Tag -->
+      <span class="category-pill-badge">Entire room</span>
+
+      <!-- Title -->
+      <h1 class="stay-main-title"><%= listing.title %></h1>
+
+      <!-- Owner Info -->
+      <div class="owner-identity-row">
+        <div class="owner-avatar-bubble">
+          <%= listing.owner.username.slice(0, 1).toUpperCase() %>
+        </div>
+        <div class="owner-meta-text">
+          <span class="owned-text">Owned by <a href="#" class="owner-link"><%= listing.owner.username %></a></span>
+          <% const ownerJoined = listing.owner.joinedAt || listing.owner._id.getTimestamp(); %>
+          <span class="joined-date">Joined in <%= ownerJoined.toLocaleDateString("en-IN", { month: "short", year: "numeric" }) %></span>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="price-highlight-row">
+        <span class="rate-amount">₹<%= Number(listing.price).toLocaleString("en-IN") %></span>
+        <span class="rate-cycle">/ night</span>
+      </div>
+
+      <!-- Location Pin -->
+      <div class="geo-location-tag">
+        <i class="fa-solid fa-location-dot"></i>
+        <span><%= listing.location %>, <%= listing.country %></span>
+      </div>
+
+      <!-- Quick Room Amenities -->
+      <div class="amenities-icon-bar">
+        <div class="amenity-node">
+          <i class="fa-solid fa-user-group"></i>
+          <span>2 Guests</span>
+        </div>
+        <div class="amenity-node">
+          <i class="fa-solid fa-door-closed"></i>
+          <span>1 Bedroom</span>
+        </div>
+        <div class="amenity-node">
+          <i class="fa-solid fa-bed"></i>
+          <span>1 Bed</span>
+        </div>
+        <div class="amenity-node">
+          <i class="fa-solid fa-wifi"></i>
+          <span>Free Wi-Fi</span>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="about-block">
+        <h3 class="about-heading">About this place</h3>
+        <p class="about-text-content">
+          <%= listing.description %>
+        </p>
+      </div>
+
+      <!-- Edit / Delete Action Buttons (For Owner) -->
+      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+        <div class="action-buttons-row">
+          <a href="/listings/<%= listing._id %>/edit" class="btn-theme-edit">
+            <i class="fa-solid fa-pen"></i> Edit
+          </a>
+          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+            <button class="btn-outline-delete" onclick="return confirm('Delete this listing permanently?')">
+              <i class="fa-solid fa-trash-can"></i> Delete
+            </button>
+          </form>
+        </div>
+      <% } %>
+
+    </div>
+
+  </div>
+
+  <!-- Leave a Review Section Card -->
+  <div class="review-compose-panel">
+    <h3 class="panel-section-title">Leave a Review</h3>
+
+    <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
+      
+      <!-- Interactive Stars -->
+      <div class="star-rating-form-group">
+        <label class="form-field-label">Your Rating</label>
+        <div class="star-rating-radio-set">
+          <input type="radio" id="star5" name="review[rating]" value="5" /><label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
+          <input type="radio" id="star4" name="review[rating]" value="4" /><label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
+          <input type="radio" id="star3" name="review[rating]" value="3" /><label for="star3" title="3 stars"><i class="fa-solid fa-star"></i></label>
+          <input type="radio" id="star2" name="review[rating]" value="2" /><label for="star2" title="2 stars"><i class="fa-solid fa-star"></i></label>
+          <input type="radio" id="star1" name="review[rating]" value="1" required /><label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
+        </div>
+      </div>
+
+      <!-- Comment Box -->
+      <div class="review-textbox-group">
+        <label for="comment" class="form-field-label">Your Review</label>
+        <textarea
+          name="review[comment]"
+          id="comment"
+          rows="4"
+          class="review-textarea-field"
+          placeholder="Share your experience about this place..."
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please share a review comment.</div>
+      </div>
+
+      <button type="submit" class="btn-theme-publish">
+        <i class="fa-regular fa-paper-plane"></i> Submit Review
+      </button>
+
+    </form>
+  </div>
+
+  <!-- All Reviews Section -->
+  <div class="reviews-feed-container">
+    <h3 class="panel-section-title">All Reviews (<%= listing.reviews.length %>)</h3>
+
+    <% if (listing.reviews.length === 0) { %>
+      <div class="empty-reviews-notice">
+        <p>No reviews yet. Be the first to review this stay!</p>
+      </div>
+    <% } else { %>
+      <div class="reviews-stack">
+        <% for(let review of listing.reviews) { %>
+          <div class="review-comment-card">
+            
+            <div class="reviewer-meta-sidebar">
+              <div class="reviewer-avatar">
+                <%= review.author.username.slice(0, 1).toUpperCase() %>
+              </div>
+              <div class="reviewer-info">
+                <h5 class="reviewer-name"><%= review.author.username %></h5>
+                <span class="review-date-posted">
+                  <%= review.createdAt.toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" }) %>
+                </span>
+              </div>
+            </div>
+
+            <div class="reviewer-content-body">
+              <div class="review-score-stars">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <i class="fa-solid fa-star <%= i <= review.rating ? 'star-filled' : 'star-muted' %>"></i>
+                <% } %>
+              </div>
+              <p class="review-comment-text"><%= review.comment %></p>
+            </div>
+
+            <% if(currUser && review.author._id.equals(currUser._id)) { %>
+              <div class="review-card-actions">
+                <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                  <button class="btn-trash-review" title="Delete Review">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </form>
+              </div>
+            <% } %>
+
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+</div>
