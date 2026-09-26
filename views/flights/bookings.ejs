@@ -1,0 +1,101 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- FontAwesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<div class="bookings-page-container">
+
+  <!-- Header & Back Navigation -->
+  <div class="bookings-header-bar">
+    <div>
+      <h1 class="bookings-title">My Flight Bookings</h1>
+      <p class="bookings-subtitle">Manage your upcoming and past flight reservations</p>
+    </div>
+    <a href="/flights/search" class="btn-theme-solid">
+      <i class="fa-solid fa-plus"></i> Book New Flight
+    </a>
+  </div>
+
+  <!-- Empty State -->
+  <% if (!bookings || bookings.length === 0) { %>
+    <div class="empty-bookings-box">
+      <div class="empty-icon-circle">
+        <i class="fa-solid fa-plane-slash"></i>
+      </div>
+      <h3>No Bookings Found</h3>
+      <p>Looks like you haven't booked any flights yet. Start exploring your next destination!</p>
+      <a href="/flights/search" class="btn-theme-outline mt-3">
+        Search Flights
+      </a>
+    </div>
+  <% } else { %>
+
+    <!-- Grid of Flight Ticket Cards -->
+    <div class="bookings-cards-grid">
+      <% bookings.forEach(booking => { %>
+        <div class="flight-ticket-card">
+          
+          <!-- Top Row: Airline & Status Badge -->
+          <div class="ticket-header">
+            <div class="airline-brand">
+              <div class="airline-icon-bubble">
+                <i class="fa-solid fa-plane-departure"></i>
+              </div>
+              <h4 class="airline-name"><%= booking.flight.airline %></h4>
+            </div>
+
+            <span class="status-pill <%= booking.status === 'Cancelled' ? 'pill-cancelled' : 'pill-confirmed' %>">
+              <%= booking.status || 'Confirmed' %>
+            </span>
+          </div>
+
+          <!-- Middle Row: Route Information -->
+          <div class="ticket-route-segment">
+            <div class="route-station">
+              <span class="station-code"><%= booking.flight.source.slice(0, 3).toUpperCase() %></span>
+              <span class="station-name"><%= booking.flight.source %></span>
+            </div>
+
+            <div class="route-flight-path">
+              <span class="flight-path-line"></span>
+              <i class="fa-solid fa-plane flight-path-icon"></i>
+            </div>
+
+            <div class="route-station text-end">
+              <span class="station-code"><%= booking.flight.destination.slice(0, 3).toUpperCase() %></span>
+              <span class="station-name"><%= booking.flight.destination %></span>
+            </div>
+          </div>
+
+          <!-- Divider Notch/Perforation -->
+          <div class="ticket-perforation"></div>
+
+          <!-- Bottom Row: Price & Actions -->
+          <div class="ticket-footer">
+            <div class="price-container">
+              <span class="price-label">Total Paid</span>
+              <span class="price-val">₹<%= Number(booking.totalAmount).toLocaleString('en-IN') %></span>
+            </div>
+
+            <% if (booking.status !== 'Cancelled') { %>
+              <form
+                action="/flights/booking/<%= booking._id %>?_method=DELETE"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to cancel this booking?');"
+              >
+                <button type="submit" class="btn-cancel-ticket">
+                  <i class="fa-regular fa-circle-xmark"></i> Cancel
+                </button>
+              </form>
+            <% } else { %>
+              <span class="cancelled-notice">Booking Cancelled</span>
+            <% } %>
+          </div>
+
+        </div>
+      <% }) %>
+    </div>
+
+  <% } %>
+
+</div>
