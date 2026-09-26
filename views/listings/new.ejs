@@ -1,0 +1,71 @@
+<% layout("/layouts/boilerplate") %>
+<h3 class="dream">Create Your Dream Stay<i class="fa-solid fa-burst" style="color: #6d5dfc;margin-top: 3.5rem;"></i></h3>
+  <div class="row-r">
+    <div class="">
+      <br/><br/>
+    
+    <form method="POST" action="/listings" novalidate class="" enctype="multipart/form-data">
+      <div class="hey">
+        
+        <div class="icon-home-r"><i class="fa-regular fa-house fa-2xl" style="color: #6d5dfc;"></i></div>
+        <div class="baby"><h2 style="font-size:x-large;">Listing Details</span></h2>
+        <p >Provide all the details about your stay.</p></div>
+      </div>
+      <div class="mb-3 ">
+        <label for="title" class="form-label"><i class="fa-solid fa-pen" style="color: #6d5dfc;"></i> &nbsp;&nbsp;Title</label>
+      <input name="listing[title]" placeholder="enter title" type="text"  class="form-control"
+      required/>
+      </div>
+      <div class="mb-3 "> 
+        <label for="price" class="form-label"><i class="fa-solid fa-tag" style="color: #6d5dfc;"></i>&nbsp;&nbsp;Price</label>
+        <input name="listing[price]" placeholder="enter price" type="number" class="form-control" required/>
+        
+      </div>
+      
+      <div class="mb-3">
+        <label for="country" class="form-label"><i class="fa-solid fa-earth-americas" style="color: #6d5dfc;"></i>&nbsp;&nbsp;Country</label>
+        <input name="listing[country]" placeholder="enter country" type="text"  class="form-control" required/>
+        </div>
+      
+      <div class="mb-3">
+        <label for="location" class="form-label"><i class="fa-solid fa-location-pin" style="color: #6d5dfc;"></i>&nbsp;&nbsp;Location</label>
+        <input
+        name="listing[location]"
+        placeholder="enter location"
+        type="text"
+        class="form-control"
+        required
+      />
+       <div class="mb-3 mt-3">
+        <label for="image" class="form-label"><i class="fa-regular fa-image" style="color: #6d5dfc;"></i>&nbsp;&nbsp;Upload Image</label>
+        <input
+        name="listing[image]"
+        type="file"
+        class="form-control"
+        required
+      />
+      
+      </div>
+      
+      <div class="mb-3 ">
+        <label for="description" class="form-label"><i class="fa-regular fa-clipboard" style="color: #6d5dfc;"></i>&nbsp;&nbsp; Description</label>
+        <textarea
+        name="listing[description]"
+        placeholder="enter description"
+        class="form-control"
+        required
+      ></textarea>
+    </div>
+      
+      <br>
+      <div class="btn-container">
+    <button class="btn btn-dark add-btn ok">
+        <i class="fa-solid fa-plus"></i>
+        Add Listing
+    </button>
+</div>
+      <br/><br/>
+      </div>
+    </form>
+    </div>
+ </div>
