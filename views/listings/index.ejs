@@ -1,79 +1,58 @@
 <% layout("/layouts/boilerplate") %>
 
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<%
+  const activeCat = typeof selectedCategory !== "undefined" ? selectedCategory : "";
+
+  const filters = [
+    { label: "Trending",  icon: "fa-fire",           href: "/listings?category=trending",  key: "trending" },
+    { label: "Rooms",     icon: "fa-bed",            href: "/listings?category=rooms",     key: "rooms" },
+    { label: "Cities",    icon: "fa-mountain-city",  href: "/listings?category=cities",    key: "cities" },
+    { label: "Mountains", icon: "fa-mountain",       href: "/listings?category=mountains", key: "mountains" },
+    { label: "Flights",   icon: "fa-plane",          href: "/flights",                     key: "" },
+    { label: "Swimming",  icon: "fa-person-swimming",href: "/listings?category=swimming",  key: "swimming" },
+    { label: "Camping",   icon: "fa-campground",     href: "/listings?category=camping",   key: "camping" },
+    { label: "Farms",     icon: "fa-plate-wheat",    href: "/listings?category=farms",     key: "farms" },
+    { label: "Arctic",    icon: "fa-snowflake",      href: "/listings?category=arctic",    key: "arctic" },
+    { label: "Bus",       icon: "fa-bus",            href: "/listings?category=bus",       key: "bus" },
+    { label: "Taxi",      icon: "fa-taxi",           href: "/listings?category=taxi",      key: "taxi" },
+    { label: "Bike",      icon: "fa-motorcycle",     href: "/listings?category=bike",      key: "bike" },
+    { label: "Train",     icon: "fa-train-tram",     href: "/listings?category=train",     key: "train" },
+  ];
+
+  const pricePeriod = {
+    bike: "/ day",
+    bus: "/ ticket",
+    train: "/ ticket",
+    taxi: "/ ride",
+  };
+%>
 
 <div class="homepage-container">
 
-  
   <div class="filter-scroll-wrapper">
     <div class="filter-track">
-      <a href="/listings?category=trending" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-fire"></i></div>
-        <span>Trending</span>
-      </a>
-      <a href="/listings?category=rooms" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-bed"></i></div>
-        <span>Rooms</span>
-      </a>
-      <a href="/listings?category=cities" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-mountain-city"></i></div>
-        <span>Cities</span>
-      </a>
-      <a href="/listings?category=mountains" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-mountain"></i></div>
-        <span>Mountains</span>
-      </a>
-      <a href="/flights" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-plane"></i></div>
-        <span>Flights</span>
-      </a>
-      <a href="/listings?category=pools" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-person-swimming"></i></div>
-        <span>Swimming</span>
-      </a>
-      <a href="/listings?category=camping" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-campground"></i></div>
-        <span>Camping</span>
-      </a>
-      <a href="/listings?category=farms" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-plate-wheat"></i></div>
-        <span>Farms</span>
-      </a>
-      <a href="/listings?category=arctic" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-snowflake"></i></div>
-        <span>Arctic</span>
-      </a>
-      <a href="/listings?category=bus" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-bus"></i></div>
-        <span>Bus</span>
-      </a>
-      <a href="/listings?category=taxi" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-taxi"></i></div>
-        <span>Taxi</span>
-      </a>
-      <a href="/listings?category=bike" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-motorcycle"></i></div>
-        <span>Bike</span>
-      </a>
-      <a href="/listings?category=train" class="filter-item ">
-        <div class="filter-icon-box"><i class="fa-solid fa-train-tram"></i></div>
-        <span>Train</span>
-      </a>
+      <% filters.forEach(f => { %>
+        <a href="<%= f.href %>" class="filter-item <%= f.key && activeCat === f.key ? 'active' : '' %>">
+          <div class="filter-icon-box"><i class="fa-solid <%= f.icon %>"></i></div>
+          <span><%= f.label %></span>
+        </a>
+      <% }) %>
     </div>
   </div>
 
- 
+
   <form action="/flights/search" method="GET" class="flight-search-container">
     <div class="search-inputs-grid">
-     
+
       <div class="input-card">
         <span class="card-floating-label">From <i class="fa-solid fa-plane-departure" style="color: #5d5bf6;"></i></span>
         <input type="text" name="source" class="card-main-input" placeholder="e.g. Delhi" required>
         <span class="card-sub-label">Departure Airport</span>
       </div>
 
-    
+
       <div class="input-card">
         <span class="card-floating-label">To <i class="fa-solid fa-plane-arrival" style="color: #5d5bf6;"></i></span>
         <input type="text" name="destination" class="card-main-input" placeholder="e.g. Mumbai" required>
@@ -99,13 +78,13 @@
         <span class="card-sub-label">Cabin selection</span>
       </div>
 
-      
+
       <button type="submit" class="btn-main-search">
         SEARCH
       </button>
     </div>
 
-   
+
     <div class="fare-options-bar">
       <div class="special-fares-header">
         <span class="benefits-badge">More Benefits</span>
@@ -152,14 +131,14 @@
     </div>
   </form>
 
-  
+
   <div class="listings-grid">
     <% for(let listing of allListings) { %>
       <a href="/listings/<%= listing._id %>" class="listing-item-anchor">
         <div class="listing-card">
-          
+
           <div class="listing-media-wrap">
-            <img src="<%= listing.image.url %>" class="listing-thumbnail" alt="<%= listing.title %>" loading="lazy"/>
+            <img src="<%= listing.image && listing.image.url ? listing.image.url : '' %>" class="listing-thumbnail" alt="<%= listing.title %>" loading="lazy"/>
             <button class="listing-like-btn" type="button" aria-label="Favorite">
               <i class="fa-solid fa-heart"></i>
             </button>
@@ -168,15 +147,15 @@
           <!-- Card Body -->
           <div class="listing-meta-wrap">
             <h5 class="listing-name"><%= listing.title %></h5>
-            
+
             <p class="listing-location">
               <i class="fa-solid fa-location-dot"></i>
               <span><%= listing.location %>, <%= listing.country %></span>
             </p>
-            
+
             <div class="listing-rate-row">
               <span class="listing-rate-amount">₹<%= Number(listing.price).toLocaleString("en-IN") %></span>
-              <span class="listing-rate-period">/ night</span>
+              <span class="listing-rate-period"><%= pricePeriod[listing.category] || "/ night" %></span>
             </div>
           </div>
         </div>
@@ -184,8 +163,14 @@
     <% } %>
   </div>
 
-  
-  <a href="mailto:gnagwarakash555@gamil.com" class="support-floating-btn" id="helpButton" aria-label="Customer Support">
+  <% if (allListings.length === 0) { %>
+    <p style="text-align:center; margin:2rem 0; color:#6b7280;">
+      Is category mein abhi koi listing nahi hai.
+    </p>
+  <% } %>
+
+
+  <a href="mailto:gnagwarakash555@gmail.com" class="support-floating-btn" id="helpButton" aria-label="Customer Support">
     <i class="fa-solid fa-headset"></i>
   </a>
 
