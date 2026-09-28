@@ -21,6 +21,7 @@ const initDB = async () => {
   initData.data=initData.data.map((obj)=>({...obj,owner:"6a24154f1aea142f090f5ec7",}));
   await Listing.insertMany(initData.data);
   console.log("data was initialized");
+  await mongoose.connection.close();
 };
 
 initDB();
