@@ -7,7 +7,6 @@ const MONGO_URL=process.env.MONGO_URL;
 
 main()
 .then(()=>{
-    console.log("connected to db");
 })
 .catch((err)=>{
     console.log(err);
@@ -28,9 +27,7 @@ let samplelisting=new Listing({
     country: "india",
 });
 await samplelisting.save();
-console.log("sample is saved");
 res.send("succesful testing");
 });
-app.listen(8080,()=>{
-    console.log("server is listening to port 8080");
+app.listen(process.env.PORT||8000,()=>{
 });
