@@ -1,5 +1,5 @@
 const Cab = require("../models/Cab");
-const CabBooking = require("../models/Cabbooking");
+const CabBooking = require("../models/CabBooking");
 
 // 1. Render Booking Screen
 module.exports.renderBookingForm = async (req, res, next) => {
