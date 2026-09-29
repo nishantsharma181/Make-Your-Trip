@@ -2,20 +2,62 @@ const express = require("express");
 const router = express.Router();
 
 const bikeBookings = require("../controllers/bikeBooking");
+const { isLoggedIn } = require("../middleware");
 
-// My Bike Bookings
-router.get("/my-bookings", bikeBookings.myBookings);
 
-// Booking Form
-router.get("/new/:bikeId", bikeBookings.renderBookingForm);
+// ===============================
+// MY BIKE BOOKINGS
+// ===============================
 
-// Create Booking
-router.post("/", bikeBookings.createBooking);
+router.get(
+  "/my-bookings",
+  isLoggedIn,
+  bikeBookings.myBookings
+);
 
-// Booking Details
-router.get("/:id", bikeBookings.showBooking);
 
-// Cancel Booking
-router.put("/:id/cancel", bikeBookings.cancelBooking);
+// ===============================
+// BOOKING FORM
+// ===============================
+
+router.get(
+  "/new/:bikeId",
+  isLoggedIn,
+  bikeBookings.renderBookingForm
+);
+
+
+// ===============================
+// CREATE BOOKING
+// ===============================
+
+router.post(
+  "/",
+  isLoggedIn,
+  bikeBookings.createBooking
+);
+
+
+// ===============================
+// BOOKING DETAILS
+// ===============================
+
+router.get(
+  "/:id",
+  isLoggedIn,
+  bikeBookings.showBooking
+);
+
+
+// ===============================
+// CANCEL BOOKING
+// ===============================
+
+router.put(
+  "/:id/cancel",
+  isLoggedIn,
+  bikeBookings.cancelBooking
+);
+
 
 module.exports = router;
