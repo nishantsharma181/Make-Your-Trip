@@ -2,80 +2,132 @@
 
 <div style="max-width:1200px; margin:40px auto; padding:20px;">
 
-  <h1 style="text-align:center; margin-bottom:10px;">
-    🚌 Bus Booking & Tickets
-  </h1>
+  <!-- Header -->
+  <div style="text-align:center; margin-bottom:35px;">
+    <h1 style="margin-bottom:10px;">
+      🚌 Bus Booking
+    </h1>
 
-  <p style="text-align:center; color:#666; margin-bottom:35px;">
-    Book your bus tickets easily
-  </p>
+    <p style="color:#666;">
+      Search and book buses easily
+    </p>
+  </div>
 
+  <!-- Search Box -->
   <div style="
     background:white;
     padding:25px;
     border-radius:15px;
     box-shadow:0 4px 15px rgba(0,0,0,0.08);
-    margin-bottom:30px;
+    margin-bottom:35px;
   ">
 
     <form action="/buses/search" method="GET">
 
       <div style="
         display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
         gap:15px;
+        align-items:end;
       ">
 
+        <!-- From -->
         <div>
-          <label>From</label>
+          <label style="font-weight:600;">From</label>
+
           <input
             type="text"
-            name="source"
+            name="from"
+            value="<%= from || '' %>"
             placeholder="e.g. Delhi"
-            required
             style="
               width:100%;
               padding:12px;
               margin-top:7px;
               border:1px solid #ddd;
               border-radius:8px;
+              box-sizing:border-box;
             "
           >
         </div>
 
+        <!-- To -->
         <div>
-          <label>To</label>
+          <label style="font-weight:600;">To</label>
+
           <input
             type="text"
-            name="destination"
+            name="to"
+            value="<%= to || '' %>"
             placeholder="e.g. Jaipur"
-            required
             style="
               width:100%;
               padding:12px;
               margin-top:7px;
               border:1px solid #ddd;
               border-radius:8px;
+              box-sizing:border-box;
             "
           >
         </div>
 
+        <!-- Bus Type -->
         <div>
-          <label>Travel Date</label>
-          <input
-            type="date"
-            name="date"
+          <label style="font-weight:600;">Bus Type</label>
+
+          <select
+            name="type"
             style="
               width:100%;
               padding:12px;
               margin-top:7px;
               border:1px solid #ddd;
               border-radius:8px;
+              box-sizing:border-box;
+              background:white;
             "
           >
+            <option value="">All Bus Types</option>
+
+            <option
+              value="AC Sleeper"
+              <%= selectedType === "AC Sleeper" ? "selected" : "" %>
+            >
+              AC Sleeper
+            </option>
+
+            <option
+              value="Non-AC Sleeper"
+              <%= selectedType === "Non-AC Sleeper" ? "selected" : "" %>
+            >
+              Non-AC Sleeper
+            </option>
+
+            <option
+              value="AC Seater"
+              <%= selectedType === "AC Seater" ? "selected" : "" %>
+            >
+              AC Seater
+            </option>
+
+            <option
+              value="Non-AC Seater"
+              <%= selectedType === "Non-AC Seater" ? "selected" : "" %>
+            >
+              Non-AC Seater
+            </option>
+
+            <option
+              value="AC Seater/Sleeper"
+              <%= selectedType === "AC Seater/Sleeper" ? "selected" : "" %>
+            >
+              AC Seater/Sleeper
+            </option>
+          </select>
         </div>
 
-        <div style="display:flex;align-items:end;">
+        <!-- Search Button -->
+        <div>
           <button
             type="submit"
             style="
@@ -99,91 +151,123 @@
 
   </div>
 
+
+  <!-- Available Buses -->
   <h2 style="margin-bottom:20px;">
     Available Buses
   </h2>
 
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-  ">
+
+  <% if (!buses || buses.length === 0) { %>
 
     <div style="
-      padding:20px;
-      border-radius:12px;
       background:white;
+      padding:40px;
+      text-align:center;
+      border-radius:15px;
       box-shadow:0 3px 12px rgba(0,0,0,0.08);
     ">
-      <h3>Delhi → Jaipur</h3>
-      <p>🚌 AC Sleeper Bus</p>
-      <p>⏰ 08:00 AM</p>
-      <strong>₹899 / ticket</strong>
-
-      <button style="
-        display:block;
-        width:100%;
-        margin-top:15px;
-        padding:11px;
-        border:none;
-        border-radius:7px;
-        background:#111827;
-        color:white;
-      ">
-        Book Now
-      </button>
+      <h3>No buses found</h3>
+      <p style="color:#666;">
+        Try another route or bus type.
+      </p>
     </div>
+
+  <% } else { %>
 
     <div style="
-      padding:20px;
-      border-radius:12px;
-      background:white;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
     ">
-      <h3>Delhi → Lucknow</h3>
-      <p>🚌 Volvo AC Bus</p>
-      <p>⏰ 09:30 PM</p>
-      <strong>₹1,199 / ticket</strong>
 
-      <button style="
-        display:block;
-        width:100%;
-        margin-top:15px;
-        padding:11px;
-        border:none;
-        border-radius:7px;
-        background:#111827;
-        color:white;
-      ">
-        Book Now
-      </button>
+      <% buses.forEach(bus => { %>
+
+        <div
+          onclick="window.location.href='/buses/<%= bus._id %>'"
+          style="
+            background:white;
+            border-radius:15px;
+            overflow:hidden;
+            box-shadow:0 3px 12px rgba(0,0,0,0.08);
+            cursor:pointer;
+            transition:transform 0.2s;
+          "
+        >
+
+          <% if (bus.image && bus.image.url) { %>
+
+            <img
+              src="<%= bus.image.url %>"
+              alt="<%= bus.operator %>"
+              style="
+                width:100%;
+                height:180px;
+                object-fit:cover;
+              "
+            >
+
+          <% } %>
+
+
+          <div style="padding:20px;">
+
+            <h3 style="margin-top:0;">
+              <%= bus.from %> → <%= bus.to %>
+            </h3>
+
+            <p style="color:#555;">
+              🚌 <%= bus.operator %>
+            </p>
+
+            <p>
+              <strong><%= bus.busType %></strong>
+            </p>
+
+            <p>
+              ⏰ <%= bus.departureTime %>
+              → <%= bus.arrivalTime %>
+            </p>
+
+            <p>
+              ⏱️ Duration: <%= bus.duration %>
+            </p>
+
+            <p>
+              💺 <%= bus.seatsAvailable %> seats available
+            </p>
+
+            <h3 style="margin-bottom:15px;">
+              ₹<%= bus.price %> / ticket
+            </h3>
+
+            <a
+              href="/buses/<%= bus._id %>"
+              onclick="event.stopPropagation();"
+              style="
+                display:block;
+                width:100%;
+                box-sizing:border-box;
+                text-align:center;
+                padding:11px;
+                border-radius:8px;
+                background:#111827;
+                color:white;
+                text-decoration:none;
+                font-weight:bold;
+              "
+            >
+              View Details
+            </a>
+
+          </div>
+
+        </div>
+
+      <% }) %>
+
     </div>
 
-    <div style="
-      padding:20px;
-      border-radius:12px;
-      background:white;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
-    ">
-      <h3>Delhi → Chandigarh</h3>
-      <p>🚌 AC Seater Bus</p>
-      <p>⏰ 07:30 AM</p>
-      <strong>₹749 / ticket</strong>
-
-      <button style="
-        display:block;
-        width:100%;
-        margin-top:15px;
-        padding:11px;
-        border:none;
-        border-radius:7px;
-        background:#111827;
-        color:white;
-      ">
-        Book Now
-      </button>
-    </div>
-
-  </div>
+  <% } %>
 
 </div>
