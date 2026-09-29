@@ -1,1 +1,189 @@
+<% layout("/layouts/boilerplate") %>
 
+<div style="max-width:1200px; margin:40px auto; padding:20px;">
+
+  <h1 style="text-align:center; margin-bottom:10px;">
+    🚌 Bus Booking & Tickets
+  </h1>
+
+  <p style="text-align:center; color:#666; margin-bottom:35px;">
+    Book your bus tickets easily
+  </p>
+
+  <div style="
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:30px;
+  ">
+
+    <form action="/buses/search" method="GET">
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+        gap:15px;
+      ">
+
+        <div>
+          <label>From</label>
+          <input
+            type="text"
+            name="source"
+            placeholder="e.g. Delhi"
+            required
+            style="
+              width:100%;
+              padding:12px;
+              margin-top:7px;
+              border:1px solid #ddd;
+              border-radius:8px;
+            "
+          >
+        </div>
+
+        <div>
+          <label>To</label>
+          <input
+            type="text"
+            name="destination"
+            placeholder="e.g. Jaipur"
+            required
+            style="
+              width:100%;
+              padding:12px;
+              margin-top:7px;
+              border:1px solid #ddd;
+              border-radius:8px;
+            "
+          >
+        </div>
+
+        <div>
+          <label>Travel Date</label>
+          <input
+            type="date"
+            name="date"
+            style="
+              width:100%;
+              padding:12px;
+              margin-top:7px;
+              border:1px solid #ddd;
+              border-radius:8px;
+            "
+          >
+        </div>
+
+        <div style="display:flex;align-items:end;">
+          <button
+            type="submit"
+            style="
+              width:100%;
+              padding:13px;
+              border:none;
+              border-radius:8px;
+              background:#5d5bf6;
+              color:white;
+              font-weight:bold;
+              cursor:pointer;
+            "
+          >
+            SEARCH BUSES
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <h2 style="margin-bottom:20px;">
+    Available Buses
+  </h2>
+
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+  ">
+
+    <div style="
+      padding:20px;
+      border-radius:12px;
+      background:white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    ">
+      <h3>Delhi → Jaipur</h3>
+      <p>🚌 AC Sleeper Bus</p>
+      <p>⏰ 08:00 AM</p>
+      <strong>₹899 / ticket</strong>
+
+      <button style="
+        display:block;
+        width:100%;
+        margin-top:15px;
+        padding:11px;
+        border:none;
+        border-radius:7px;
+        background:#111827;
+        color:white;
+      ">
+        Book Now
+      </button>
+    </div>
+
+    <div style="
+      padding:20px;
+      border-radius:12px;
+      background:white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    ">
+      <h3>Delhi → Lucknow</h3>
+      <p>🚌 Volvo AC Bus</p>
+      <p>⏰ 09:30 PM</p>
+      <strong>₹1,199 / ticket</strong>
+
+      <button style="
+        display:block;
+        width:100%;
+        margin-top:15px;
+        padding:11px;
+        border:none;
+        border-radius:7px;
+        background:#111827;
+        color:white;
+      ">
+        Book Now
+      </button>
+    </div>
+
+    <div style="
+      padding:20px;
+      border-radius:12px;
+      background:white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    ">
+      <h3>Delhi → Chandigarh</h3>
+      <p>🚌 AC Seater Bus</p>
+      <p>⏰ 07:30 AM</p>
+      <strong>₹749 / ticket</strong>
+
+      <button style="
+        display:block;
+        width:100%;
+        margin-top:15px;
+        padding:11px;
+        border:none;
+        border-radius:7px;
+        background:#111827;
+        color:white;
+      ">
+        Book Now
+      </button>
+    </div>
+
+  </div>
+
+</div>
