@@ -31,6 +31,7 @@ const cabRoutes = require("./routes/cabs.js");
 const cabBookingRoutes = require("./routes/cabBooking.js");
 const busRouter = require("./routes/buses.js");
 const bikeRouter = require("./routes/bikes.js");
+const bikeBookingRoutes = require("./routes/bikeBooking.js");
 
 // Database configuration
 const dbUrl = process.env.ATLASDB_URL;
@@ -150,6 +151,7 @@ const demoCabs = [
     pricing: { baseFare: 800, pricePerKm: 18, extraHourCharge: 200 },
     isAvailable: true,
   },
+
   {
     vehicleName: "Maruti Suzuki Dzire",
     vehicleType: "Sedan",
@@ -177,6 +179,7 @@ const demoCabs = [
     pricing: { baseFare: 500, pricePerKm: 13, extraHourCharge: 150 },
     isAvailable: true,
   },
+
   {
     vehicleName: "Hyundai i20 Asta",
     vehicleType: "Hatchback",
@@ -199,6 +202,7 @@ const demoCabs = [
     pricing: { baseFare: 400, pricePerKm: 11, extraHourCharge: 120 },
     isAvailable: true,
   },
+
   {
     vehicleName: "Mercedes-Benz E-Class",
     vehicleType: "Luxury",
@@ -226,6 +230,7 @@ const demoCabs = [
     pricing: { baseFare: 2500, pricePerKm: 45, extraHourCharge: 500 },
     isAvailable: true,
   },
+
   {
     vehicleName: "Tata Nexon EV",
     vehicleType: "SUV",
@@ -343,6 +348,7 @@ app.use("/cabs", cabRoutes);
 app.use("/bookings/cabs", cabBookingRoutes);
 app.use("/buses", busRouter);
 app.use("/bikes", bikeRouter);
+app.use("/bookings/bikes", bikeBookingRoutes);
 
 // 404 Handler
 app.use((req, res, next) => {
