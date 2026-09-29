@@ -21,7 +21,6 @@
 
     <hr style="border:none; border-top:1px solid #eee; margin:25px 0;">
 
-
     <!-- Bus Details -->
     <div style="
       display:grid;
@@ -50,12 +49,16 @@
         <p>₹<%= bus.price %></p>
       </div>
 
-    </div>
+      <div>
+        <strong>Seats Available</strong>
+        <p><%= bus.seatsAvailable %></p>
+      </div>
 
+    </div>
 
     <!-- Booking Form -->
     <form
-      action="/bookings/buses/new/<%= bus._id %>"
+      action="/bookings/buses/<%= bus._id %>"
       method="POST"
     >
 
@@ -71,6 +74,7 @@
           name="passengerName"
           placeholder="Enter passenger name"
           required
+          maxlength="100"
           style="
             width:100%;
             padding:13px;
@@ -82,7 +86,6 @@
         >
 
       </div>
-
 
       <!-- Age -->
       <div style="margin-bottom:20px;">
@@ -109,7 +112,6 @@
         >
 
       </div>
-
 
       <!-- Gender -->
       <div style="margin-bottom:20px;">
@@ -152,7 +154,6 @@
 
       </div>
 
-
       <!-- Travel Date -->
       <div style="margin-bottom:20px;">
 
@@ -164,6 +165,7 @@
           type="date"
           name="travelDate"
           required
+          min="<%= new Date().toISOString().split('T')[0] %>"
           style="
             width:100%;
             padding:13px;
@@ -175,7 +177,6 @@
         >
 
       </div>
-
 
       <!-- Seats -->
       <div style="margin-bottom:20px;">
@@ -207,7 +208,6 @@
 
       </div>
 
-
       <!-- Boarding Point -->
       <div style="margin-bottom:20px;">
 
@@ -232,7 +232,6 @@
         >
 
       </div>
-
 
       <!-- Dropping Point -->
       <div style="margin-bottom:25px;">
@@ -259,7 +258,6 @@
 
       </div>
 
-
       <!-- Total -->
       <div style="
         background:#f8f9ff;
@@ -282,7 +280,6 @@
 
       </div>
 
-
       <!-- Submit -->
       <button
         type="submit"
@@ -302,7 +299,6 @@
       </button>
 
     </form>
-
 
     <!-- Back -->
     <div style="margin-top:20px;">
