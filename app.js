@@ -30,6 +30,7 @@ const flightRouter = require("./routes/flights.js");
 const cabRoutes = require("./routes/cabs.js");
 const cabBookingRoutes = require("./routes/cabBooking.js");
 const busRouter = require("./routes/buses.js");
+const bikeRouter = require("./routes/bikes.js");
 
 // Database configuration
 const dbUrl = process.env.ATLASDB_URL;
@@ -340,9 +341,8 @@ app.use("/", userRouter);
 app.use("/flights", flightRouter);
 app.use("/cabs", cabRoutes);
 app.use("/bookings/cabs", cabBookingRoutes);
-
-// BUS ROUTE
 app.use("/buses", busRouter);
+app.use("/bikes", bikeRouter);
 
 // 404 Handler
 app.use((req, res, next) => {
@@ -387,7 +387,6 @@ main()
   .then(async () => {
     console.log("connected to DB");
 
-    // Seed cabs only after DB connection is ready
     await initCabData();
 
     const port = process.env.PORT || 8080;
