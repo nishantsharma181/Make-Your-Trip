@@ -111,6 +111,7 @@
           border-radius:12px;
         ">
           <strong>Ticket Price</strong>
+
           <p style="
             margin-bottom:0;
             font-size:20px;
@@ -166,20 +167,39 @@
         </div>
 
 
-        <a
-          href="#"
-          style="
-            margin-left:auto;
-            padding:14px 28px;
-            background:#5d5bf6;
-            color:white;
-            border-radius:9px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          🎟️ Book Now
-        </a>
+        <% if (bus.isAvailable && bus.seatsAvailable > 0) { %>
+
+          <a
+            href="/bookings/buses/new/<%= bus._id %>"
+            style="
+              margin-left:auto;
+              padding:14px 28px;
+              background:#5d5bf6;
+              color:white;
+              border-radius:9px;
+              text-decoration:none;
+              font-weight:bold;
+            "
+          >
+            🎟️ Book Now
+          </a>
+
+        <% } else { %>
+
+          <span
+            style="
+              margin-left:auto;
+              padding:14px 28px;
+              background:#999;
+              color:white;
+              border-radius:9px;
+              font-weight:bold;
+            "
+          >
+            SOLD OUT
+          </span>
+
+        <% } %>
 
       </div>
 
