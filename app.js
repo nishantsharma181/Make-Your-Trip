@@ -29,6 +29,7 @@ const userRouter = require("./routes/user.js");
 const flightRouter = require("./routes/flights.js");
 const cabRoutes = require("./routes/cabs.js");
 const cabBookingRoutes = require("./routes/cabBooking.js");
+const busRouter = require("./routes/buses.js");
 
 // Database configuration
 const dbUrl = process.env.ATLASDB_URL;
@@ -78,12 +79,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://make-your-trip-90sr.onrender.com/auth/google/callback",
+      callbackURL:
+        "https://make-your-trip-90sr.onrender.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -96,6 +99,7 @@ passport.use(
             username: email.split("@")[0],
             googleId: profile.id,
           });
+
           await user.save();
         } else if (!user.googleId) {
           user.googleId = profile.id;
@@ -163,7 +167,12 @@ const demoCabs = [
       totalTrips: 215,
     },
     operatingCity: "Mumbai",
-    serviceTypes: ["One-Way", "Round-Trip", "Airport Transfer", "Local Rental"],
+    serviceTypes: [
+      "One-Way",
+      "Round-Trip",
+      "Airport Transfer",
+      "Local Rental",
+    ],
     pricing: { baseFare: 500, pricePerKm: 13, extraHourCharge: 150 },
     isAvailable: true,
   },
@@ -207,7 +216,12 @@ const demoCabs = [
       totalTrips: 410,
     },
     operatingCity: "Delhi",
-    serviceTypes: ["One-Way", "Round-Trip", "Airport Transfer", "Local Rental"],
+    serviceTypes: [
+      "One-Way",
+      "Round-Trip",
+      "Airport Transfer",
+      "Local Rental",
+    ],
     pricing: { baseFare: 2500, pricePerKm: 45, extraHourCharge: 500 },
     isAvailable: true,
   },
@@ -239,8 +253,10 @@ const demoCabs = [
 async function initCabData() {
   try {
     const count = await Cab.countDocuments();
+
     if (count === 0) {
       let hostUser = await User.findOne();
+
       if (!hostUser) {
         hostUser = await User.create({
           username: "cab_host",
@@ -254,6 +270,7 @@ async function initCabData() {
       }));
 
       await Cab.insertMany(cabsToInsert);
+
       console.log("Demo Cabs successfully initialized in Database!");
     }
   } catch (err) {
@@ -271,12 +288,15 @@ app.get("/demouser", async (req, res) => {
     email: "gnagwarakash555@gmail.com",
     username: "Akash999",
   });
+
   let registeredUser = await User.register(fakeUser, "helloworld");
+
   res.send(registeredUser);
 });
 
 app.get("/seed", async (req, res) => {
   await Flight.deleteMany({});
+
   await Flight.insertMany([
     {
       flightNumber: "AI101",
@@ -309,15 +329,20 @@ app.get("/seed", async (req, res) => {
       seatsAvailable: 30,
     },
   ]);
+
   res.send("Flights Seeded Successfully");
 });
 
+// Main Routes
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 app.use("/", userRouter);
 app.use("/flights", flightRouter);
 app.use("/cabs", cabRoutes);
 app.use("/bookings/cabs", cabBookingRoutes);
+
+// BUS ROUTE
+app.use("/buses", busRouter);
 
 // 404 Handler
 app.use((req, res, next) => {
@@ -329,6 +354,7 @@ app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     err = new ExpressError(400, "Image must be 10 MB or smaller.");
   }
+
   console.error(`${req.method} ${req.originalUrl} failed:`, {
     name: err.name,
     message: err.message,
@@ -336,13 +362,21 @@ app.use((err, req, res, next) => {
     httpCode: err.http_code,
   });
 
-  let { statusCode = 500, message = "Something went wrong" } = err;
-  res.status(statusCode).render("error.ejs", { statusCode, message });
+  let {
+    statusCode = 500,
+    message = "Something went wrong",
+  } = err;
+
+  res.status(statusCode).render("error.ejs", {
+    statusCode,
+    message,
+  });
 });
 
 // Database Connection and Server Startup
 async function main() {
   mongoose.set("bufferCommands", false);
+
   await mongoose.connect(dbUrl, {
     serverSelectionTimeoutMS: DB_TIMEOUT_MS,
     connectTimeoutMS: DB_TIMEOUT_MS,
@@ -352,10 +386,12 @@ async function main() {
 main()
   .then(async () => {
     console.log("connected to DB");
+
     // Seed cabs only after DB connection is ready
     await initCabData();
 
     const port = process.env.PORT || 8080;
+
     app.listen(port, () => {
       console.log(`server is listening to port ${port}`);
     });
