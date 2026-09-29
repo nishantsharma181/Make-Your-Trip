@@ -10,12 +10,15 @@
     Rent a bike and explore your destination
   </p>
 
+
+  <!-- SEARCH BOX -->
+
   <div style="
     background:white;
     padding:25px;
     border-radius:15px;
     box-shadow:0 4px 15px rgba(0,0,0,0.08);
-    margin-bottom:30px;
+    margin-bottom:35px;
   ">
 
     <form action="/bikes/search" method="GET">
@@ -28,6 +31,7 @@
 
         <div>
           <label>Pickup City</label>
+
           <input
             type="text"
             name="location"
@@ -39,12 +43,15 @@
               margin-top:7px;
               border:1px solid #ddd;
               border-radius:8px;
+              box-sizing:border-box;
             "
           >
         </div>
 
+
         <div>
           <label>Pickup Date</label>
+
           <input
             type="date"
             name="date"
@@ -55,12 +62,15 @@
               margin-top:7px;
               border:1px solid #ddd;
               border-radius:8px;
+              box-sizing:border-box;
             "
           >
         </div>
 
+
         <div>
           <label>Bike Type</label>
+
           <select
             name="type"
             style="
@@ -69,16 +79,33 @@
               margin-top:7px;
               border:1px solid #ddd;
               border-radius:8px;
+              box-sizing:border-box;
             "
           >
-            <option value="">All Bikes</option>
-            <option value="Scooter">Scooter</option>
-            <option value="Bike">Bike</option>
-            <option value="Sports">Sports Bike</option>
+
+            <option value="">
+              All Bikes
+            </option>
+
+            <option value="Scooter">
+              Scooter
+            </option>
+
+            <option value="Bike">
+              Bike
+            </option>
+
+            <option value="Sports">
+              Sports Bike
+            </option>
+
           </select>
+
         </div>
 
+
         <div style="display:flex;align-items:end;">
+
           <button
             type="submit"
             style="
@@ -94,6 +121,7 @@
           >
             SEARCH BIKES
           </button>
+
         </div>
 
       </div>
@@ -102,90 +130,194 @@
 
   </div>
 
+
+  <!-- AVAILABLE BIKES -->
+
   <h2 style="margin-bottom:20px;">
     Available Bikes
   </h2>
 
+
   <div style="
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
+    gap:25px;
   ">
 
-    <div style="
-      padding:20px;
-      border-radius:12px;
-      background:white;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
-    ">
-      <h3>Honda Activa 6G</h3>
-      <p>🛵 Scooter</p>
-      <p>📍 Delhi</p>
-      <strong>₹499 / day</strong>
 
-      <button style="
-        display:block;
-        width:100%;
-        margin-top:15px;
-        padding:11px;
-        border:none;
-        border-radius:7px;
-        background:#111827;
-        color:white;
-      ">
-        Book Now
-      </button>
-    </div>
+    <!-- BIKE 1 -->
 
     <div style="
-      padding:20px;
-      border-radius:12px;
+      border-radius:15px;
       background:white;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+      overflow:hidden;
+      box-shadow:0 4px 15px rgba(0,0,0,0.10);
     ">
-      <h3>Royal Enfield Classic 350</h3>
-      <p>🏍️ Bike</p>
-      <p>📍 Jaipur</p>
-      <strong>₹999 / day</strong>
 
-      <button style="
-        display:block;
-        width:100%;
-        margin-top:15px;
-        padding:11px;
-        border:none;
-        border-radius:7px;
-        background:#111827;
-        color:white;
-      ">
-        Book Now
-      </button>
+      <img
+        src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80"
+        alt="Honda Activa"
+        style="
+          width:100%;
+          height:220px;
+          object-fit:cover;
+        "
+      >
+
+      <div style="padding:20px;">
+
+        <h3 style="margin-top:0;">
+          Honda Activa 6G
+        </h3>
+
+        <p>
+          🛵 Scooter
+        </p>
+
+        <p>
+          📍 Delhi
+        </p>
+
+        <strong style="font-size:20px;">
+          ₹499 / day
+        </strong>
+
+        <button
+          style="
+            display:block;
+            width:100%;
+            margin-top:18px;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#111827;
+            color:white;
+            cursor:pointer;
+          "
+        >
+          Book Now
+        </button>
+
+      </div>
+
     </div>
+
+
+    <!-- BIKE 2 -->
 
     <div style="
-      padding:20px;
-      border-radius:12px;
+      border-radius:15px;
       background:white;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+      overflow:hidden;
+      box-shadow:0 4px 15px rgba(0,0,0,0.10);
     ">
-      <h3>KTM Duke 390</h3>
-      <p>🏍️ Sports Bike</p>
-      <p>📍 Goa</p>
-      <strong>₹1,499 / day</strong>
 
-      <button style="
-        display:block;
-        width:100%;
-        margin-top:15px;
-        padding:11px;
-        border:none;
-        border-radius:7px;
-        background:#111827;
-        color:white;
-      ">
-        Book Now
-      </button>
+      <img
+        src="https://images.unsplash.com/photo-1558980664-10ea5b3f3e96?auto=format&fit=crop&w=900&q=80"
+        alt="Royal Enfield Classic 350"
+        style="
+          width:100%;
+          height:220px;
+          object-fit:cover;
+        "
+      >
+
+      <div style="padding:20px;">
+
+        <h3 style="margin-top:0;">
+          Royal Enfield Classic 350
+        </h3>
+
+        <p>
+          🏍️ Bike
+        </p>
+
+        <p>
+          📍 Jaipur
+        </p>
+
+        <strong style="font-size:20px;">
+          ₹999 / day
+        </strong>
+
+        <button
+          style="
+            display:block;
+            width:100%;
+            margin-top:18px;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#111827;
+            color:white;
+            cursor:pointer;
+          "
+        >
+          Book Now
+        </button>
+
+      </div>
+
     </div>
+
+
+    <!-- BIKE 3 -->
+
+    <div style="
+      border-radius:15px;
+      background:white;
+      overflow:hidden;
+      box-shadow:0 4px 15px rgba(0,0,0,0.10);
+    ">
+
+      <img
+        src="https://images.unsplash.com/photo-1558980394-0c8b9b7e5d2d?auto=format&fit=crop&w=900&q=80"
+        alt="KTM Duke"
+        style="
+          width:100%;
+          height:220px;
+          object-fit:cover;
+        "
+      >
+
+      <div style="padding:20px;">
+
+        <h3 style="margin-top:0;">
+          KTM Duke 390
+        </h3>
+
+        <p>
+          🏍️ Sports Bike
+        </p>
+
+        <p>
+          📍 Goa
+        </p>
+
+        <strong style="font-size:20px;">
+          ₹1,499 / day
+        </strong>
+
+        <button
+          style="
+            display:block;
+            width:100%;
+            margin-top:18px;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#111827;
+            color:white;
+            cursor:pointer;
+          "
+        >
+          Book Now
+        </button>
+
+      </div>
+
+    </div>
+
 
   </div>
 
