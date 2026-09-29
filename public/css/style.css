@@ -1,180 +1,207 @@
-body{
-    font-family: "Plus Jakarta Sans", sans-serif !important;
-  background-color:#F5F3FF !important;
-  
-}body {
-  padding-top:1rem !important;
-}
-*{
-    padding:0;
-    margin:0;
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  background-color: #F5F3FF !important;
 }
 
-/*navbar*/
-.navbar{position:fixed !important;
-    height: 5rem;
-    width:100%;
-    background-color: white;
-    border: 2px solid #eae9f1;
-    
-    margin-bottom: 5rem;
-   
-   
-    box-shadow: 0px 4px 4px #b9b2f6;
-    backdrop-filter: blur(10px);
-    /* Keep the header in the document flow so it cannot cover listing cards. */
-    
-}.profile-nav{
-    display:flex;
-    align-items:center;
-    margin-right:10px;
+body {
+  padding-top: 1rem !important;
 }
 
-.navbar-profile-image{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid #6D5DFC;
-    transition:0.3s;
+* {
+  padding: 0;
+  margin: 0;
 }
 
-.navbar-profile-image:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 12px rgba(109,93,252,0.4);
-}
-.navbar-brand img{
-    max-height: 3rem;
-    color: #6D5DFC;
-}
-.nav-link{
-    color: black !important;
-    text-align: center !important;
-    padding-top: 1rem;
-   font-weight: bolder;
-    
-}
-/*footer*/
-.f-info-links a{
-    text-decoration: none ;
-    color: black;
-    white-space: nowrap;
+/* =========================
+   NAVBAR
+========================= */
 
+.navbar {
+  position: fixed !important;
+  height: 5rem;
+  width: 100%;
+  background-color: white;
+  border: 2px solid #eae9f1;
+  margin-bottom: 5rem;
+  box-shadow: 0px 4px 4px #b9b2f6;
+  backdrop-filter: blur(10px);
 }
-.f-info-links, 
+
+.profile-nav {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.navbar-profile-image {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6D5DFC;
+  transition: 0.3s;
+}
+
+.navbar-profile-image:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(109, 93, 252, 0.4);
+}
+
+.navbar-brand img {
+  max-height: 3rem;
+  color: #6D5DFC;
+}
+
+.nav-link {
+  color: black !important;
+  text-align: center !important;
+  padding-top: 1rem;
+  font-weight: bolder;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.f-info-links a {
+  text-decoration: none;
+  color: black;
+  white-space: nowrap;
+}
+
+.f-info-links,
 .f-info-socials,
-.f-info-brand{
-width:100%;
-flex-wrap: nowrap;
-display:flex;
-align-items: center;
-justify-content: center;
-}
-.f-info-socials i{
-    font-size: 1.2rem;
-    margin-right: 1rem;
-}
-.f-info{
-    text-align: center;
-    min-height: 11rem;
-    padding: 1.25rem 0 3rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: space-evenly;
-    position: relative;
-    z-index: 10;
-}
-/*Cards*/
-.card{
-    border: none !important;
-    margin-bottom: 2rem;
-    box-shadow:1px 1px 5px  #868386;
-    overflow: hidden;
-    height: 100%;
+.f-info-brand {
+  width: 100%;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card-img-top{
-    margin: 1rem;
-    border-radius: 10px !important;
-    width: 90% !important;
-    object-fit: cover !important;
-    display: inline-block;
+.f-info-socials i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
 }
-.card-img-top-li{
-    border-radius:5px 5px 0px 0px !important;
-    aspect-ratio: 16 / 10;
-    height: auto;
-    width: 100% !important;
-    object-fit: cover !important;
-    display: block;
+
+.f-info {
+  text-align: center;
+  min-height: 11rem;
+  padding: 1.25rem 0 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-evenly;
+  position: relative;
+  z-index: 10;
 }
-.card-body-li{
-    padding: 3% !important;
-    min-height: 5rem;
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
+  box-shadow: 1px 1px 5px #868386;
+  overflow: hidden;
+  height: 100%;
 }
-.card-body{
-    padding: 0 !important;
-   height: 55vh;
-   width: 50%;
+
+.card-img-top {
+  margin: 1rem;
+  border-radius: 10px !important;
+  width: 90% !important;
+  object-fit: cover !important;
+  display: inline-block;
 }
-.card-text p{
-    font-weight: 400;
+
+.card-img-top-li {
+  border-radius: 5px 5px 0px 0px !important;
+  aspect-ratio: 16 / 10;
+  height: auto;
+  width: 100% !important;
+  object-fit: cover !important;
+  display: block;
 }
-.listing-link{
-    text-decoration: none;
-    display: block;
-    height: 100%;
+
+.card-body-li {
+  padding: 3% !important;
+  min-height: 5rem;
 }
-.card-img-overlay{
-    opacity: 0;
+
+.card-body {
+  padding: 0 !important;
+  height: 55vh;
+  width: 50%;
 }
-.card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: whitesmoke;
-    
+
+.card-text p {
+  font-weight: 400;
 }
-.add-btn{
-    background-color: #6D5DFC !important;
-    border: none !important;
-    
+
+.listing-link {
+  text-decoration: none;
+  display: block;
+  height: 100%;
 }
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: whitesmoke;
+}
+
+.add-btn {
+  background-color: #6D5DFC !important;
+  border: none !important;
+}
+
 .edit-btn,
-.del-btn{
-    
-    background-color: #6D5DFC !important;
-    border: none !important;
-    text-align: center !important;
-}
-.show-image{
-    height: 53vh;
-    width: 10%;
-}.btns{
-    display: flex;
-}
-.edit-image-preview{
-    width: 100%;
-    max-width: 18rem;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    border-radius: 0.5rem;
-    display: block;
+.del-btn {
+  background-color: #6D5DFC !important;
+  border: none !important;
+  text-align: center !important;
 }
 
-.fa-brands{
-    color: #6D5DFC !important;
+.show-image {
+  height: 53vh;
+  width: 10%;
 }
-#heart{
-    margin:5%;
-    float:right;
-    opacity:0.5;
+
+.btns {
+  display: flex;
 }
-    .heart-icon{
-        border: 2px solid white;
-        border-radius: 50%;
-        padding: 0.5% 1%;
-        background-color: white;
-        
+
+.edit-image-preview {
+  width: 100%;
+  max-width: 18rem;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  display: block;
+}
+
+.fa-brands {
+  color: #6D5DFC !important;
+}
+
+#heart {
+  margin: 5%;
+  float: right;
+  opacity: 0.5;
+}
+
+.heart-icon {
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 0.5% 1%;
+  background-color: white;
   position: absolute;
   top: 3%;
   right: 3%;
@@ -184,176 +211,213 @@ justify-content: center;
   cursor: pointer;
 }
 
-.heart-icon:active{
+.heart-icon:active {
   color: red;
 }
-.heart-icon:hover{
+
+.heart-icon:hover {
   color: rgb(242, 56, 56);
 }
-.footer{
-    position:relative;
-    background:#F3F0FF;
-    overflow:hidden;
-    margin-top:auto;
-    float:bottom;
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  position: relative;
+  background: #F3F0FF;
+  overflow: hidden;
+  margin-top: auto;
+  float: bottom;
 }
 
-.f-info{
-    position:relative;
-    z-index:2;
-    padding:2rem 0;
+.f-info {
+  position: relative;
+  z-index: 2;
+  padding: 2rem 0;
 }
 
-.footer-wave{
-    position:absolute;
-    left:0;
-    bottom:0;
-    width:100%;
-    z-index:1;
-    pointer-events:none;
+.footer-wave {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.footer-wave svg{
-    display:block;
-    width:100%;
-    height:120px;
-}
-.f-edit{ border: 1px solid #6D5DFC;
-    border-radius: 50%;
-    
-    display: inline-table;
-    margin:20px;
-    padding: 5px;
-}
-.btnm{
-    background-color: #6D5DFC !important;
-    color: white !important;
-}
-.navbar-search{
-    position: relative;
-}
-.navbar-search .form-control{
-    padding-left: 2.5rem !important;
-}
-.navbar-search-icon{
-    position: absolute;
-    top: 50%;
-    left: 0.9rem;
-    transform: translateY(-50%);
-    z-index: 2;
-    color: #6c757d;
-    pointer-events: none;
-}
-.login-btn-nav{
-     background-color: #6D5DFC !important;
-    border: none !important;
-    
-    border-radius: 0.5rem;
-    color: white !important; 
-    padding: 0.5rem 1rem;
-    
-    text-align: center !important;
-}
-.todo{
-    margin-top: 0.55rem;
-    margin-right: 1rem;
-    font-weight: bolder;
-}
-.f-info-links{
-    margin-top: 2rem;
-    color: #6D5DFC;
-    
-}
-.help{
- 
-
-margin:0.5rem;
-border:none;
-border-radius: 50%;
-margin-bottom: 5rem;
-display:inline-block;
-flex-wrap: wrap;
-background: linear-gradient(120deg, #a360e2,#6d5dfc);
-z-index:10;
-position:fixed;
-bottom:-10px;
-right:5px;
-padding:1.5rem;
-background-color:#6D5DFC;
-box-shadow: 0px 4px 4px #6f63f6;
-
+.footer-wave svg {
+  display: block;
+  width: 100%;
+  height: 120px;
 }
 
-.fa-headset{
-padding:1rem 0rem;
-    color:#fdfdfd;
-}
-.logout-btn-nav{
-    background-color: #6D5DFC !important;
-    border: none !important;
-    
-    border-radius: 0.5rem;
-    color: white !important; 
-    padding: 0.5rem 0.5rem;
-    
-    text-align: center !important;
-}
-.help-modal{
-    border: 1px solid black;
-    display: inline-flex;
-    z-index: 20;
-    
-}
-.help-close{
-    float:right;
-    margin: 0.5rem;
-    border-radius: 20%;
-    text-align: center;
-    
-    
-}
-.close{
-    text-decoration: none;
+.f-edit {
+  border: 1px solid #6D5DFC;
+  border-radius: 50%;
+  display: inline-table;
+  margin: 20px;
+  padding: 5px;
 }
 
-.text{
-    font-size: larger;
-    font-weight:bol!important;
+.btnm {
+  background-color: #6D5DFC !important;
+  color: white !important;
 }
-.listing-price{
-    color: #4f3eed;
-    font-size: larger;
-    font-weight: 900 !important;
+
+
+/* =========================
+   NAVBAR SEARCH
+========================= */
+
+.navbar-search {
+  position: relative;
 }
-.listing-price strong{
-    font-weight: 900 !important;
+
+.navbar-search .form-control {
+  padding-left: 2.5rem !important;
 }
-.listing-price span{
-    color: rgb(65, 64, 64);
-    font-size: small;
-    font-weight: 400;
-    opacity: 0.8;
-}.alert{
-    position:absolute;
-    top:70px;
-    
-    z-index: 1;
+
+.navbar-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #6c757d;
+  pointer-events: none;
 }
-.show-heart{
-    width:2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    padding: 1% 0px;
-   text-align: center;
-    background-color: white;
-    position: absolute;
-    top:3rem;
-    right:5rem;
+
+.login-btn-nav {
+  background-color: #6D5DFC !important;
+  border: none !important;
+  border-radius: 0.5rem;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  text-align: center !important;
 }
-.listing{
-    display:flex;
-    flex-wrap: wrap;
-}:root {
+
+.todo {
+  margin-top: 0.55rem;
+  margin-right: 1rem;
+  font-weight: bolder;
+}
+
+.f-info-links {
+  margin-top: 2rem;
+  color: #6D5DFC;
+}
+
+
+/* =========================
+   HELP BUTTON
+========================= */
+
+.help {
+  margin: 0.5rem;
+  border: none;
+  border-radius: 50%;
+  margin-bottom: 5rem;
+  display: inline-block;
+  flex-wrap: wrap;
+  background: linear-gradient(120deg, #a360e2, #6d5dfc);
+  z-index: 10;
+  position: fixed;
+  bottom: -10px;
+  right: 5px;
+  padding: 1.5rem;
+  background-color: #6D5DFC;
+  box-shadow: 0px 4px 4px #6f63f6;
+}
+
+.fa-headset {
+  padding: 1rem 0rem;
+  color: #fdfdfd;
+}
+
+.logout-btn-nav {
+  background-color: #6D5DFC !important;
+  border: none !important;
+  border-radius: 0.5rem;
+  color: white !important;
+  padding: 0.5rem 0.5rem;
+  text-align: center !important;
+}
+
+.help-modal {
+  border: 1px solid black;
+  display: inline-flex;
+  z-index: 20;
+}
+
+.help-close {
+  float: right;
+  margin: 0.5rem;
+  border-radius: 20%;
+  text-align: center;
+}
+
+.close {
+  text-decoration: none;
+}
+
+.text {
+  font-size: larger;
+  font-weight: bol !important;
+}
+
+
+/* =========================
+   LISTING PRICE
+========================= */
+
+.listing-price {
+  color: #4f3eed;
+  font-size: larger;
+  font-weight: 900 !important;
+}
+
+.listing-price strong {
+  font-weight: 900 !important;
+}
+
+.listing-price span {
+  color: rgb(65, 64, 64);
+  font-size: small;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.alert {
+  position: absolute;
+  top: 70px;
+  z-index: 1;
+}
+
+.show-heart {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  padding: 1% 0px;
+  text-align: center;
+  background-color: white;
+  position: absolute;
+  top: 3rem;
+  right: 5rem;
+}
+
+.listing {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   HOME PAGE / CATEGORY ICONS / FLIGHT SEARCH
+========================================================= */
+
+:root {
   --primary-color: #6D5DFC;
   --primary-light: #f1effe;
   --primary-hover: #5b4be0;
@@ -375,13 +439,23 @@ body {
 .homepage-container {
   max-width: 1480px;
   margin: 0 auto;
-  padding: 24px 20px 80px;
+
+  /* Increased top spacing so category icons sit lower */
+  padding: 40px 20px 80px;
 }
 
-/* 1. Filter Scroll Bar */
+
+/* =========================
+   1. FILTER SCROLL BAR
+========================= */
+
 .filter-scroll-wrapper {
   overflow-x: auto;
+
+  /* Extra space above and below the category icons */
+  padding-top: 12px;
   padding-bottom: 12px;
+
   margin-bottom: 24px;
   scrollbar-width: thin;
   scrollbar-color: #d1d5db transparent;
@@ -396,31 +470,46 @@ body {
   border-radius: 4px;
 }
 
+
 /* Container holding all the icons */
 .filter-track {
   display: flex;
-  gap: 35px; /* Increased spacing between each icon (adjust from 24px to 36px as you like) */
-  align-items:center;
+
+  /* Gap between category items */
+  gap: 35px;
+
+  align-items: center;
   width: max-content;
-  padding: 10px 4px; /* Prevents focus/hover shadows from getting clipped */
+
+  /* Main fix:
+     more space above the icons,
+     small space below */
+  padding: 40px 4px 10px;
 }
+
 
 /* Individual icon item */
 .filter-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* Space between the square icon and the text label below it */
-  min-width: 60px; /* Gives each item a consistent width */
+
+  /* Space between icon and text */
+  gap: 10px;
+
+  min-width: 60px;
   text-decoration: none;
   color: var(--text-muted);
   cursor: pointer;
   transition: transform 0.2s ease;
 }
+
 .filter-item:hover {
   transform: translateY(-2px);
 }
 
+
+/* Icon box */
 .filter-icon-box {
   width: 52px;
   height: 52px;
@@ -428,10 +517,13 @@ body {
   background: #ffffff;
   border: 1px solid var(--border-subtle);
   color: var(--primary-color);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 1.25rem;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   transition: all 0.2s ease;
 }
@@ -454,7 +546,11 @@ body {
   font-weight: 700;
 }
 
-/* 2. Flight Search Widget */
+
+/* =========================
+   2. FLIGHT SEARCH WIDGET
+========================= */
+
 .flight-search-container {
   background: #ffffff;
   padding: 24px 28px;
@@ -477,11 +573,16 @@ body {
   padding: 12px 14px;
   border: 1.5px solid var(--border-subtle);
   border-radius: 12px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   background: #fff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .input-card:focus-within {
@@ -537,7 +638,11 @@ body {
   background: var(--primary-hover);
 }
 
-/* Fares Row */
+
+/* =========================
+   FARES ROW
+========================= */
+
 .fare-options-bar {
   display: flex;
   align-items: center;
@@ -597,21 +702,27 @@ body {
   height: 16px;
   border: 1.5px solid #d1d5db;
   border-radius: 4px;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.fare-select-box input[type="radio"]:checked + .fare-select-content {
+.fare-select-box input[type="radio"]:checked
++ .fare-select-content {
   border-color: var(--primary-color);
 }
 
-.fare-select-box input[type="radio"]:checked + .fare-select-content .custom-checkbox {
+.fare-select-box input[type="radio"]:checked
++ .fare-select-content
+.custom-checkbox {
   background: var(--primary-color);
   border-color: var(--primary-color);
 }
 
-.fare-select-box input[type="radio"]:checked + .fare-select-content .custom-checkbox::after {
+.fare-select-box input[type="radio"]:checked
++ .fare-select-content
+.custom-checkbox::after {
   content: "✓";
   font-size: 11px;
   color: #ffffff;
@@ -637,7 +748,11 @@ body {
   color: var(--text-muted);
 }
 
-/* 3. Listings Grid */
+
+/* =========================
+   3. LISTINGS GRID
+========================= */
+
 .listings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -655,7 +770,9 @@ body {
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .listing-card:hover {
@@ -692,13 +809,18 @@ body {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
   border: none;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: var(--primary-color);
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 .listing-like-btn:hover {
@@ -751,7 +873,11 @@ body {
   color: var(--text-muted);
 }
 
-/* 4. Floating Help Action Button */
+
+/* =========================
+   4. FLOATING HELP ACTION BUTTON
+========================= */
+
 .support-floating-btn {
   position: fixed;
   bottom: 24px;
@@ -761,13 +887,20 @@ body {
   border-radius: 50%;
   background: var(--primary-color);
   color: #ffffff;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 1.4rem;
   text-decoration: none;
+
   box-shadow: 0 6px 20px rgba(109, 93, 252, 0.35);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
   z-index: 99;
 }
 
@@ -777,13 +910,20 @@ body {
   color: #ffffff;
 }
 
-/* Responsive Styles */
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media (max-width: 992px) {
+
   .search-inputs-grid {
     flex-direction: column;
     align-items: stretch;
   }
+
   .btn-main-search {
     height: 50px;
   }
+
 }
