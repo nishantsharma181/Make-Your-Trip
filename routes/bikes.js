@@ -1,14 +1,33 @@
 const express = require("express");
 const router = express.Router();
 
-// Bike home page
+
+// ===============================
+// BIKE HOME PAGE
+// ===============================
+
 router.get("/", (req, res) => {
-  res.render("bikes/index");
+
+  res.render("bikes/index", {
+    selectedType: ""
+  });
+
 });
 
-// Bike search
+
+// ===============================
+// BIKE SEARCH
+// ===============================
+
 router.get("/search", (req, res) => {
-  res.render("bikes/index");
+
+  const selectedType = req.query.type || "";
+
+  res.render("bikes/index", {
+    selectedType: selectedType
+  });
+
 });
+
 
 module.exports = router;
