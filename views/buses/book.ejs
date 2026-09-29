@@ -1,0 +1,325 @@
+<% layout("/layouts/boilerplate") %>
+
+<div style="max-width:900px; margin:40px auto; padding:20px;">
+
+  <div style="
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.10);
+  ">
+
+    <h1 style="margin-top:0;">
+      🎟️ Book Your Bus Ticket
+    </h1>
+
+    <p style="color:#666;">
+      <strong><%= bus.operator %></strong>
+      —
+      <%= bus.from %> → <%= bus.to %>
+    </p>
+
+    <hr style="border:none; border-top:1px solid #eee; margin:25px 0;">
+
+
+    <!-- Bus Details -->
+    <div style="
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:15px;
+      margin-bottom:30px;
+    ">
+
+      <div>
+        <strong>Bus Type</strong>
+        <p><%= bus.busType %></p>
+      </div>
+
+      <div>
+        <strong>Departure</strong>
+        <p><%= bus.departureTime %></p>
+      </div>
+
+      <div>
+        <strong>Arrival</strong>
+        <p><%= bus.arrivalTime %></p>
+      </div>
+
+      <div>
+        <strong>Price / Seat</strong>
+        <p>₹<%= bus.price %></p>
+      </div>
+
+    </div>
+
+
+    <!-- Booking Form -->
+    <form
+      action="/bookings/buses/new/<%= bus._id %>"
+      method="POST"
+    >
+
+      <!-- Passenger Name -->
+      <div style="margin-bottom:20px;">
+
+        <label style="font-weight:600;">
+          Passenger Name
+        </label>
+
+        <input
+          type="text"
+          name="passengerName"
+          placeholder="Enter passenger name"
+          required
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+          "
+        >
+
+      </div>
+
+
+      <!-- Age -->
+      <div style="margin-bottom:20px;">
+
+        <label style="font-weight:600;">
+          Passenger Age
+        </label>
+
+        <input
+          type="number"
+          name="passengerAge"
+          min="1"
+          max="120"
+          placeholder="Enter age"
+          required
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+          "
+        >
+
+      </div>
+
+
+      <!-- Gender -->
+      <div style="margin-bottom:20px;">
+
+        <label style="font-weight:600;">
+          Passenger Gender
+        </label>
+
+        <select
+          name="passengerGender"
+          required
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+            background:white;
+          "
+        >
+
+          <option value="">
+            Select Gender
+          </option>
+
+          <option value="Male">
+            Male
+          </option>
+
+          <option value="Female">
+            Female
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Travel Date -->
+      <div style="margin-bottom:20px;">
+
+        <label style="font-weight:600;">
+          Travel Date
+        </label>
+
+        <input
+          type="date"
+          name="travelDate"
+          required
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+          "
+        >
+
+      </div>
+
+
+      <!-- Seats -->
+      <div style="margin-bottom:20px;">
+
+        <label style="font-weight:600;">
+          Number of Seats
+        </label>
+
+        <input
+          type="number"
+          name="seatsBooked"
+          min="1"
+          max="<%= bus.seatsAvailable %>"
+          value="1"
+          required
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+          "
+        >
+
+        <small style="color:#666;">
+          <%= bus.seatsAvailable %> seats currently available
+        </small>
+
+      </div>
+
+
+      <!-- Boarding Point -->
+      <div style="margin-bottom:20px;">
+
+        <label style="font-weight:600;">
+          Boarding Point
+        </label>
+
+        <input
+          type="text"
+          name="boardingPoint"
+          value="<%= bus.boardingPoint %>"
+          readonly
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+            background:#f8f9fa;
+          "
+        >
+
+      </div>
+
+
+      <!-- Dropping Point -->
+      <div style="margin-bottom:25px;">
+
+        <label style="font-weight:600;">
+          Dropping Point
+        </label>
+
+        <input
+          type="text"
+          name="droppingPoint"
+          value="<%= bus.droppingPoint %>"
+          readonly
+          style="
+            width:100%;
+            padding:13px;
+            margin-top:8px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            box-sizing:border-box;
+            background:#f8f9fa;
+          "
+        >
+
+      </div>
+
+
+      <!-- Total -->
+      <div style="
+        background:#f8f9ff;
+        padding:20px;
+        border-radius:12px;
+        margin-bottom:25px;
+      ">
+
+        <div style="color:#666;">
+          Price per seat
+        </div>
+
+        <strong style="font-size:24px;">
+          ₹<%= bus.price %>
+        </strong>
+
+        <p style="margin-bottom:0; color:#666;">
+          Final amount will be calculated according to the number of seats.
+        </p>
+
+      </div>
+
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        style="
+          width:100%;
+          padding:15px;
+          border:none;
+          border-radius:9px;
+          background:#5d5bf6;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+          cursor:pointer;
+        "
+      >
+        CONFIRM BOOKING
+      </button>
+
+    </form>
+
+
+    <!-- Back -->
+    <div style="margin-top:20px;">
+
+      <a
+        href="/buses/<%= bus._id %>"
+        style="
+          text-decoration:none;
+          color:#5d5bf6;
+          font-weight:600;
+        "
+      >
+        ← Back to Bus Details
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
