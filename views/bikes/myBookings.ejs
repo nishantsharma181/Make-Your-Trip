@@ -1,0 +1,397 @@
+<% layout("/layouts/boilerplate") %>
+
+<div style="
+  max-width:1100px;
+  margin:40px auto;
+  padding:20px;
+">
+
+  <h1 style="
+    margin-bottom:8px;
+  ">
+    🏍️ My Bike Bookings
+  </h1>
+
+  <p style="
+    color:#64748b;
+    margin-bottom:30px;
+  ">
+    View and manage your bike bookings
+  </p>
+
+
+  <% if (!bookings || bookings.length === 0) { %>
+
+    <!-- NO BOOKINGS -->
+
+    <div style="
+      background:white;
+      padding:50px 25px;
+      border-radius:15px;
+      text-align:center;
+      box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    ">
+
+      <div style="
+        font-size:60px;
+        margin-bottom:15px;
+      ">
+        🏍️
+      </div>
+
+      <h2>
+        No Bike Bookings Yet
+      </h2>
+
+      <p style="
+        color:#64748b;
+      ">
+        You haven't booked any bikes yet.
+      </p>
+
+      <a
+        href="/bikes"
+        style="
+          display:inline-block;
+          margin-top:15px;
+          padding:13px 25px;
+          background:#2563eb;
+          color:white;
+          text-decoration:none;
+          border-radius:9px;
+          font-weight:600;
+        "
+      >
+        Browse Bikes
+      </a>
+
+    </div>
+
+
+  <% } else { %>
+
+
+    <!-- BOOKINGS -->
+
+    <div style="
+      display:grid;
+      gap:20px;
+    ">
+
+
+      <% bookings.forEach(function(booking) { %>
+
+
+        <div style="
+          background:white;
+          border:1px solid #e2e8f0;
+          border-radius:15px;
+          padding:20px;
+          box-shadow:0 4px 15px rgba(0,0,0,0.06);
+        ">
+
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:20px;
+            flex-wrap:wrap;
+          ">
+
+
+            <!-- BIKE -->
+
+            <div style="
+              display:flex;
+              gap:18px;
+              align-items:center;
+            ">
+
+
+              <% if (
+                booking.bike &&
+                booking.bike.image &&
+                booking.bike.image.url
+              ) { %>
+
+                <img
+                  src="<%= booking.bike.image.url %>"
+                  alt="<%= booking.bike.name %>"
+                  style="
+                    width:130px;
+                    height:90px;
+                    object-fit:cover;
+                    border-radius:10px;
+                  "
+                >
+
+              <% } else { %>
+
+                <div style="
+                  width:130px;
+                  height:90px;
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
+                  background:#f1f5f9;
+                  border-radius:10px;
+                  font-size:40px;
+                ">
+                  🏍️
+                </div>
+
+              <% } %>
+
+
+              <div>
+
+                <h2 style="
+                  margin:0 0 7px;
+                ">
+                  <%= booking.bike
+                    ? booking.bike.name
+                    : "Bike" %>
+                </h2>
+
+                <p style="
+                  margin:4px 0;
+                  color:#64748b;
+                ">
+                  📍 <%= booking.bike
+                    ? booking.bike.location
+                    : "N/A" %>
+                </p>
+
+                <p style="
+                  margin:4px 0;
+                  color:#64748b;
+                ">
+                  Booking ID:
+                  <strong>
+                    <%= booking.bookingId %>
+                  </strong>
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div>
+
+              <% if (booking.bookingStatus === "Confirmed") { %>
+
+                <span style="
+                  display:inline-block;
+                  background:#dcfce7;
+                  color:#166534;
+                  padding:7px 12px;
+                  border-radius:20px;
+                  font-size:13px;
+                  font-weight:700;
+                ">
+                  CONFIRMED
+                </span>
+
+              <% } else if (
+                booking.bookingStatus === "Cancelled"
+              ) { %>
+
+                <span style="
+                  display:inline-block;
+                  background:#fee2e2;
+                  color:#991b1b;
+                  padding:7px 12px;
+                  border-radius:20px;
+                  font-size:13px;
+                  font-weight:700;
+                ">
+                  CANCELLED
+                </span>
+
+              <% } else if (
+                booking.bookingStatus === "Completed"
+              ) { %>
+
+                <span style="
+                  display:inline-block;
+                  background:#e0e7ff;
+                  color:#3730a3;
+                  padding:7px 12px;
+                  border-radius:20px;
+                  font-size:13px;
+                  font-weight:700;
+                ">
+                  COMPLETED
+                </span>
+
+              <% } else { %>
+
+                <span style="
+                  display:inline-block;
+                  background:#fef3c7;
+                  color:#92400e;
+                  padding:7px 12px;
+                  border-radius:20px;
+                  font-size:13px;
+                  font-weight:700;
+                ">
+                  <%= booking.bookingStatus %>
+                </span>
+
+              <% } %>
+
+            </div>
+
+          </div>
+
+
+          <hr style="
+            border:none;
+            border-top:1px solid #e2e8f0;
+            margin:20px 0;
+          ">
+
+
+          <!-- BOOKING DETAILS -->
+
+          <div style="
+            display:grid;
+            grid-template-columns:
+              repeat(4,1fr);
+            gap:15px;
+          ">
+
+
+            <div>
+
+              <div style="
+                color:#64748b;
+                font-size:13px;
+              ">
+                Pickup
+              </div>
+
+              <strong>
+                <%= new Date(
+                  booking.pickupDate
+                ).toLocaleDateString("en-IN") %>
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <div style="
+                color:#64748b;
+                font-size:13px;
+              ">
+                Return
+              </div>
+
+              <strong>
+                <%= new Date(
+                  booking.returnDate
+                ).toLocaleDateString("en-IN") %>
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <div style="
+                color:#64748b;
+                font-size:13px;
+              ">
+                Days
+              </div>
+
+              <strong>
+                <%= booking.numberOfDays %>
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <div style="
+                color:#64748b;
+                font-size:13px;
+              ">
+                Total
+              </div>
+
+              <strong>
+                ₹<%= booking.totalAmount
+                  .toLocaleString("en-IN") %>
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- VIEW BUTTON -->
+
+          <div style="
+            margin-top:20px;
+          ">
+
+            <a
+              href="/bookings/bikes/<%= booking._id %>"
+              style="
+                display:inline-block;
+                padding:11px 20px;
+                background:#2563eb;
+                color:white;
+                text-decoration:none;
+                border-radius:8px;
+                font-weight:600;
+              "
+            >
+              View Booking
+            </a>
+
+          </div>
+
+
+        </div>
+
+
+      <% }) %>
+
+
+    </div>
+
+
+  <% } %>
+
+</div>
+
+
+<style>
+
+@media (max-width:750px) {
+
+  div[style*="repeat(4,1fr)"] {
+    grid-template-columns:
+      repeat(2,1fr) !important;
+  }
+
+}
+
+@media (max-width:500px) {
+
+  div[style*="repeat(4,1fr)"] {
+    grid-template-columns:1fr !important;
+  }
+
+}
+
+</style>
