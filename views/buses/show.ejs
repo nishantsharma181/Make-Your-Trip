@@ -1,0 +1,207 @@
+<% layout("/layouts/boilerplate") %>
+
+<div style="max-width:1100px; margin:40px auto; padding:20px;">
+
+  <div style="
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 4px 18px rgba(0,0,0,0.10);
+  ">
+
+    <!-- Bus Image -->
+    <% if (bus.image && bus.image.url) { %>
+
+      <img
+        src="<%= bus.image.url %>"
+        alt="<%= bus.operator %>"
+        style="
+          width:100%;
+          height:350px;
+          object-fit:cover;
+        "
+      >
+
+    <% } %>
+
+
+    <div style="padding:30px;">
+
+      <!-- Route -->
+      <h1 style="margin-top:0;">
+        <%= bus.from %> → <%= bus.to %>
+      </h1>
+
+      <p style="font-size:18px; color:#555;">
+        🚌 <strong><%= bus.operator %></strong>
+      </p>
+
+
+      <!-- Bus Information -->
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:15px;
+        margin-top:25px;
+      ">
+
+        <div style="
+          background:#f8f9ff;
+          padding:18px;
+          border-radius:12px;
+        ">
+          <strong>Bus Type</strong>
+          <p style="margin-bottom:0;">
+            <%= bus.busType %>
+          </p>
+        </div>
+
+
+        <div style="
+          background:#f8f9ff;
+          padding:18px;
+          border-radius:12px;
+        ">
+          <strong>Departure</strong>
+          <p style="margin-bottom:0;">
+            <%= bus.departureTime %>
+          </p>
+        </div>
+
+
+        <div style="
+          background:#f8f9ff;
+          padding:18px;
+          border-radius:12px;
+        ">
+          <strong>Arrival</strong>
+          <p style="margin-bottom:0;">
+            <%= bus.arrivalTime %>
+          </p>
+        </div>
+
+
+        <div style="
+          background:#f8f9ff;
+          padding:18px;
+          border-radius:12px;
+        ">
+          <strong>Duration</strong>
+          <p style="margin-bottom:0;">
+            <%= bus.duration %>
+          </p>
+        </div>
+
+
+        <div style="
+          background:#f8f9ff;
+          padding:18px;
+          border-radius:12px;
+        ">
+          <strong>Available Seats</strong>
+          <p style="margin-bottom:0;">
+            <%= bus.seatsAvailable %> / <%= bus.totalSeats %>
+          </p>
+        </div>
+
+
+        <div style="
+          background:#f8f9ff;
+          padding:18px;
+          border-radius:12px;
+        ">
+          <strong>Ticket Price</strong>
+          <p style="
+            margin-bottom:0;
+            font-size:20px;
+            font-weight:bold;
+          ">
+            ₹<%= bus.price %>
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Boarding / Dropping -->
+      <div style="
+        margin-top:30px;
+        padding:20px;
+        border-radius:12px;
+        background:#f8f9ff;
+      ">
+
+        <h3>📍 Travel Points</h3>
+
+        <p>
+          <strong>Boarding Point:</strong>
+          <%= bus.boardingPoint %>
+        </p>
+
+        <p style="margin-bottom:0;">
+          <strong>Dropping Point:</strong>
+          <%= bus.droppingPoint %>
+        </p>
+
+      </div>
+
+
+      <!-- Booking -->
+      <div style="
+        margin-top:30px;
+        display:flex;
+        gap:15px;
+        flex-wrap:wrap;
+        align-items:center;
+      ">
+
+        <div>
+          <div style="color:#666;">
+            Ticket Price
+          </div>
+
+          <strong style="font-size:26px;">
+            ₹<%= bus.price %>
+          </strong>
+        </div>
+
+
+        <a
+          href="#"
+          style="
+            margin-left:auto;
+            padding:14px 28px;
+            background:#5d5bf6;
+            color:white;
+            border-radius:9px;
+            text-decoration:none;
+            font-weight:bold;
+          "
+        >
+          🎟️ Book Now
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Back -->
+  <div style="margin-top:20px;">
+
+    <a
+      href="/buses"
+      style="
+        text-decoration:none;
+        color:#5d5bf6;
+        font-weight:600;
+      "
+    >
+      ← Back to Buses
+    </a>
+
+  </div>
+
+</div>
