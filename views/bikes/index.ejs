@@ -42,7 +42,6 @@
         gap:15px;
       ">
 
-
         <!-- PICKUP CITY -->
 
         <div>
@@ -101,7 +100,9 @@
           </label>
 
           <select
+            id="bikeType"
             name="type"
+            onchange="filterBikes()"
             style="
               width:100%;
               padding:12px;
@@ -112,31 +113,19 @@
             "
           >
 
-            <option
-              value=""
-              <%= selectedType === "" ? "selected" : "" %>
-            >
+            <option value="">
               All Bikes
             </option>
 
-            <option
-              value="Scooter"
-              <%= selectedType === "Scooter" ? "selected" : "" %>
-            >
+            <option value="Scooter">
               Scooter
             </option>
 
-            <option
-              value="Bike"
-              <%= selectedType === "Bike" ? "selected" : "" %>
-            >
+            <option value="Bike">
               Bike
             </option>
 
-            <option
-              value="Sports"
-              <%= selectedType === "Sports" ? "selected" : "" %>
-            >
+            <option value="Sports">
               Sports Bike
             </option>
 
@@ -186,251 +175,302 @@
   </h2>
 
 
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-  ">
+  <div
+    id="bikeContainer"
+    style="
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+    "
+  >
 
 
-    <!-- ================================= -->
-    <!-- HONDA ACTIVA - SCOOTER -->
-    <!-- ================================= -->
+    <!-- HONDA ACTIVA -->
 
-    <% if (selectedType === "" || selectedType === "Scooter") { %>
-
-      <div style="
+    <div
+      class="bike-card"
+      data-type="Scooter"
+      style="
         border-radius:15px;
         background:white;
         overflow:hidden;
         box-shadow:0 4px 15px rgba(0,0,0,0.10);
-      ">
+      "
+    >
 
-        <img
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/Honda_Activa_6G.jpg"
-          alt="Honda Activa 6G"
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Honda_Activa_6G.jpg"
+        alt="Honda Activa 6G"
+        style="
+          width:100%;
+          height:220px;
+          object-fit:cover;
+          display:block;
+        "
+      >
+
+      <div style="padding:20px;">
+
+        <h3 style="margin-top:0;">
+          Honda Activa 6G
+        </h3>
+
+        <p>
+          🛵 Scooter
+        </p>
+
+        <p>
+          📍 Delhi
+        </p>
+
+        <strong style="font-size:20px;">
+          ₹499 / day
+        </strong>
+
+        <button
           style="
-            width:100%;
-            height:220px;
-            object-fit:cover;
             display:block;
+            width:100%;
+            margin-top:18px;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#111827;
+            color:white;
+            cursor:pointer;
           "
         >
-
-        <div style="
-          padding:20px;
-        ">
-
-          <h3 style="
-            margin-top:0;
-          ">
-            Honda Activa 6G
-          </h3>
-
-          <p>
-            🛵 Scooter
-          </p>
-
-          <p>
-            📍 Delhi
-          </p>
-
-          <strong style="
-            font-size:20px;
-          ">
-            ₹499 / day
-          </strong>
-
-          <button
-            style="
-              display:block;
-              width:100%;
-              margin-top:18px;
-              padding:12px;
-              border:none;
-              border-radius:8px;
-              background:#111827;
-              color:white;
-              cursor:pointer;
-            "
-          >
-            Book Now
-          </button>
-
-        </div>
+          Book Now
+        </button>
 
       </div>
 
-    <% } %>
+    </div>
 
 
-    <!-- ================================= -->
-    <!-- ROYAL ENFIELD - BIKE -->
-    <!-- ================================= -->
+    <!-- ROYAL ENFIELD -->
 
-    <% if (selectedType === "" || selectedType === "Bike") { %>
-
-      <div style="
+    <div
+      class="bike-card"
+      data-type="Bike"
+      style="
         border-radius:15px;
         background:white;
         overflow:hidden;
         box-shadow:0 4px 15px rgba(0,0,0,0.10);
-      ">
+      "
+    >
 
-        <img
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/Royal_Enfield_Classic_350.jpg"
-          alt="Royal Enfield Classic 350"
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Royal_Enfield_Classic_350.jpg"
+        alt="Royal Enfield Classic 350"
+        style="
+          width:100%;
+          height:220px;
+          object-fit:cover;
+          display:block;
+        "
+      >
+
+      <div style="padding:20px;">
+
+        <h3 style="margin-top:0;">
+          Royal Enfield Classic 350
+        </h3>
+
+        <p>
+          🏍️ Bike
+        </p>
+
+        <p>
+          📍 Jaipur
+        </p>
+
+        <strong style="font-size:20px;">
+          ₹999 / day
+        </strong>
+
+        <button
           style="
-            width:100%;
-            height:220px;
-            object-fit:cover;
             display:block;
+            width:100%;
+            margin-top:18px;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#111827;
+            color:white;
+            cursor:pointer;
           "
         >
-
-        <div style="
-          padding:20px;
-        ">
-
-          <h3 style="
-            margin-top:0;
-          ">
-            Royal Enfield Classic 350
-          </h3>
-
-          <p>
-            🏍️ Bike
-          </p>
-
-          <p>
-            📍 Jaipur
-          </p>
-
-          <strong style="
-            font-size:20px;
-          ">
-            ₹999 / day
-          </strong>
-
-          <button
-            style="
-              display:block;
-              width:100%;
-              margin-top:18px;
-              padding:12px;
-              border:none;
-              border-radius:8px;
-              background:#111827;
-              color:white;
-              cursor:pointer;
-            "
-          >
-            Book Now
-          </button>
-
-        </div>
+          Book Now
+        </button>
 
       </div>
 
-    <% } %>
+    </div>
 
 
-    <!-- ================================= -->
-    <!-- KTM DUKE - SPORTS BIKE -->
-    <!-- ================================= -->
+    <!-- KTM DUKE -->
 
-    <% if (selectedType === "" || selectedType === "Sports") { %>
-
-      <div style="
+    <div
+      class="bike-card"
+      data-type="Sports"
+      style="
         border-radius:15px;
         background:white;
         overflow:hidden;
         box-shadow:0 4px 15px rgba(0,0,0,0.10);
-      ">
+      "
+    >
 
-        <img
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/Ktm_duke_390.jpg"
-          alt="KTM Duke 390"
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Ktm_duke_390.jpg"
+        alt="KTM Duke 390"
+        style="
+          width:100%;
+          height:220px;
+          object-fit:cover;
+          display:block;
+        "
+      >
+
+      <div style="padding:20px;">
+
+        <h3 style="margin-top:0;">
+          KTM Duke 390
+        </h3>
+
+        <p>
+          🏍️ Sports Bike
+        </p>
+
+        <p>
+          📍 Goa
+        </p>
+
+        <strong style="font-size:20px;">
+          ₹1,499 / day
+        </strong>
+
+        <button
           style="
-            width:100%;
-            height:220px;
-            object-fit:cover;
             display:block;
+            width:100%;
+            margin-top:18px;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#111827;
+            color:white;
+            cursor:pointer;
           "
         >
-
-        <div style="
-          padding:20px;
-        ">
-
-          <h3 style="
-            margin-top:0;
-          ">
-            KTM Duke 390
-          </h3>
-
-          <p>
-            🏍️ Sports Bike
-          </p>
-
-          <p>
-            📍 Goa
-          </p>
-
-          <strong style="
-            font-size:20px;
-          ">
-            ₹1,499 / day
-          </strong>
-
-          <button
-            style="
-              display:block;
-              width:100%;
-              margin-top:18px;
-              padding:12px;
-              border:none;
-              border-radius:8px;
-              background:#111827;
-              color:white;
-              cursor:pointer;
-            "
-          >
-            Book Now
-          </button>
-
-        </div>
+          Book Now
+        </button>
 
       </div>
 
-    <% } %>
+    </div>
 
 
   </div>
 
 
-  <!-- NO RESULT MESSAGE -->
+  <!-- NO RESULT -->
 
-  <% if (
-    selectedType !== "" &&
-    selectedType !== "Scooter" &&
-    selectedType !== "Bike" &&
-    selectedType !== "Sports"
-  ) { %>
-
-    <div style="
+  <div
+    id="noResult"
+    style="
+      display:none;
       text-align:center;
       padding:40px;
       margin-top:20px;
       background:white;
       border-radius:15px;
-    ">
-      <h3>
-        No bikes found
-      </h3>
-    </div>
+    "
+  >
 
-  <% } %>
+    <h3>
+      No bikes found
+    </h3>
 
+  </div>
 
 </div>
+
+
+<!-- =============================== -->
+<!-- BIKE FILTER JAVASCRIPT -->
+<!-- =============================== -->
+
+<script>
+
+  function filterBikes() {
+
+    const selectedType =
+      document.getElementById("bikeType").value;
+
+    const bikes =
+      document.querySelectorAll(".bike-card");
+
+    const noResult =
+      document.getElementById("noResult");
+
+    let visibleCount = 0;
+
+
+    bikes.forEach(function(bike) {
+
+      const bikeType =
+        bike.getAttribute("data-type");
+
+
+      // ALL BIKES
+
+      if (selectedType === "") {
+
+        bike.style.display = "block";
+
+        visibleCount++;
+
+      }
+
+
+      // SELECTED TYPE
+
+      else if (bikeType === selectedType) {
+
+        bike.style.display = "block";
+
+        visibleCount++;
+
+      }
+
+
+      // HIDE OTHER BIKES
+
+      else {
+
+        bike.style.display = "none";
+
+      }
+
+    });
+
+
+    // NO RESULT MESSAGE
+
+    if (visibleCount === 0) {
+
+      noResult.style.display = "block";
+
+    } else {
+
+      noResult.style.display = "none";
+
+    }
+
+  }
+
+</script>
