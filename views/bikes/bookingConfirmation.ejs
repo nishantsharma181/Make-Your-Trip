@@ -1,1 +1,438 @@
+<% layout("/layouts/boilerplate") %>
 
+<div style="
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+">
+
+  <div style="
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 5px 25px rgba(0,0,0,0.08);
+  ">
+
+    <!-- SUCCESS -->
+
+    <div style="
+      text-align:center;
+      margin-bottom:30px;
+    ">
+
+      <% if (booking.bookingStatus === "Cancelled") { %>
+
+        <div style="
+          font-size:55px;
+        ">
+          ❌
+        </div>
+
+        <h1>
+          Booking Cancelled
+        </h1>
+
+      <% } else { %>
+
+        <div style="
+          font-size:55px;
+        ">
+          ✅
+        </div>
+
+        <h1>
+          Booking Confirmed!
+        </h1>
+
+        <p style="color:#64748b;">
+          Your bike booking has been successfully created.
+        </p>
+
+      <% } %>
+
+    </div>
+
+
+    <!-- BOOKING ID -->
+
+    <div style="
+      background:#f8fafc;
+      padding:18px;
+      border-radius:10px;
+      text-align:center;
+      margin-bottom:25px;
+    ">
+
+      <span style="color:#64748b;">
+        Booking ID
+      </span>
+
+      <h2 style="
+        margin:8px 0 0;
+      ">
+        <%= booking.bookingId %>
+      </h2>
+
+    </div>
+
+
+    <!-- BIKE -->
+
+    <div style="
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:25px;
+      align-items:center;
+    ">
+
+
+      <% if (
+        booking.bike &&
+        booking.bike.image &&
+        booking.bike.image.url
+      ) { %>
+
+        <img
+          src="<%= booking.bike.image.url %>"
+          alt="<%= booking.bike.name %>"
+          style="
+            width:220px;
+            height:160px;
+            object-fit:cover;
+            border-radius:12px;
+          "
+        >
+
+      <% } else { %>
+
+        <div style="
+          width:220px;
+          height:160px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          background:#f1f5f9;
+          border-radius:12px;
+          font-size:60px;
+        ">
+          🏍️
+        </div>
+
+      <% } %>
+
+
+      <div>
+
+        <h2 style="
+          margin-top:0;
+        ">
+          <%= booking.bike.name %>
+        </h2>
+
+        <p>
+          🏍️ <%= booking.bike.type %>
+        </p>
+
+        <p>
+          📍 <%= booking.bike.location %>
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <hr style="
+      border:none;
+      border-top:1px solid #e2e8f0;
+      margin:30px 0;
+    ">
+
+
+    <!-- DATES -->
+
+    <h3>
+      Booking Details
+    </h3>
+
+
+    <div style="
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:15px;
+      margin-top:15px;
+    ">
+
+      <div style="
+        background:#f8fafc;
+        padding:18px;
+        border-radius:10px;
+      ">
+
+        <div style="color:#64748b;">
+          Pickup Date
+        </div>
+
+        <strong>
+          <%= new Date(booking.pickupDate).toLocaleDateString("en-IN") %>
+        </strong>
+
+      </div>
+
+
+      <div style="
+        background:#f8fafc;
+        padding:18px;
+        border-radius:10px;
+      ">
+
+        <div style="color:#64748b;">
+          Return Date
+        </div>
+
+        <strong>
+          <%= new Date(booking.returnDate).toLocaleDateString("en-IN") %>
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRICE -->
+
+    <div style="
+      margin-top:25px;
+      background:#f8fafc;
+      padding:20px;
+      border-radius:12px;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:12px;
+      ">
+        <span>
+          Price / Day
+        </span>
+
+        <strong>
+          ₹<%= booking.pricePerDay.toLocaleString("en-IN") %>
+        </strong>
+      </div>
+
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:12px;
+      ">
+        <span>
+          Number of Days
+        </span>
+
+        <strong>
+          <%= booking.numberOfDays %>
+        </strong>
+      </div>
+
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:12px;
+      ">
+        <span>
+          Rental Amount
+        </span>
+
+        <strong>
+          ₹<%= (
+            booking.pricePerDay * booking.numberOfDays
+          ).toLocaleString("en-IN") %>
+        </strong>
+      </div>
+
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:15px;
+      ">
+        <span>
+          Security Deposit
+        </span>
+
+        <strong>
+          ₹<%= booking.securityDeposit.toLocaleString("en-IN") %>
+        </strong>
+      </div>
+
+
+      <hr style="
+        border:none;
+        border-top:1px solid #cbd5e1;
+      ">
+
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-top:15px;
+        font-size:20px;
+      ">
+
+        <strong>
+          Total Amount
+        </strong>
+
+        <strong>
+          ₹<%= booking.totalAmount.toLocaleString("en-IN") %>
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+
+    <div style="
+      margin-top:20px;
+      padding:18px;
+      border-radius:10px;
+      background:#eff6ff;
+    ">
+
+      <strong>
+        Payment
+      </strong>
+
+      <p style="margin-bottom:0;">
+        Method:
+        <%= booking.payment.method %>
+        <br>
+
+        Status:
+        <%= booking.payment.status %>
+      </p>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div style="
+      display:flex;
+      gap:12px;
+      margin-top:30px;
+      flex-wrap:wrap;
+    ">
+
+      <a
+        href="/bikes"
+        style="
+          flex:1;
+          min-width:180px;
+          text-align:center;
+          padding:13px;
+          border-radius:9px;
+          background:#111827;
+          color:white;
+          text-decoration:none;
+          font-weight:600;
+        "
+      >
+        Browse More Bikes
+      </a>
+
+
+      <a
+        href="/bookings/bikes/my-bookings"
+        style="
+          flex:1;
+          min-width:180px;
+          text-align:center;
+          padding:13px;
+          border-radius:9px;
+          background:#2563eb;
+          color:white;
+          text-decoration:none;
+          font-weight:600;
+        "
+      >
+        My Bike Bookings
+      </a>
+
+    </div>
+
+
+    <!-- CANCEL -->
+
+    <% if (
+      booking.bookingStatus !== "Cancelled" &&
+      booking.bookingStatus !== "Completed"
+    ) { %>
+
+      <form
+        action="/bookings/bikes/<%= booking._id %>/cancel?_method=PUT"
+        method="POST"
+        style="margin-top:25px;"
+      >
+
+        <input
+          type="text"
+          name="reason"
+          placeholder="Cancellation reason (optional)"
+          style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            margin-bottom:10px;
+          "
+        >
+
+        <button
+          type="submit"
+          style="
+            width:100%;
+            padding:12px;
+            border:1px solid #dc2626;
+            border-radius:8px;
+            background:white;
+            color:#dc2626;
+            font-weight:600;
+            cursor:pointer;
+          "
+        >
+          Cancel Booking
+        </button>
+
+      </form>
+
+    <% } %>
+
+
+  </div>
+
+</div>
+
+
+<style>
+
+@media (max-width:700px) {
+
+  div[style*="grid-template-columns:220px 1fr"] {
+    grid-template-columns:1fr !important;
+  }
+
+  div[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns:1fr !important;
+  }
+
+}
+
+</style>
