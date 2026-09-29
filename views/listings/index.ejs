@@ -1,378 +1,218 @@
 <% layout("/layouts/boilerplate") %>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+  .filters {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 20px 0;
+    margin-bottom: 20px;
+  }
 
-<%
-  const activeCat = typeof selectedCategory !== "undefined" ? selectedCategory : "";
+  .filter {
+    min-width: 70px;
+    text-align: center;
+    color: #555;
+    text-decoration: none;
+  }
 
-  const filters = [
-    { label: "Trending",  icon: "fa-fire",            href: "/listings?category=trending",  key: "trending" },
-    { label: "Rooms",     icon: "fa-bed",             href: "/listings?category=rooms",      key: "rooms" },
-    { label: "Cities",    icon: "fa-mountain-city",   href: "/listings?category=cities",     key: "cities" },
-    { label: "Mountains", icon: "fa-mountain",        href: "/listings?category=mountains",  key: "mountains" },
-    { label: "Flights",   icon: "fa-plane",           href: "/flights",                      key: "" },
-    { label: "Swimming",  icon: "fa-person-swimming", href: "/listings?category=swimming",   key: "swimming" },
-    { label: "Camping",   icon: "fa-campground",      href: "/listings?category=camping",    key: "camping" },
-    { label: "Farms",     icon: "fa-plate-wheat",     href: "/listings?category=farms",      key: "farms" },
-    { label: "Arctic",    icon: "fa-snowflake",       href: "/listings?category=arctic",     key: "arctic" },
+  .filter i {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
 
-    /* BUS - corrected */
-    { label: "Bus",       icon: "fa-bus",             href: "/buses",                        key: "bus" },
+  .filter p {
+    margin: 0;
+    font-size: 14px;
+  }
 
-    { label: "Taxi",      icon: "fa-taxi",            href: "/listings?category=taxi",       key: "taxi" },
-    { label: "Bike",      icon: "fa-motorcycle",      href: "/listings?category=bike",       key: "bike" },
-    { label: "Train",     icon: "fa-train-tram",      href: "/listings?category=train",      key: "train" },
-  ];
+  .filter:hover {
+    color: #000;
+  }
 
-  const pricePeriod = {
-    bike: "/ day",
-    bus: "/ ticket",
-    train: "/ ticket",
-    taxi: "/ ride",
-  };
-%>
+  .tax-info {
+    display: none;
+  }
 
-<div class="homepage-container">
+  .tax-toggle {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+  }
 
-  <div class="filter-scroll-wrapper">
-    <div class="filter-track">
+  .card {
+    border: none !important;
+    margin-bottom: 2rem;
+  }
 
-      <% filters.forEach(f => { %>
+  .card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+  }
 
-        <a
-          href="<%= f.href %>"
-          class="filter-item <%= f.key && activeCat === f.key ? 'active' : '' %>"
-        >
+  .card-body {
+    padding: 0 !important;
+  }
 
-          <div class="filter-icon-box">
-            <i class="fa-solid <%= f.icon %>"></i>
-          </div>
+  .card-text {
+    font-size: 0.95rem;
+  }
 
-          <span><%= f.label %></span>
+  .listing-link {
+    text-decoration: none;
+    color: inherit;
+  }
 
-        </a>
+  .listing-link:hover {
+    color: inherit;
+  }
+</style>
 
-      <% }) %>
 
-    </div>
+<!-- Filters -->
+
+<div class="filters">
+
+  <a href="/listings?category=trending" class="filter">
+    <i class="fa-solid fa-fire"></i>
+    <p>Trending</p>
+  </a>
+
+  <a href="/listings?category=rooms" class="filter">
+    <i class="fa-solid fa-bed"></i>
+    <p>Rooms</p>
+  </a>
+
+  <a href="/listings?category=cities" class="filter">
+    <i class="fa-solid fa-mountain-city"></i>
+    <p>Cities</p>
+  </a>
+
+  <a href="/listings?category=mountains" class="filter">
+    <i class="fa-solid fa-mountain"></i>
+    <p>Mountains</p>
+  </a>
+
+  <!-- Flights -->
+
+  <a href="/flights" class="filter">
+    <i class="fa-solid fa-plane"></i>
+    <p>Flights</p>
+  </a>
+
+  <a href="/listings?category=swimming" class="filter">
+    <i class="fa-solid fa-person-swimming"></i>
+    <p>Swimming</p>
+  </a>
+
+  <a href="/listings?category=camping" class="filter">
+    <i class="fa-solid fa-campground"></i>
+    <p>Camping</p>
+  </a>
+
+  <a href="/listings?category=farms" class="filter">
+    <i class="fa-solid fa-plate-wheat"></i>
+    <p>Farms</p>
+  </a>
+
+  <a href="/listings?category=arctic" class="filter">
+    <i class="fa-solid fa-snowflake"></i>
+    <p>Arctic</p>
+  </a>
+
+  <!-- Bus -->
+
+  <a href="/buses" class="filter">
+    <i class="fa-solid fa-bus"></i>
+    <p>Bus</p>
+  </a>
+
+  <!-- Taxi -->
+
+  <a href="/listings?category=taxi" class="filter">
+    <i class="fa-solid fa-taxi"></i>
+    <p>Taxi</p>
+  </a>
+
+  <!-- Bike -->
+
+  <a href="/bikes" class="filter">
+    <i class="fa-solid fa-motorcycle"></i>
+    <p>Bike</p>
+  </a>
+
+  <!-- Train -->
+
+  <a href="/listings?category=train" class="filter">
+    <i class="fa-solid fa-train-tram"></i>
+    <p>Train</p>
+  </a>
+
+</div>
+
+
+<!-- Tax Toggle -->
+
+<div class="tax-toggle">
+  <div class="form-check-reverse form-switch">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      id="flexSwitchCheckDefault"
+    >
+
+    <label
+      class="form-check-label"
+      for="flexSwitchCheckDefault"
+    >
+      Display total after taxes
+    </label>
   </div>
+</div>
 
 
-  <!-- FLIGHT SEARCH -->
+<!-- Listings -->
 
-  <form action="/flights/search" method="GET" class="flight-search-container">
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
 
-    <div class="search-inputs-grid">
+  <% for (let listing of allListings) { %>
 
-      <div class="input-card">
-
-        <span class="card-floating-label">
-          From
-          <i class="fa-solid fa-plane-departure" style="color: #5d5bf6;"></i>
-        </span>
-
-        <input
-          type="text"
-          name="source"
-          class="card-main-input"
-          placeholder="e.g. Delhi"
-          required
-        >
-
-        <span class="card-sub-label">
-          Departure Airport
-        </span>
-
-      </div>
-
-
-      <div class="input-card">
-
-        <span class="card-floating-label">
-          To
-          <i class="fa-solid fa-plane-arrival" style="color: #5d5bf6;"></i>
-        </span>
-
-        <input
-          type="text"
-          name="destination"
-          class="card-main-input"
-          placeholder="e.g. Mumbai"
-          required
-        >
-
-        <span class="card-sub-label">
-          Arrival Airport
-        </span>
-
-      </div>
-
-
-      <!-- Departure Field -->
-
-      <div class="input-card">
-
-        <span class="card-floating-label">
-          Departure
-        </span>
-
-        <input
-          type="text"
-          name="departureDate"
-          class="card-main-input"
-          placeholder="Select Date"
-          onfocus="(this.type='date')"
-          onblur="if(!this.value) this.type='text'"
-        >
-
-        <span class="card-sub-label">
-          Travel Day
-        </span>
-
-      </div>
-
-
-      <!-- Travellers & Class -->
-
-      <div class="input-card">
-
-        <span class="card-floating-label">
-          Traveler(s) & Class
-        </span>
-
-        <select
-          name="travellers"
-          class="card-select-input"
-        >
-
-          <option value="1">
-            1 Adult, Economy
-          </option>
-
-          <option value="2">
-            2 Adults, Economy
-          </option>
-
-          <option value="3">
-            3 Adults, Economy
-          </option>
-
-          <option value="4">
-            4+ Adults, Economy
-          </option>
-
-        </select>
-
-        <span class="card-sub-label">
-          Cabin selection
-        </span>
-
-      </div>
-
-
-      <button
-        type="submit"
-        class="btn-main-search"
-      >
-        SEARCH
-      </button>
-
-    </div>
-
-
-    <!-- SPECIAL FARES -->
-
-    <div class="fare-options-bar">
-
-      <div class="special-fares-header">
-
-        <span class="benefits-badge">
-          More Benefits
-        </span>
-
-        <strong class="special-fares-title">
-          Special Fares
-        </strong>
-
-      </div>
-
-
-      <div class="fare-card-group">
-
-        <label class="fare-select-box">
-
-          <input
-            type="radio"
-            name="fareType"
-            value="regular"
-            checked
-          >
-
-          <div class="fare-select-content">
-
-            <span class="custom-checkbox"></span>
-
-            <span class="fare-avatar">
-              👨‍💼
-            </span>
-
-            <div class="fare-details">
-
-              <span class="fare-name">
-                Regular
-              </span>
-
-              <span class="fare-desc">
-                Lowest Fares
-              </span>
-
-            </div>
-
-          </div>
-
-        </label>
-
-
-        <label class="fare-select-box">
-
-          <input
-            type="radio"
-            name="fareType"
-            value="student"
-          >
-
-          <div class="fare-select-content">
-
-            <span class="custom-checkbox"></span>
-
-            <span class="fare-avatar">
-              🎓
-            </span>
-
-            <div class="fare-details">
-
-              <span class="fare-name">
-                Student
-              </span>
-
-              <span class="fare-desc">
-                Extra Baggage
-              </span>
-
-            </div>
-
-          </div>
-
-        </label>
-
-
-        <label class="fare-select-box">
-
-          <input
-            type="radio"
-            name="fareType"
-            value="senior"
-          >
-
-          <div class="fare-select-content">
-
-            <span class="custom-checkbox"></span>
-
-            <span class="fare-avatar">
-              👴
-            </span>
-
-            <div class="fare-details">
-
-              <span class="fare-name">
-                Senior Citizen
-              </span>
-
-              <span class="fare-desc">
-                Exclusive Discount
-              </span>
-
-            </div>
-
-          </div>
-
-        </label>
-
-      </div>
-
-    </div>
-
-  </form>
-
-
-  <!-- LISTINGS -->
-
-  <div class="listings-grid">
-
-    <% for(let listing of allListings) { %>
+    <div class="col">
 
       <a
         href="/listings/<%= listing._id %>"
-        class="listing-item-anchor"
+        class="listing-link"
       >
 
-        <div class="listing-card">
+        <div class="card">
 
+          <img
+            src="<%= listing.image.url %>"
+            class="card-img-top"
+            alt="listing_image"
+            style="height: 20rem;"
+          >
 
-          <div class="listing-media-wrap">
+          <div class="card-body">
 
-            <img
-              src="<%= listing.image && listing.image.url ? listing.image.url : '' %>"
-              class="listing-thumbnail"
-              alt="<%= listing.title %>"
-              loading="lazy"
-            />
+            <p class="card-text">
 
-            <button
-              class="listing-like-btn"
-              type="button"
-              aria-label="Favorite"
-            >
+              <b>
+                <%= listing.title %>
+              </b>
 
-              <i class="fa-solid fa-heart"></i>
+              <br>
 
-            </button>
+              ₹ <%= listing.price.toLocaleString("en-IN") %> / night
 
-          </div>
-
-
-          <!-- Card Body -->
-
-          <div class="listing-meta-wrap">
-
-            <h5 class="listing-name">
-              <%= listing.title %>
-            </h5>
-
-
-            <p class="listing-location">
-
-              <i class="fa-solid fa-location-dot"></i>
-
-              <span>
-                <%= listing.location %>,
-                <%= listing.country %>
+              <span class="tax-info">
+                + 18% GST
               </span>
 
             </p>
-
-
-            <div class="listing-rate-row">
-
-              <span class="listing-rate-amount">
-                ₹<%= Number(listing.price).toLocaleString("en-IN") %>
-              </span>
-
-              <span class="listing-rate-period">
-                <%= pricePeriod[listing.category] || "/ night" %>
-              </span>
-
-            </div>
 
           </div>
 
@@ -380,35 +220,120 @@
 
       </a>
 
-    <% } %>
-
-  </div>
-
-
-  <!-- EMPTY CATEGORY -->
-
-  <% if (allListings.length === 0) { %>
-
-    <p
-      style="text-align:center; margin:2rem 0; color:#6b7280;"
-    >
-      Is category mein abhi koi listing nahi hai.
-    </p>
+    </div>
 
   <% } %>
 
+</div>
 
-  <!-- CUSTOMER SUPPORT -->
 
-  <a
-    href="mailto:gnagwarakash555@gmail.com"
-    class="support-floating-btn"
-    id="helpButton"
-    aria-label="Customer Support"
-  >
+<!-- Search / Flight Section -->
 
-    <i class="fa-solid fa-headset"></i>
+<div class="container mt-5 mb-5">
 
-  </a>
+  <div class="row">
+
+    <div class="col-md-8 mx-auto">
+
+      <form
+        action="/flights/search"
+        method="GET"
+        class="p-4 border rounded shadow-sm"
+      >
+
+        <h4 class="mb-4 text-center">
+          Search Flights
+        </h4>
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+              From
+            </label>
+
+            <input
+              type="text"
+              name="source"
+              class="form-control"
+              placeholder="Delhi"
+              required
+            >
+
+          </div>
+
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+              To
+            </label>
+
+            <input
+              type="text"
+              name="destination"
+              class="form-control"
+              placeholder="Mumbai"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn btn-dark w-100 mt-3"
+        >
+          Search Flights
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
 
 </div>
+
+
+<!-- Price Tax Script -->
+
+<script>
+
+  let taxSwitch = document.getElementById(
+    "flexSwitchCheckDefault"
+  );
+
+  taxSwitch.addEventListener(
+    "click",
+    () => {
+
+      let taxInfo = document.getElementsByClassName(
+        "tax-info"
+      );
+
+      for (
+        let info of taxInfo
+      ) {
+
+        if (
+          info.style.display != "inline"
+        ) {
+
+          info.style.display = "inline";
+
+        } else {
+
+          info.style.display = "none";
+
+        }
+
+      }
+
+    }
+  );
+
+</script>
