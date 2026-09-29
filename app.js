@@ -30,6 +30,7 @@ const flightRouter = require("./routes/flights.js");
 const cabRoutes = require("./routes/cabs.js");
 const cabBookingRoutes = require("./routes/cabBooking.js");
 const busRouter = require("./routes/buses.js");
+const busBookingRoutes = require("./routes/busBooking.js");
 const bikeRouter = require("./routes/bikes.js");
 const bikeBookingRoutes = require("./routes/bikeBooking.js");
 
@@ -343,10 +344,15 @@ app.get("/seed", async (req, res) => {
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 app.use("/", userRouter);
+
 app.use("/flights", flightRouter);
+
 app.use("/cabs", cabRoutes);
 app.use("/bookings/cabs", cabBookingRoutes);
+
 app.use("/buses", busRouter);
+app.use("/bookings/buses", busBookingRoutes);
+
 app.use("/bikes", bikeRouter);
 app.use("/bookings/bikes", bikeBookingRoutes);
 
