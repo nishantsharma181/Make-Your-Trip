@@ -1,34 +1,80 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
+
+  /* =========================
+     CATEGORY FILTERS
+  ========================= */
+
   .filters {
     display: flex;
-    gap: 30px;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
     overflow-x: auto;
-    padding: 20px 0;
-    margin-bottom: 20px;
+    padding: 20px 8px;
+    margin-bottom: 30px;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
   }
 
   .filter {
-    min-width: 70px;
+    min-width: 76px;
     text-align: center;
     color: #555;
     text-decoration: none;
+    flex-shrink: 0;
   }
 
-  .filter i {
+  .filter-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 10px;
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+
+    transition: all 0.2s ease;
+  }
+
+  .filter-icon i {
     font-size: 22px;
-    margin-bottom: 8px;
+    color: #635bff;
   }
 
   .filter p {
     margin: 0;
     font-size: 14px;
+    color: #444;
   }
 
   .filter:hover {
-    color: #000;
+    color: #635bff;
   }
+
+  .filter:hover .filter-icon {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  }
+
+  .filter:hover p {
+    color: #635bff;
+  }
+
+
+  /* =========================
+     TAX
+  ========================= */
 
   .tax-info {
     display: none;
@@ -41,7 +87,11 @@
     margin-bottom: 20px;
   }
 
-  /* CARD FIX */
+
+  /* =========================
+     LISTING CARDS
+  ========================= */
+
   .listing-col {
     align-self: flex-start !important;
   }
@@ -80,92 +130,361 @@
   .listing-link:hover {
     color: inherit;
   }
+
+
+  /* =========================
+     FLIGHT SEARCH
+  ========================= */
+
+  .flight-search-section {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+  }
+
+  .flight-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .flight-subtitle {
+    color: #6b7280;
+    margin-bottom: 25px;
+  }
+
+  .flight-label {
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+
+  .flight-input {
+    height: 58px;
+    border-radius: 12px !important;
+    border: 1px solid #ddd !important;
+  }
+
+  .flight-search-button {
+    height: 58px;
+    border-radius: 12px;
+    background: #635bff;
+    color: white;
+    border: none;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  .flight-search-button:hover {
+    background: #5149e8;
+    color: white;
+  }
+
+
+  /* =========================
+     MOBILE
+  ========================= */
+
+  @media (max-width: 768px) {
+
+    .filters {
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .filter {
+      min-width: 70px;
+    }
+
+    .filter-icon {
+      width: 52px;
+      height: 52px;
+    }
+
+    .flight-search-section {
+      padding: 20px;
+    }
+
+  }
+
 </style>
 
 
-<!-- Filters -->
+<!-- =========================================
+     CATEGORY FILTERS
+========================================= -->
 
 <div class="filters">
 
-  <a href="/listings?category=trending" class="filter">
-    <i class="fa-solid fa-fire"></i>
-    <p>Trending</p>
+
+  <!-- TRENDING -->
+
+  <a
+    href="/listings?category=trending"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-fire"></i>
+
+    </div>
+
+    <p>
+      Trending
+    </p>
+
   </a>
 
-  <a href="/listings?category=rooms" class="filter">
-    <i class="fa-solid fa-bed"></i>
-    <p>Rooms</p>
+
+  <!-- ROOMS -->
+
+  <a
+    href="/listings?category=rooms"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-bed"></i>
+
+    </div>
+
+    <p>
+      Rooms
+    </p>
+
   </a>
 
-  <a href="/listings?category=cities" class="filter">
-    <i class="fa-solid fa-mountain-city"></i>
-    <p>Cities</p>
+
+  <!-- FLIGHTS -->
+
+  <a
+    href="/flights"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-plane"></i>
+
+    </div>
+
+    <p>
+      Flights
+    </p>
+
   </a>
 
-  <a href="/listings?category=mountains" class="filter">
-    <i class="fa-solid fa-mountain"></i>
-    <p>Mountains</p>
+
+  <!-- BUS -->
+
+  <a
+    href="/buses"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-bus"></i>
+
+    </div>
+
+    <p>
+      Bus
+    </p>
+
   </a>
 
-  <!-- Flights -->
 
-  <a href="/flights" class="filter">
-    <i class="fa-solid fa-plane"></i>
-    <p>Flights</p>
+  <!-- TAXI -->
+
+  <a
+    href="/listings?category=taxi"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-taxi"></i>
+
+    </div>
+
+    <p>
+      Taxi
+    </p>
+
   </a>
 
-  <a href="/listings?category=swimming" class="filter">
-    <i class="fa-solid fa-person-swimming"></i>
-    <p>Swimming</p>
+
+  <!-- BIKE -->
+
+  <a
+    href="/bikes"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-motorcycle"></i>
+
+    </div>
+
+    <p>
+      Bike
+    </p>
+
   </a>
 
-  <a href="/listings?category=camping" class="filter">
-    <i class="fa-solid fa-campground"></i>
-    <p>Camping</p>
+
+  <!-- TRAIN -->
+
+  <a
+    href="/listings?category=train"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-train-tram"></i>
+
+    </div>
+
+    <p>
+      Train
+    </p>
+
   </a>
 
-  <a href="/listings?category=farms" class="filter">
-    <i class="fa-solid fa-plate-wheat"></i>
-    <p>Farms</p>
+
+  <!-- CITIES -->
+
+  <a
+    href="/listings?category=cities"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-mountain-city"></i>
+
+    </div>
+
+    <p>
+      Cities
+    </p>
+
   </a>
 
-  <a href="/listings?category=arctic" class="filter">
-    <i class="fa-solid fa-snowflake"></i>
-    <p>Arctic</p>
+
+  <!-- MOUNTAINS -->
+
+  <a
+    href="/listings?category=mountains"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-mountain"></i>
+
+    </div>
+
+    <p>
+      Mountains
+    </p>
+
   </a>
 
-  <!-- Bus -->
 
-  <a href="/buses" class="filter">
-    <i class="fa-solid fa-bus"></i>
-    <p>Bus</p>
+  <!-- SWIMMING -->
+
+  <a
+    href="/listings?category=swimming"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-person-swimming"></i>
+
+    </div>
+
+    <p>
+      Swimming
+    </p>
+
   </a>
 
-  <!-- Taxi -->
 
-  <a href="/listings?category=taxi" class="filter">
-    <i class="fa-solid fa-taxi"></i>
-    <p>Taxi</p>
+  <!-- CAMPING -->
+
+  <a
+    href="/listings?category=camping"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-campground"></i>
+
+    </div>
+
+    <p>
+      Camping
+    </p>
+
   </a>
 
-  <!-- Bike -->
 
-  <a href="/bikes" class="filter">
-    <i class="fa-solid fa-motorcycle"></i>
-    <p>Bike</p>
+  <!-- FARMS -->
+
+  <a
+    href="/listings?category=farms"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-plate-wheat"></i>
+
+    </div>
+
+    <p>
+      Farms
+    </p>
+
   </a>
 
-  <!-- Train -->
 
-  <a href="/listings?category=train" class="filter">
-    <i class="fa-solid fa-train-tram"></i>
-    <p>Train</p>
+  <!-- ARCTIC -->
+
+  <a
+    href="/listings?category=arctic"
+    class="filter"
+  >
+
+    <div class="filter-icon">
+
+      <i class="fa-solid fa-snowflake"></i>
+
+    </div>
+
+    <p>
+      Arctic
+    </p>
+
   </a>
+
 
 </div>
 
 
-<!-- Tax Toggle -->
+
+<!-- =========================================
+     TAX TOGGLE
+========================================= -->
 
 <div class="tax-toggle">
 
@@ -190,20 +509,31 @@
 </div>
 
 
-<!-- Listings -->
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
+<!-- =========================================
+     LISTINGS
+========================================= -->
+
+<div
+  class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3"
+>
 
   <% for (let listing of allListings) { %>
 
+
     <div class="col listing-col">
+
 
       <a
         href="/listings/<%= listing._id %>"
         class="listing-link"
       >
 
+
         <div class="card">
+
+
+          <!-- IMAGE -->
 
           <img
             src="<%= listing.image.url %>"
@@ -211,101 +541,222 @@
             alt="listing_image"
           >
 
+
+          <!-- DETAILS -->
+
           <div class="card-body">
 
+
             <p class="card-text">
+
 
               <b>
                 <%= listing.title %>
               </b>
 
+
               <br>
 
+
               ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+
 
               <span class="tax-info">
                 + 18% GST
               </span>
 
+
             </p>
+
 
           </div>
 
+
         </div>
+
 
       </a>
 
+
     </div>
 
+
   <% } %>
+
 
 </div>
 
 
-<!-- Search / Flight Section -->
+
+<!-- =========================================
+     FLIGHT SEARCH
+========================================= -->
 
 <div class="container mt-5 mb-5">
 
   <div class="row">
 
-    <div class="col-md-8 mx-auto">
-
-      <form
-        action="/flights/search"
-        method="GET"
-        class="p-4 border rounded shadow-sm"
-      >
-
-        <h4 class="mb-4 text-center">
-          Search Flights
-        </h4>
-
-        <div class="row g-3">
-
-          <div class="col-md-6">
-
-            <label class="form-label">
-              From
-            </label>
-
-            <input
-              type="text"
-              name="source"
-              class="form-control"
-              placeholder="Delhi"
-              required
-            >
-
-          </div>
+    <div class="col-md-10 mx-auto">
 
 
-          <div class="col-md-6">
-
-            <label class="form-label">
-              To
-            </label>
-
-            <input
-              type="text"
-              name="destination"
-              class="form-control"
-              placeholder="Mumbai"
-              required
-            >
-
-          </div>
-
-        </div>
+      <div class="flight-search-section">
 
 
-        <button
-          type="submit"
-          class="btn btn-dark w-100 mt-3"
+        <!-- TITLE -->
+
+        <h3 class="flight-title">
+
+          ✈️ Find your next flight
+
+        </h3>
+
+
+        <p class="flight-subtitle">
+
+          Compare routes and book your journey in a few steps.
+
+        </p>
+
+
+        <form
+          action="/flights/search"
+          method="GET"
         >
-          Search Flights
-        </button>
 
-      </form>
+
+          <div class="row g-3">
+
+
+            <!-- FROM -->
+
+            <div class="col-md-6">
+
+              <label class="form-label flight-label">
+
+                From
+
+              </label>
+
+
+              <input
+                type="text"
+                name="source"
+                class="form-control flight-input"
+                placeholder="e.g. Delhi"
+                required
+              >
+
+            </div>
+
+
+            <!-- TO -->
+
+            <div class="col-md-6">
+
+              <label class="form-label flight-label">
+
+                To
+
+              </label>
+
+
+              <input
+                type="text"
+                name="destination"
+                class="form-control flight-input"
+                placeholder="e.g. Mumbai"
+                required
+              >
+
+            </div>
+
+
+            <!-- DEPARTURE -->
+
+            <div class="col-md-6">
+
+              <label class="form-label flight-label">
+
+                Departure
+
+              </label>
+
+
+              <input
+                type="date"
+                name="date"
+                class="form-control flight-input"
+              >
+
+            </div>
+
+
+            <!-- TRAVELER -->
+
+            <div class="col-md-6">
+
+              <label class="form-label flight-label">
+
+                Traveler(s) & Class
+
+              </label>
+
+
+              <select
+                name="class"
+                class="form-select flight-input"
+              >
+
+                <option value="Economy">
+
+                  1 Adult, Economy
+
+                </option>
+
+
+                <option value="Premium Economy">
+
+                  1 Adult, Premium Economy
+
+                </option>
+
+
+                <option value="Business">
+
+                  1 Adult, Business
+
+                </option>
+
+
+              </select>
+
+            </div>
+
+
+            <!-- SEARCH BUTTON -->
+
+            <div class="col-12">
+
+              <button
+                type="submit"
+                class="flight-search-button"
+              >
+
+                SEARCH FLIGHTS
+
+              </button>
+
+            </div>
+
+
+          </div>
+
+
+        </form>
+
+
+      </div>
+
 
     </div>
 
@@ -314,41 +765,50 @@
 </div>
 
 
-<!-- Price Tax Script -->
+
+<!-- =========================================
+     PRICE TAX SCRIPT
+========================================= -->
 
 <script>
 
-  let taxSwitch = document.getElementById(
-    "flexSwitchCheckDefault"
-  );
+  const taxSwitch =
+    document.getElementById(
+      "flexSwitchCheckDefault"
+    );
 
-  taxSwitch.addEventListener(
-    "click",
-    () => {
 
-      let taxInfo = document.getElementsByClassName(
-        "tax-info"
-      );
+  if (taxSwitch) {
 
-      for (
-        let info of taxInfo
-      ) {
+    taxSwitch.addEventListener(
+      "click",
+      () => {
 
-        if (
-          info.style.display != "inline"
-        ) {
+        const taxInfo =
+          document.getElementsByClassName(
+            "tax-info"
+          );
 
-          info.style.display = "inline";
 
-        } else {
+        for (const info of taxInfo) {
 
-          info.style.display = "none";
+          if (
+            info.style.display !== "inline"
+          ) {
+
+            info.style.display = "inline";
+
+          } else {
+
+            info.style.display = "none";
+
+          }
 
         }
 
       }
+    );
 
-    }
-  );
+  }
 
 </script>
