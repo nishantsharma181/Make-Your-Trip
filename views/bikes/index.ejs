@@ -1,0 +1,192 @@
+<% layout("/layouts/boilerplate") %>
+
+<div style="max-width:1200px; margin:40px auto; padding:20px;">
+
+  <h1 style="text-align:center; margin-bottom:10px;">
+    🏍️ Bike Rental & Booking
+  </h1>
+
+  <p style="text-align:center; color:#666; margin-bottom:35px;">
+    Rent a bike and explore your destination
+  </p>
+
+  <div style="
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:30px;
+  ">
+
+    <form action="/bikes/search" method="GET">
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+        gap:15px;
+      ">
+
+        <div>
+          <label>Pickup City</label>
+          <input
+            type="text"
+            name="location"
+            placeholder="e.g. Delhi"
+            required
+            style="
+              width:100%;
+              padding:12px;
+              margin-top:7px;
+              border:1px solid #ddd;
+              border-radius:8px;
+            "
+          >
+        </div>
+
+        <div>
+          <label>Pickup Date</label>
+          <input
+            type="date"
+            name="date"
+            required
+            style="
+              width:100%;
+              padding:12px;
+              margin-top:7px;
+              border:1px solid #ddd;
+              border-radius:8px;
+            "
+          >
+        </div>
+
+        <div>
+          <label>Bike Type</label>
+          <select
+            name="type"
+            style="
+              width:100%;
+              padding:12px;
+              margin-top:7px;
+              border:1px solid #ddd;
+              border-radius:8px;
+            "
+          >
+            <option value="">All Bikes</option>
+            <option value="Scooter">Scooter</option>
+            <option value="Bike">Bike</option>
+            <option value="Sports">Sports Bike</option>
+          </select>
+        </div>
+
+        <div style="display:flex;align-items:end;">
+          <button
+            type="submit"
+            style="
+              width:100%;
+              padding:13px;
+              border:none;
+              border-radius:8px;
+              background:#5d5bf6;
+              color:white;
+              font-weight:bold;
+              cursor:pointer;
+            "
+          >
+            SEARCH BIKES
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <h2 style="margin-bottom:20px;">
+    Available Bikes
+  </h2>
+
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+  ">
+
+    <div style="
+      padding:20px;
+      border-radius:12px;
+      background:white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    ">
+      <h3>Honda Activa 6G</h3>
+      <p>🛵 Scooter</p>
+      <p>📍 Delhi</p>
+      <strong>₹499 / day</strong>
+
+      <button style="
+        display:block;
+        width:100%;
+        margin-top:15px;
+        padding:11px;
+        border:none;
+        border-radius:7px;
+        background:#111827;
+        color:white;
+      ">
+        Book Now
+      </button>
+    </div>
+
+    <div style="
+      padding:20px;
+      border-radius:12px;
+      background:white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    ">
+      <h3>Royal Enfield Classic 350</h3>
+      <p>🏍️ Bike</p>
+      <p>📍 Jaipur</p>
+      <strong>₹999 / day</strong>
+
+      <button style="
+        display:block;
+        width:100%;
+        margin-top:15px;
+        padding:11px;
+        border:none;
+        border-radius:7px;
+        background:#111827;
+        color:white;
+      ">
+        Book Now
+      </button>
+    </div>
+
+    <div style="
+      padding:20px;
+      border-radius:12px;
+      background:white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    ">
+      <h3>KTM Duke 390</h3>
+      <p>🏍️ Sports Bike</p>
+      <p>📍 Goa</p>
+      <strong>₹1,499 / day</strong>
+
+      <button style="
+        display:block;
+        width:100%;
+        margin-top:15px;
+        padding:11px;
+        border:none;
+        border-radius:7px;
+        background:#111827;
+        color:white;
+      ">
+        Book Now
+      </button>
+    </div>
+
+  </div>
+
+</div>
