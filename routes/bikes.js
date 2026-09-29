@@ -8,10 +8,18 @@ const Bike = require("../models/Bike");
 // BIKE HOME PAGE
 // ===============================
 
-router.get("/", (req, res) => {
-  res.render("bikes/index", {
-    selectedType: ""
-  });
+router.get("/", async (req, res, next) => {
+  try {
+    const bikes = await Bike.find({});
+
+    res.render("bikes/index", {
+      bikes,
+      selectedType: ""
+    });
+
+  } catch (err) {
+    next(err);
+  }
 });
 
 
@@ -19,12 +27,20 @@ router.get("/", (req, res) => {
 // BIKE SEARCH
 // ===============================
 
-router.get("/search", (req, res) => {
-  const selectedType = req.query.type || "";
+router.get("/search", async (req, res, next) => {
+  try {
+    const selectedType = req.query.type || "";
 
-  res.render("bikes/index", {
-    selectedType: selectedType
-  });
+    const bikes = await Bike.find({});
+
+    res.render("bikes/index", {
+      bikes,
+      selectedType
+    });
+
+  } catch (err) {
+    next(err);
+  }
 });
 
 
