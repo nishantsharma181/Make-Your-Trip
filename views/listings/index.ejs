@@ -2,12 +2,12 @@
 
 <style>
 
-/* =====================================================
-   MAIN PAGE
-===================================================== */
+/* =========================================================
+   PAGE
+========================================================= */
 
 body {
-  background: #f7f6ff;
+  background: #f7f5ff;
 }
 
 .main-home-container {
@@ -17,9 +17,9 @@ body {
 }
 
 
-/* =====================================================
-   CATEGORY FILTERS
-===================================================== */
+/* =========================================================
+   CATEGORY BAR
+========================================================= */
 
 .filters {
   display: flex;
@@ -30,7 +30,7 @@ body {
 
   overflow-x: auto;
 
-  padding: 20px 5px 30px;
+  padding: 22px 5px 32px;
 
   scrollbar-width: none;
 }
@@ -52,26 +52,26 @@ body {
 }
 
 .filter-icon {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
 
-  margin: 0 auto 10px;
+  margin: 0 auto 9px;
 
   background: #ffffff;
 
-  border-radius: 16px;
+  border-radius: 15px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
 
   transition: all 0.2s ease;
 }
 
 .filter-icon i {
-  font-size: 23px;
+  font-size: 22px;
 
   color: #635bff;
 }
@@ -91,9 +91,9 @@ body {
 }
 
 .filter:hover .filter-icon {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 
-  box-shadow: 0 8px 20px rgba(99, 91, 255, 0.18);
+  box-shadow: 0 7px 18px rgba(99, 91, 255, 0.15);
 }
 
 .filter:hover p {
@@ -101,74 +101,244 @@ body {
 }
 
 
-/* =====================================================
-   FLIGHT SEARCH SECTION
-===================================================== */
+/* =========================================================
+   FLIGHT SEARCH CARD
+========================================================= */
 
 .flight-search-section {
   background: #ffffff;
 
-  border-radius: 24px;
+  border: 1px solid #e7e4f0;
 
-  padding: 32px;
+  border-radius: 22px;
 
-  margin-top: 10px;
+  padding: 25px 30px 24px;
 
-  border: 1px solid #e8e6f5;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.055);
+}
 
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+
+/* =========================================================
+   FLIGHT HEADER
+========================================================= */
+
+.flight-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.flight-header-left {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+}
+
+.flight-main-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  background: #f0edff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.flight-main-icon i {
+  color: #635bff;
+
+  font-size: 22px;
 }
 
 .flight-title {
-  font-size: 28px;
+  margin: 0;
+
+  font-size: 22px;
 
   font-weight: 700;
-
-  margin: 0 0 6px;
 
   color: #222;
 }
 
 .flight-subtitle {
+  margin: 2px 0 0;
+
   color: #777;
 
-  margin-bottom: 28px;
-
-  font-size: 15px;
+  font-size: 14px;
 }
 
-.flight-label {
-  font-size: 14px;
+
+/* =========================================================
+   EASY BOOKING
+========================================================= */
+
+.easy-booking {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 8px 14px;
+
+  background: #effbf3;
+
+  color: #29934b;
+
+  border-radius: 20px;
+
+  font-size: 13px;
 
   font-weight: 600;
 
-  margin-bottom: 8px;
+  white-space: nowrap;
+}
 
-  color: #333;
+.easy-booking i {
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   FLIGHT FORM
+========================================================= */
+
+.flight-form-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1fr
+    1fr
+    140px;
+
+  gap: 12px;
+
+  align-items: end;
+}
+
+.flight-field {
+  min-width: 0;
+}
+
+.flight-label {
+  display: block;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #555;
+
+  margin: 0 0 6px 4px;
+}
+
+.flight-input-wrapper {
+  position: relative;
 }
 
 .flight-input {
-  height: 56px;
+  width: 100%;
 
-  border-radius: 12px !important;
+  height: 78px;
 
-  border: 1px solid #ddd !important;
+  border: 1px solid #e2e0e8;
 
-  box-shadow: none !important;
+  border-radius: 12px;
 
-  font-size: 15px;
+  background: #fff;
+
+  padding: 25px 14px 8px;
+
+  font-size: 16px;
+
+  color: #222;
+
+  outline: none;
+
+  transition: all 0.2s ease;
 }
 
 .flight-input:focus {
-  border-color: #635bff !important;
+  border-color: #635bff;
 
-  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.08) !important;
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.08);
 }
 
-.flight-search-button {
-  height: 56px;
+.flight-input::placeholder {
+  color: #222;
 
+  opacity: 1;
+}
+
+.flight-small-text {
+  position: absolute;
+
+  left: 14px;
+
+  bottom: 8px;
+
+  color: #a0a0ad;
+
+  font-size: 12px;
+
+  pointer-events: none;
+}
+
+.flight-input[type="date"] {
+  padding-top: 24px;
+}
+
+.flight-select {
   width: 100%;
+
+  height: 78px;
+
+  border: 1px solid #e2e0e8;
+
+  border-radius: 12px;
+
+  background: #fff;
+
+  padding: 0 36px 0 14px;
+
+  font-size: 16px;
+
+  color: #222;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.flight-select:focus {
+  border-color: #635bff;
+
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.08);
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+========================================================= */
+
+.flight-search-button {
+  width: 100%;
+
+  height: 78px;
 
   border: none;
 
@@ -176,11 +346,13 @@ body {
 
   background: #635bff;
 
-  color: #ffffff;
+  color: #fff;
+
+  font-size: 16px;
 
   font-weight: 700;
 
-  font-size: 15px;
+  cursor: pointer;
 
   transition: all 0.2s ease;
 }
@@ -188,102 +360,248 @@ body {
 .flight-search-button:hover {
   background: #5149e8;
 
-  color: #ffffff;
-
   transform: translateY(-1px);
 }
 
 
-/* =====================================================
+/* =========================================================
    SPECIAL FARES
-===================================================== */
+========================================================= */
 
 .special-fares {
-  margin-top: 22px;
+  display: flex;
 
-  padding-top: 22px;
+  align-items: center;
+
+  gap: 18px;
 
   border-top: 1px solid #eeeeee;
+
+  margin-top: 18px;
+
+  padding-top: 16px;
+}
+
+.special-fares-label {
+  min-width: 105px;
+}
+
+.more-benefits {
+  display: inline-block;
+
+  background: #635bff;
+
+  color: #fff;
+
+  border-radius: 12px;
+
+  padding: 3px 10px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  margin-bottom: 5px;
 }
 
 .special-fares-title {
-  font-size: 14px;
+  margin: 0;
+
+  font-size: 15px;
 
   font-weight: 600;
 
-  color: #333;
-
-  margin-bottom: 14px;
+  color: #222;
 }
 
 .fare-options {
   display: flex;
 
-  flex-wrap: wrap;
-
   gap: 12px;
+
+  flex-wrap: wrap;
 }
 
 .fare-option {
-  padding: 9px 16px;
+  min-width: 165px;
 
-  border-radius: 20px;
+  height: 58px;
 
-  background: #f3f2ff;
-
-  color: #635bff;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  border: 1px solid #e2dfff;
-}
-
-
-/* =====================================================
-   ROOMS & STAYS
-===================================================== */
-
-.rooms-heading {
   display: flex;
 
   align-items: center;
 
-  justify-content: space-between;
+  gap: 10px;
 
-  margin-top: 45px;
+  padding: 8px 13px;
 
-  margin-bottom: 22px;
+  border: 1px solid #e4e2eb;
+
+  border-radius: 11px;
+
+  background: #fff;
+
+  transition: all 0.2s ease;
 }
 
-.rooms-heading h2 {
-  margin: 0 0 5px;
+.fare-option:hover {
+  border-color: #635bff;
 
-  font-size: 26px;
+  background: #faf9ff;
+}
 
-  font-weight: 700;
+.fare-option.active {
+  border-color: #635bff;
+
+  background: #faf9ff;
+}
+
+.fare-check {
+  width: 18px;
+  height: 18px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 4px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.fare-option.active .fare-check {
+  background: #635bff;
+
+  border-color: #635bff;
+
+  color: #fff;
+}
+
+.fare-check i {
+  font-size: 10px;
+}
+
+.fare-icon {
+  font-size: 20px;
+
+  width: 25px;
+
+  text-align: center;
+}
+
+.fare-text strong {
+  display: block;
+
+  font-size: 14px;
 
   color: #222;
 }
 
-.rooms-heading p {
-  margin: 0;
+.fare-text span {
+  display: block;
 
-  color: #777;
+  font-size: 11px;
 
-  font-size: 14px;
+  color: #888;
+
+  margin-top: 2px;
 }
 
 
-/* =====================================================
-   LISTING CARDS
-===================================================== */
+/* =========================================================
+   ROOMS & STAYS HEADER
+========================================================= */
+
+.rooms-section-header {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  margin-top: 48px;
+
+  margin-bottom: 22px;
+}
+
+.rooms-label {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #635bff;
+
+  letter-spacing: 0.8px;
+
+  margin-bottom: 5px;
+}
+
+.rooms-title {
+  margin: 0;
+
+  font-size: 30px;
+
+  line-height: 1.1;
+
+  font-weight: 700;
+
+  color: #1f2850;
+}
+
+.rooms-subtitle {
+  margin: 6px 0 0;
+
+  font-size: 15px;
+
+  color: #777;
+}
+
+.view-more {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 18px;
+
+  border-radius: 25px;
+
+  background: #fff;
+
+  border: 1px solid #e5e2f0;
+
+  color: #635bff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+
+  transition: all 0.2s ease;
+}
+
+.view-more:hover {
+  color: #5149e8;
+
+  transform: translateX(2px);
+
+  box-shadow: 0 6px 16px rgba(99, 91, 255, 0.12);
+}
+
+
+/* =========================================================
+   ROOM CARDS
+========================================================= */
 
 .listing-col {
   align-self: flex-start !important;
-
-  margin-bottom: 30px;
 }
 
 .listing-link {
@@ -298,46 +616,80 @@ body {
   color: inherit;
 }
 
-.card {
-  border: none !important;
+.room-card {
+  border: none;
 
-  border-radius: 16px !important;
+  border-radius: 16px;
 
   overflow: hidden;
 
-  background: #ffffff;
+  background: #fff;
 
-  height: auto !important;
-
-  min-height: 0 !important;
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
   transition: all 0.2s ease;
 }
 
-.card:hover {
+.room-card:hover {
   transform: translateY(-4px);
 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.13);
 }
 
-.card-img-top {
-  width: 100% !important;
+.room-image-wrapper {
+  position: relative;
 
-  height: 230px !important;
+  overflow: hidden;
+}
 
-  object-fit: cover !important;
+.room-image {
+  width: 100%;
+
+  height: 235px;
+
+  object-fit: cover;
 
   display: block;
 
-  border-radius: 0 !important;
+  transition: transform 0.3s ease;
 }
 
-.card-body {
-  padding: 14px 4px 8px !important;
+.room-card:hover .room-image {
+  transform: scale(1.03);
+}
 
-  height: auto !important;
+.favorite-button {
+  position: absolute;
+
+  top: 12px;
+
+  right: 12px;
+
+  width: 38px;
+
+  height: 38px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #635bff;
+
+  font-size: 16px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.room-card-body {
+  padding: 14px 5px 8px;
 }
 
 .room-card-title {
@@ -353,7 +705,7 @@ body {
 .room-card-price {
   font-size: 15px;
 
-  font-weight: 500;
+  font-weight: 600;
 
   color: #222;
 }
@@ -365,14 +717,40 @@ body {
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   EMPTY STATE
+========================================================= */
 
-@media (max-width: 992px) {
+.empty-listings {
+  text-align: center;
 
-  .filters {
-    justify-content: flex-start;
+  padding: 50px 20px;
+
+  color: #777;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .flight-form-row {
+    grid-template-columns:
+      1fr
+      1fr
+      1fr;
+  }
+
+  .flight-search-button {
+    width: 100%;
+  }
+
+  .special-fares {
+    align-items: flex-start;
+
+    flex-direction: column;
   }
 
 }
@@ -381,13 +759,15 @@ body {
 @media (max-width: 768px) {
 
   .main-home-container {
-    padding: 0 15px 40px;
+    padding: 0 15px 45px;
   }
 
   .filters {
+    justify-content: flex-start;
+
     gap: 18px;
 
-    padding-bottom: 20px;
+    padding-bottom: 22px;
   }
 
   .filter {
@@ -395,9 +775,9 @@ body {
   }
 
   .filter-icon {
-    width: 54px;
+    width: 53px;
 
-    height: 54px;
+    height: 53px;
   }
 
   .filter-icon i {
@@ -405,25 +785,75 @@ body {
   }
 
   .flight-search-section {
-    padding: 22px 18px;
+    padding: 20px 16px;
 
     border-radius: 18px;
   }
 
+  .flight-header {
+    align-items: flex-start;
+  }
+
+  .flight-header-left {
+    align-items: flex-start;
+  }
+
   .flight-title {
-    font-size: 23px;
+    font-size: 20px;
   }
 
-  .rooms-heading {
-    margin-top: 30px;
+  .flight-subtitle {
+    font-size: 13px;
   }
 
-  .rooms-heading h2 {
-    font-size: 22px;
+  .easy-booking {
+    display: none;
   }
 
-  .card-img-top {
-    height: 220px !important;
+  .flight-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .flight-input,
+  .flight-select,
+  .flight-search-button {
+    height: 62px;
+  }
+
+  .special-fares {
+    gap: 12px;
+  }
+
+  .fare-options {
+    width: 100%;
+  }
+
+  .fare-option {
+    min-width: 100%;
+
+    width: 100%;
+  }
+
+  .rooms-section-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    margin-top: 35px;
+  }
+
+  .rooms-title {
+    font-size: 25px;
+  }
+
+  .view-more {
+    align-self: flex-end;
+  }
+
+  .room-image {
+    height: 220px;
   }
 
 }
@@ -431,16 +861,16 @@ body {
 </style>
 
 
-<!-- =====================================================
-     MAIN HOME CONTAINER
-===================================================== -->
+<!-- =========================================================
+     MAIN CONTAINER
+========================================================= -->
 
 <div class="main-home-container">
 
 
-  <!-- ===================================================
+  <!-- =======================================================
        CATEGORY FILTERS
-  =================================================== -->
+  ======================================================= -->
 
   <div class="filters">
 
@@ -453,14 +883,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-fire"></i>
-
       </div>
 
-      <p>
-        Trending
-      </p>
+      <p>Trending</p>
 
     </a>
 
@@ -473,14 +899,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-bed"></i>
-
       </div>
 
-      <p>
-        Rooms
-      </p>
+      <p>Rooms</p>
 
     </a>
 
@@ -493,14 +915,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-plane"></i>
-
       </div>
 
-      <p>
-        Flights
-      </p>
+      <p>Flights</p>
 
     </a>
 
@@ -513,14 +931,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-bus"></i>
-
       </div>
 
-      <p>
-        Bus
-      </p>
+      <p>Bus</p>
 
     </a>
 
@@ -533,14 +947,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-taxi"></i>
-
       </div>
 
-      <p>
-        Taxi
-      </p>
+      <p>Taxi</p>
 
     </a>
 
@@ -553,14 +963,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-motorcycle"></i>
-
       </div>
 
-      <p>
-        Bike
-      </p>
+      <p>Bike</p>
 
     </a>
 
@@ -573,14 +979,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-train-tram"></i>
-
       </div>
 
-      <p>
-        Train
-      </p>
+      <p>Train</p>
 
     </a>
 
@@ -593,14 +995,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-mountain-city"></i>
-
       </div>
 
-      <p>
-        Cities
-      </p>
+      <p>Cities</p>
 
     </a>
 
@@ -613,14 +1011,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-mountain"></i>
-
       </div>
 
-      <p>
-        Mountains
-      </p>
+      <p>Mountains</p>
 
     </a>
 
@@ -633,14 +1027,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-person-swimming"></i>
-
       </div>
 
-      <p>
-        Swimming
-      </p>
+      <p>Swimming</p>
 
     </a>
 
@@ -653,14 +1043,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-campground"></i>
-
       </div>
 
-      <p>
-        Camping
-      </p>
+      <p>Camping</p>
 
     </a>
 
@@ -673,14 +1059,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-plate-wheat"></i>
-
       </div>
 
-      <p>
-        Farms
-      </p>
+      <p>Farms</p>
 
     </a>
 
@@ -693,14 +1075,10 @@ body {
     >
 
       <div class="filter-icon">
-
         <i class="fa-solid fa-snowflake"></i>
-
       </div>
 
-      <p>
-        Arctic
-      </p>
+      <p>Arctic</p>
 
     </a>
 
@@ -708,25 +1086,54 @@ body {
   </div>
 
 
-  <!-- ===================================================
+  <!-- =======================================================
        FLIGHT SEARCH
-  =================================================== -->
+  ======================================================= -->
 
   <div class="flight-search-section">
 
 
-    <!-- TITLE -->
+    <!-- HEADER -->
 
-    <h3 class="flight-title">
-      ✈️ Find your next flight
-    </h3>
+    <div class="flight-header">
 
 
-    <!-- SUBTITLE -->
+      <div class="flight-header-left">
 
-    <p class="flight-subtitle">
-      Compare routes and book your journey in a few steps.
-    </p>
+
+        <div class="flight-main-icon">
+          <i class="fa-solid fa-plane-departure"></i>
+        </div>
+
+
+        <div>
+
+          <h2 class="flight-title">
+            Find your next flight
+          </h2>
+
+          <p class="flight-subtitle">
+            Compare routes and book your journey in a few steps.
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- EASY BOOKING -->
+
+      <div class="easy-booking">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Easy booking
+
+      </div>
+
+
+    </div>
 
 
     <!-- SEARCH FORM -->
@@ -737,98 +1144,108 @@ body {
     >
 
 
-      <div class="row g-3">
+      <div class="flight-form-row">
 
 
         <!-- FROM -->
 
-        <div class="col-md-6">
+        <div class="flight-field">
 
-          <label
-            class="form-label flight-label"
-          >
+          <label class="flight-label">
             From
           </label>
 
+          <div class="flight-input-wrapper">
 
-          <input
-            type="text"
-            name="source"
-            class="form-control flight-input"
-            placeholder="e.g. Delhi"
-            required
-          >
+            <input
+              type="text"
+              name="source"
+              class="flight-input"
+              placeholder="e.g. Delhi"
+              required
+            >
+
+            <span class="flight-small-text">
+              Departure Airport
+            </span>
+
+          </div>
 
         </div>
 
 
         <!-- TO -->
 
-        <div class="col-md-6">
+        <div class="flight-field">
 
-          <label
-            class="form-label flight-label"
-          >
+          <label class="flight-label">
             To
           </label>
 
+          <div class="flight-input-wrapper">
 
-          <input
-            type="text"
-            name="destination"
-            class="form-control flight-input"
-            placeholder="e.g. Mumbai"
-            required
-          >
+            <input
+              type="text"
+              name="destination"
+              class="flight-input"
+              placeholder="e.g. Mumbai"
+              required
+            >
+
+            <span class="flight-small-text">
+              Arrival Airport
+            </span>
+
+          </div>
 
         </div>
 
 
         <!-- DEPARTURE -->
 
-        <div class="col-md-6">
+        <div class="flight-field">
 
-          <label
-            class="form-label flight-label"
-          >
+          <label class="flight-label">
             Departure
           </label>
 
+          <div class="flight-input-wrapper">
 
-          <input
-            type="date"
-            name="date"
-            class="form-control flight-input"
-          >
+            <input
+              type="date"
+              name="date"
+              class="flight-input"
+            >
+
+            <span class="flight-small-text">
+              Travel Day
+            </span>
+
+          </div>
 
         </div>
 
 
         <!-- TRAVELER -->
 
-        <div class="col-md-6">
+        <div class="flight-field">
 
-          <label
-            class="form-label flight-label"
-          >
+          <label class="flight-label">
             Traveler(s) & Class
           </label>
 
-
           <select
             name="class"
-            class="form-select flight-input"
+            class="flight-select"
           >
 
             <option value="Economy">
               1 Adult, Economy
             </option>
 
-
             <option value="Premium Economy">
               1 Adult, Premium Economy
             </option>
-
 
             <option value="Business">
               1 Adult, Business
@@ -839,15 +1256,15 @@ body {
         </div>
 
 
-        <!-- SEARCH BUTTON -->
+        <!-- SEARCH -->
 
-        <div class="col-12">
+        <div class="flight-field">
 
           <button
             type="submit"
             class="flight-search-button"
           >
-            SEARCH FLIGHTS
+            SEARCH
           </button>
 
         </div>
@@ -855,123 +1272,235 @@ body {
 
       </div>
 
+
     </form>
 
 
-    <!-- =================================================
+    <!-- =====================================================
          SPECIAL FARES
-    ================================================= -->
+    ===================================================== -->
 
     <div class="special-fares">
 
 
-      <div class="special-fares-title">
-        Special Fares
+      <div class="special-fares-label">
+
+        <div class="more-benefits">
+          More Benefits
+        </div>
+
+        <p class="special-fares-title">
+          Special Fares
+        </p>
+
       </div>
 
 
       <div class="fare-options">
 
 
-        <div class="fare-option">
-          Regular
+        <!-- REGULAR -->
+
+        <div class="fare-option active">
+
+          <div class="fare-check">
+
+            <i class="fa-solid fa-check"></i>
+
+          </div>
+
+          <div class="fare-icon">
+            👨‍💼
+          </div>
+
+          <div class="fare-text">
+
+            <strong>
+              Regular
+            </strong>
+
+            <span>
+              Lowest Fares
+            </span>
+
+          </div>
+
         </div>
 
 
+        <!-- STUDENT -->
+
         <div class="fare-option">
-          Student
+
+          <div class="fare-check"></div>
+
+          <div class="fare-icon">
+            🎓
+          </div>
+
+          <div class="fare-text">
+
+            <strong>
+              Student
+            </strong>
+
+            <span>
+              Extra Baggage
+            </span>
+
+          </div>
+
         </div>
 
 
+        <!-- SENIOR -->
+
         <div class="fare-option">
-          Senior Citizen
+
+          <div class="fare-check"></div>
+
+          <div class="fare-icon">
+            👴
+          </div>
+
+          <div class="fare-text">
+
+            <strong>
+              Senior Citizen
+            </strong>
+
+            <span>
+              Exclusive Discount
+            </span>
+
+          </div>
+
         </div>
 
 
       </div>
 
+
     </div>
 
 
   </div>
 
 
-  <!-- ===================================================
-       ROOMS & STAYS
-  =================================================== -->
+  <!-- =======================================================
+       ROOMS & STAYS HEADER
+  ======================================================= -->
 
-  <div class="rooms-heading">
+  <div class="rooms-section-header">
 
 
     <div>
 
-      <h2>
+      <div class="rooms-label">
+        FIND YOUR NEXT STAY
+      </div>
+
+      <h2 class="rooms-title">
         Rooms & stays
       </h2>
 
-
-      <p>
-        Discover comfortable places to stay for your next journey.
+      <p class="rooms-subtitle">
+        Handpicked places for your next trip.
       </p>
 
     </div>
 
 
+    <a
+      href="/listings"
+      class="view-more"
+    >
+
+      View more
+
+      <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
   </div>
 
 
-  <!-- ===================================================
-       LISTING CARDS
-  =================================================== -->
+  <!-- =======================================================
+       ROOM CARDS
+  ======================================================= -->
 
-  <div
-    class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4"
-  >
+  <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
 
 
-    <% for (let listing of allListings) { %>
+    <% if (allListings && allListings.length > 0) { %>
 
 
-      <div class="col listing-col">
+      <% for (let listing of allListings) { %>
 
 
-        <a
-          href="/listings/<%= listing._id %>"
-          class="listing-link"
-        >
+        <div class="col listing-col">
 
 
-          <div class="card">
+          <a
+            href="/listings/<%= listing._id %>"
+            class="listing-link"
+          >
 
 
-            <!-- IMAGE -->
-
-            <img
-              src="<%= listing.image.url %>"
-              class="card-img-top"
-              alt="<%= listing.title %>"
-            >
+            <div class="room-card">
 
 
-            <!-- CARD BODY -->
+              <!-- IMAGE -->
 
-            <div class="card-body">
+              <div class="room-image-wrapper">
 
 
-              <div class="room-card-title">
+                <img
+                  src="<%= listing.image.url %>"
+                  class="room-image"
+                  alt="<%= listing.title %>"
+                >
 
-                <%= listing.title %>
+
+                <!-- HEART -->
+
+                <button
+                  type="button"
+                  class="favorite-button"
+                  onclick="event.preventDefault(); event.stopPropagation();"
+                >
+
+                  <i class="fa-regular fa-heart"></i>
+
+                </button>
+
 
               </div>
 
 
-              <div class="room-card-price">
+              <!-- BODY -->
 
-                ₹ <%= listing.price.toLocaleString("en-IN") %>
+              <div class="room-card-body">
 
-                <span>
-                  / night
-                </span>
+
+                <div class="room-card-title">
+
+                  <%= listing.title %>
+
+                </div>
+
+
+                <div class="room-card-price">
+
+                  ₹ <%= listing.price.toLocaleString("en-IN") %>
+
+                  <span>
+                    / night
+                  </span>
+
+                </div>
+
 
               </div>
 
@@ -979,11 +1508,25 @@ body {
             </div>
 
 
-          </div>
+          </a>
 
 
-        </a>
+        </div>
 
+
+      <% } %>
+
+
+    <% } else { %>
+
+
+      <div class="col-12">
+
+        <div class="empty-listings">
+
+          No rooms available right now.
+
+        </div>
 
       </div>
 
