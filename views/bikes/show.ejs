@@ -1,1 +1,291 @@
+<% layout("/layouts/boilerplate") %>
 
+<div style="max-width:1200px; margin:40px auto; padding:0 20px;">
+
+  <!-- Back -->
+  <a href="/bikes"
+     style="text-decoration:none; color:#2563eb; font-weight:600;">
+    ← Back to all bikes
+  </a>
+
+
+  <div style="
+    display:grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap:30px;
+    margin-top:25px;
+  ">
+
+    <!-- LEFT SIDE -->
+    <div>
+
+      <!-- Bike Image -->
+      <div style="
+        background:#f8fafc;
+        border-radius:18px;
+        padding:20px;
+        text-align:center;
+      ">
+
+        <% if (bike.image && bike.image.url) { %>
+
+          <img
+            src="<%= bike.image.url %>"
+            alt="<%= bike.name %>"
+            style="
+              width:100%;
+              max-height:500px;
+              object-fit:contain;
+              border-radius:14px;
+            "
+          >
+
+        <% } else { %>
+
+          <div style="
+            height:400px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:100px;
+          ">
+            🏍️
+          </div>
+
+        <% } %>
+
+      </div>
+
+
+      <!-- Bike Information -->
+      <div style="margin-top:25px;">
+
+        <span style="
+          display:inline-block;
+          background:#e0f2fe;
+          color:#0369a1;
+          padding:7px 14px;
+          border-radius:20px;
+          font-size:13px;
+          font-weight:700;
+          text-transform:uppercase;
+        ">
+          <%= bike.type %>
+        </span>
+
+
+        <h1 style="
+          font-size:34px;
+          margin:15px 0 10px;
+        ">
+          <%= bike.name %>
+        </h1>
+
+
+        <p style="
+          color:#64748b;
+          font-size:17px;
+        ">
+          📍 <%= bike.location %>
+        </p>
+
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(2,1fr);
+          gap:15px;
+          margin-top:25px;
+        ">
+
+          <div style="
+            background:#f8fafc;
+            padding:18px;
+            border-radius:12px;
+          ">
+            <strong>Model Year</strong>
+            <div style="margin-top:6px;">
+              <%= bike.modelYear %>
+            </div>
+          </div>
+
+
+          <div style="
+            background:#f8fafc;
+            padding:18px;
+            border-radius:12px;
+          ">
+            <strong>Registration</strong>
+            <div style="margin-top:6px;">
+              <%= bike.registrationNumber %>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div>
+
+      <div style="
+        background:white;
+        border:1px solid #e2e8f0;
+        border-radius:18px;
+        padding:25px;
+        box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      ">
+
+        <div style="
+          font-size:13px;
+          font-weight:700;
+          color:#64748b;
+          letter-spacing:1px;
+        ">
+          RENTAL PRICING
+        </div>
+
+
+        <div style="
+          font-size:36px;
+          font-weight:800;
+          margin:12px 0 25px;
+        ">
+          ₹<%= bike.pricePerDay %>
+          <span style="
+            font-size:15px;
+            color:#64748b;
+            font-weight:500;
+          ">
+            / day
+          </span>
+        </div>
+
+
+        <!-- Pricing Details -->
+
+        <div style="
+          border-top:1px solid #e2e8f0;
+          padding-top:18px;
+        ">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:15px;
+          ">
+            <span>Refundable Security</span>
+            <strong>₹<%= bike.securityDeposit %></strong>
+          </div>
+
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:15px;
+          ">
+            <span>Hourly Extension</span>
+            <strong>₹<%= bike.hourlyExtension %>/hr</strong>
+          </div>
+
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:20px;
+          ">
+            <span>Extra Km Charge</span>
+            <strong>₹<%= bike.extraKmCharge %>/km</strong>
+          </div>
+
+        </div>
+
+
+        <!-- BOOK BUTTON -->
+
+        <% if (bike.isAvailable) { %>
+
+          <a
+            href="/bookings/bikes/new/<%= bike._id %>"
+            style="
+              display:block;
+              text-align:center;
+              background:#2563eb;
+              color:white;
+              text-decoration:none;
+              padding:15px;
+              border-radius:10px;
+              font-weight:700;
+              font-size:16px;
+              margin-top:10px;
+            "
+          >
+            Book & Pick Dates →
+          </a>
+
+        <% } else { %>
+
+          <button
+            disabled
+            style="
+              width:100%;
+              padding:15px;
+              border:0;
+              border-radius:10px;
+              background:#94a3b8;
+              color:white;
+              font-weight:700;
+            "
+          >
+            Currently Unavailable
+          </button>
+
+        <% } %>
+
+
+        <!-- Safety -->
+
+        <div style="
+          margin-top:20px;
+          padding:15px;
+          background:#f0fdf4;
+          border-radius:10px;
+          color:#166534;
+          font-size:14px;
+          text-align:center;
+        ">
+          🛡️ SafeRide Verified Fleet
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- RESPONSIVE -->
+
+<style>
+
+@media (max-width: 800px) {
+
+  div[style*="grid-template-columns: 1.5fr 1fr"] {
+    grid-template-columns:1fr !important;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  h1 {
+    font-size:28px !important;
+  }
+
+}
+
+</style>
