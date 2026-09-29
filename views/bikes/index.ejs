@@ -202,11 +202,23 @@
         <div
           class="bike-card"
           data-type="<%= bike.type %>"
+
+          <% if (bike.isAvailable) { %>
+            onclick="window.location.href='/bikes/<%= bike._id %>'"
+            title="View <%= bike.name %> details"
+          <% } %>
+
           style="
             border-radius:15px;
             background:white;
             overflow:hidden;
             box-shadow:0 4px 15px rgba(0,0,0,0.10);
+
+            <% if (bike.isAvailable) { %>
+              cursor:pointer;
+            <% } else { %>
+              cursor:not-allowed;
+            <% } %>
           "
         >
 
@@ -252,6 +264,7 @@
 
             <h3 style="
               margin-top:0;
+              margin-bottom:10px;
             ">
               <%= bike.name %>
             </h3>
@@ -280,6 +293,7 @@
 
               <a
                 href="/bikes/<%= bike._id %>"
+                onclick="event.stopPropagation()"
                 style="
                   display:block;
                   width:100%;
@@ -302,6 +316,7 @@
 
               <button
                 disabled
+                onclick="event.stopPropagation()"
                 style="
                   display:block;
                   width:100%;
