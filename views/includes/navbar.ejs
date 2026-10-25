@@ -58,6 +58,12 @@
         <% } %>
 
         <% if (currUser) { %>
+          <% if (typeof isAdmin !== "undefined" && isAdmin) { %>
+            <a class="nav-link nav-link-text" href="/admin">
+              Organization
+            </a>
+          <% } %>
+
           <a href="/profile" class="nav-link profile-link-wrap" title="My Profile">
             <img
               src="<%= currUser.image && currUser.image.url ? currUser.image.url : '/images/default-avatar.png' %>"
