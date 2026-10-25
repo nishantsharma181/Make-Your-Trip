@@ -1,10 +1,10 @@
 const express=require("express");
 const router=express.Router();
-const User=require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const passport=require("passport");
- const {saveRedirectUrl}=require ("../middleware.js");
- const usercontroller=require("../controllers/users.js");const multer = require("multer");
+const {saveRedirectUrl, isLoggedIn}=require ("../middleware.js");
+const usercontroller=require("../controllers/users.js");
+const multer = require("multer");
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -23,25 +23,25 @@ router.post(
 );
 router.get("/login", usercontroller.renderLogin);
 
-router.post("/login",saveRedirectUrl, (req, res, next) => {
-  console.log("LOGIN BODY:", req.body);   // 👈 HERE
-  next();
-}, passport.authenticate("local", {
+router.post("/login", saveRedirectUrl, passport.authenticate("local", {
   failureRedirect: "/login",
   failureFlash: true,
 }), usercontroller.Login);
 router.get("/logout", usercontroller.Logout);
 router.get(
     "/profile",
+    isLoggedIn,
     saveRedirectUrl,
-    usercontroller.profile
+    wrapAsync(usercontroller.profile)
 );router.get(
   "/profile/edit",
-  usercontroller.renderEditProfile
+  isLoggedIn,
+  wrapAsync(usercontroller.renderEditProfile)
 );
 
 router.put(
   "/profile",
+  isLoggedIn,
   upload.single("image"),
   wrapAsync(usercontroller.updateProfile)
 );

@@ -29,9 +29,11 @@ router.get("/", async (req, res, next) => {
 
 router.get("/search", async (req, res, next) => {
   try {
-    const selectedType = req.query.type || "";
+    const selectedType =
+      typeof req.query.type === "string" ? req.query.type : "";
 
-    const bikes = await Bike.find({});
+    // The type filter was ignored before, it always returned every bike.
+    const bikes = await Bike.find(selectedType ? { type: selectedType } : {});
 
     res.render("bikes/index", {
       bikes,

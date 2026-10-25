@@ -1,0 +1,120 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-8">
+
+    <a href="/cabs" class="text-decoration-none fw-semibold">
+      <i class="fa-solid fa-arrow-left"></i> Back to cabs
+    </a>
+
+    <h1 class="mt-3 mb-4">List a new cab</h1>
+
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <form action="/cabs" method="POST" enctype="multipart/form-data">
+
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="vehicleName">Vehicle name</label>
+              <input type="text" name="cab[vehicleName]" id="vehicleName" class="form-control" placeholder="Toyota Innova Crysta" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="registrationNumber">Registration number</label>
+              <input type="text" name="cab[registrationNumber]" id="registrationNumber" class="form-control" placeholder="UP-25-AB-1234" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="vehicleType">Vehicle type</label>
+              <select name="cab[vehicleType]" id="vehicleType" class="form-select" required>
+                <option value="Sedan">Sedan</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="SUV">SUV</option>
+                <option value="Luxury">Luxury</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="fuelType">Fuel type</label>
+              <select name="cab[fuelType]" id="fuelType" class="form-select">
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="CNG">CNG</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="passengers">Passenger seats</label>
+              <input type="number" name="cab[capacity][passengers]" id="passengers" class="form-control" min="1" max="8" value="4" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="luggage">Luggage bags</label>
+              <input type="number" name="cab[capacity][luggage]" id="luggage" class="form-control" min="0" value="2">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="operatingCity">Operating city</label>
+              <input type="text" name="cab[operatingCity]" id="operatingCity" class="form-control" placeholder="Bareilly" required>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-end">
+              <div class="form-check mb-2">
+                <input type="checkbox" name="cab[hasAC]" id="hasAC" class="form-check-input" checked>
+                <label class="form-check-label" for="hasAC">Air conditioned</label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="driverName">Driver name</label>
+              <input type="text" name="cab[driver][name]" id="driverName" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="driverPhone">Driver phone</label>
+              <input type="text" name="cab[driver][phone]" id="driverPhone" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="baseFare">Base fare (₹)</label>
+              <input type="number" name="cab[pricing][baseFare]" id="baseFare" class="form-control" min="0" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="pricePerKm">Price per km (₹)</label>
+              <input type="number" name="cab[pricing][pricePerKm]" id="pricePerKm" class="form-control" min="0" required>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-semibold d-block">Services offered</label>
+              <% ["One-Way", "Round-Trip", "Airport Transfer", "Local Rental"].forEach((type, i) => { %>
+                <div class="form-check form-check-inline">
+                  <input
+                    type="checkbox"
+                    name="cab[serviceTypes]"
+                    value="<%= type %>"
+                    id="service<%= i %>"
+                    class="form-check-input"
+                    <%= i === 0 ? "checked" : "" %>
+                  >
+                  <label class="form-check-label" for="service<%= i %>"><%= type %></label>
+                </div>
+              <% }) %>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-semibold" for="image">Photo (optional)</label>
+              <input type="file" name="image" id="image" class="form-control" accept="image/*">
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 py-2 mt-4">List cab</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

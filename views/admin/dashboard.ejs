@@ -1,0 +1,135 @@
+<% layout("/layouts/boilerplate") %>
+
+<%
+  const money = (n) => "₹" + Number(n || 0).toLocaleString("en-IN");
+  const badge = (status) => ({
+    Cancelled: "danger",
+    Completed: "secondary",
+    Pending: "warning"
+  }[status] || "success");
+%>
+
+<div class="mb-5">
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <h1 class="mb-1">Organization Dashboard</h1>
+      <p class="text-muted mb-0">Every booking made by your users, in one place.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <a href="/admin/bookings" class="btn btn-primary">
+        <i class="fa-solid fa-table-list"></i> All bookings
+      </a>
+      <a href="/admin/bookings.csv" class="btn btn-outline-primary">
+        <i class="fa-solid fa-file-csv"></i> Download CSV
+      </a>
+    </div>
+  </div>
+
+  <!-- Totals -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="text-muted">Total bookings</div>
+          <div class="fs-2 fw-bold"><%= totals.bookings %></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="text-muted">Active (not cancelled)</div>
+          <div class="fs-2 fw-bold"><%= totals.active %></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="text-muted">Booking value (active)</div>
+          <div class="fs-2 fw-bold"><%= money(totals.revenue) %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Per type -->
+  <div class="row g-3 mb-5">
+    <% stats.forEach((s) => { %>
+      <div class="col-sm-6 col-lg-3">
+        <a href="/admin/bookings?type=<%= s.type %>" class="text-decoration-none text-reset">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0"><%= s.label %></h5>
+                <i class="fa-solid <%= s.icon %> fs-4 text-primary"></i>
+              </div>
+              <div class="fs-3 fw-bold"><%= s.total %></div>
+              <div class="text-muted small">
+                <%= s.active %> active · <%= s.cancelled %> cancelled
+              </div>
+              <div class="mt-2 fw-semibold"><%= money(s.revenue) %></div>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+
+  <!-- Latest bookings -->
+  <h4 class="mb-3">Latest bookings</h4>
+
+  <% if (recent.length === 0) { %>
+    <div class="text-center border rounded-3 p-5">
+      <h5>No bookings yet</h5>
+      <p class="text-muted mb-0">New bookings from your users will appear here.</p>
+    </div>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Type</th>
+            <th>Customer</th>
+            <th>Booking</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Booked on</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% recent.forEach((row) => { %>
+            <tr>
+              <td><%= row.ref %></td>
+              <td><i class="fa-solid <%= row.icon %>"></i> <%= row.typeLabel %></td>
+              <td>
+                <div class="fw-semibold"><%= row.customer.name %></div>
+                <div class="small text-muted"><%= row.customer.phone || row.customer.email %></div>
+              </td>
+              <td><%= row.summary %></td>
+              <td><%= money(row.amount) %></td>
+              <td><span class="badge text-bg-<%= badge(row.status) %>"><%= row.status %></span></td>
+              <td><%= fmtDate(row.createdAt, true) %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <!-- Sample data -->
+  <div class="border rounded-3 p-3 mt-5 d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <div>
+      <strong>Sample flights</strong>
+      <div class="text-muted small">
+        Adds or refreshes 3 demo flights with upcoming dates. Existing bookings are never deleted.
+      </div>
+    </div>
+    <form action="/admin/seed-flights" method="POST">
+      <button type="submit" class="btn btn-outline-secondary">Add / refresh sample flights</button>
+    </form>
+  </div>
+
+</div>

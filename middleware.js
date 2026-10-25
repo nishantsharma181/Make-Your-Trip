@@ -14,6 +14,53 @@ module.exports.saveRedirectUrl=(req,res,next)=>{
     res.locals.redirectUrl=req.session.redirectUrl;
   }next();
 };
+
+// ---------------------------------------------------------------------
+// Organization (admin) access
+// A user is an admin if their role is "admin" OR their email is listed in
+// the ADMIN_EMAILS environment variable (comma separated).
+// ---------------------------------------------------------------------
+const adminEmails = () =>
+  (process.env.ADMIN_EMAILS || "")
+    .split(",")
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean);
+
+const userIsAdmin = (user) =>
+  !!user &&
+  (user.role === "admin" ||
+    adminEmails().includes(String(user.email || "").toLowerCase()));
+
+module.exports.userIsAdmin = userIsAdmin;
+
+module.exports.isAdmin = (req, res, next) => {
+  if (!userIsAdmin(req.user)) {
+    req.flash("error", "Only the organization (admin) can open this page.");
+    return res.redirect("/listings");
+  }
+  next();
+};
+
+// A booking can be opened/changed by the person who made it, or by an admin.
+module.exports.canAccessBooking = (user, bookingUser) => {
+  if (!user || !bookingUser) return false;
+  const ownerId = bookingUser._id || bookingUser;
+  return userIsAdmin(user) || String(ownerId) === String(user._id);
+};
+
+// The organization needs a way to contact the traveller, so a phone number
+// must be saved in the profile before booking.
+module.exports.requirePhone = (req, res, next) => {
+  if (!req.user.phone) {
+    req.flash(
+      "error",
+      "Please add your phone number to your profile first, so the organization can contact you about your booking."
+    );
+    return res.redirect("/profile/edit");
+  }
+  next();
+};
+
 module.exports.isOwner = async (req, res, next) => {
     let { id } = req.params;
 
@@ -24,7 +71,7 @@ module.exports.isOwner = async (req, res, next) => {
         return res.redirect("/listings");
     }
 
-    if (!listing.owner.equals(res.locals.currUser._id)) {
+    if (!listing.owner || !listing.owner.equals(res.locals.currUser._id)) {
         req.flash("error", "You are not the Owner of this Listing");
         return res.redirect(`/listings/${id}`);
     }next();

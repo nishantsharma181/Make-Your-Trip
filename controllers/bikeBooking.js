@@ -1,5 +1,7 @@
 const Bike = require("../models/Bike");
 const BikeBooking = require("../models/bikeBooking");
+const { canAccessBooking } = require("../middleware");
+const { setStatus } = require("../utils/bookingStatus");
 
 // 1. Render Bike Booking Form
 module.exports.renderBookingForm = async (req, res, next) => {
@@ -38,6 +40,13 @@ module.exports.createBooking = async (req, res, next) => {
       return next(err);
     }
 
+    const backToForm = `/bookings/bikes/new/${bike._id}`;
+
+    if (!bike.isAvailable) {
+      req.flash("error", "This bike is currently not available.");
+      return res.redirect(backToForm);
+    }
+
     const pickup = new Date(pickupDate);
     const returnDateObj = new Date(returnDate);
 
@@ -45,15 +54,34 @@ module.exports.createBooking = async (req, res, next) => {
       isNaN(pickup.getTime()) ||
       isNaN(returnDateObj.getTime())
     ) {
-      const err = new Error("Please select valid pickup and return dates");
-      err.statusCode = 400;
-      return next(err);
+      req.flash("error", "Please select valid pickup and return dates");
+      return res.redirect(backToForm);
+    }
+
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    if (pickup < today) {
+      req.flash("error", "Pickup date cannot be in the past");
+      return res.redirect(backToForm);
     }
 
     if (returnDateObj <= pickup) {
-      const err = new Error("Return date must be after pickup date");
-      err.statusCode = 400;
-      return next(err);
+      req.flash("error", "Return date must be after pickup date");
+      return res.redirect(backToForm);
+    }
+
+    // Do not let the same bike be booked twice for overlapping dates
+    const clash = await BikeBooking.exists({
+      bike: bike._id,
+      bookingStatus: { $ne: "Cancelled" },
+      pickupDate: { $lt: returnDateObj },
+      returnDate: { $gt: pickup },
+    });
+
+    if (clash) {
+      req.flash("error", "This bike is already booked for those dates. Please choose other dates.");
+      return res.redirect(backToForm);
     }
 
     // Calculate number of rental days
@@ -87,9 +115,11 @@ module.exports.createBooking = async (req, res, next) => {
 
       bookingStatus: "Confirmed",
 
+      // No payment gateway yet, so payment stays "Pending" until the
+      // organization marks it as received.
       payment: {
         method: paymentMethod || "UPI",
-        status: "Paid",
+        status: "Pending",
       },
     });
 
@@ -110,7 +140,8 @@ module.exports.showBooking = async (req, res, next) => {
       .populate("bike")
       .populate("user", "username email phone");
 
-    if (!booking) {
+    // Only the person who booked (or the organization) can open it
+    if (!booking || !canAccessBooking(req.user, booking.user)) {
       const err = new Error("Bike booking not found");
       err.statusCode = 404;
       return next(err);
@@ -131,7 +162,10 @@ module.exports.myBookings = async (req, res, next) => {
       .populate("bike")
       .sort({ createdAt: -1 });
 
-    res.render("bikes/myBookings", { bookings });
+    // Skip bookings whose bike was removed, the page cannot show them
+    res.render("bikes/myBookings", {
+      bookings: bookings.filter((booking) => booking.bike),
+    });
   } catch (err) {
     next(err);
   }
@@ -145,18 +179,23 @@ module.exports.cancelBooking = async (req, res, next) => {
 
     const booking = await BikeBooking.findById(id);
 
-    if (!booking) {
+    if (!booking || !canAccessBooking(req.user, booking.user)) {
       const err = new Error("Bike booking not found");
       err.statusCode = 404;
       return next(err);
     }
 
-    booking.bookingStatus = "Cancelled";
-    booking.cancelledBy = "User";
-    booking.cancellationReason =
-      reason || "Cancelled by user";
+    if (booking.bookingStatus === "Completed") {
+      req.flash("error", "A completed booking cannot be cancelled.");
+      return res.redirect(`/bookings/bikes/${id}`);
+    }
 
-    await booking.save();
+    if (booking.bookingStatus !== "Cancelled") {
+      await setStatus("bikes", booking, "Cancelled", {
+        cancelledBy: "User",
+        reason: reason || "Cancelled by user",
+      });
+    }
 
     res.redirect(`/bookings/bikes/${id}`);
   } catch (err) {

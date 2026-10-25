@@ -1,0 +1,117 @@
+<% layout("/layouts/boilerplate") %>
+
+<%
+  const fmt = (d) => d ? new Date(d).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    day: "numeric", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  }) : "-";
+  const isCancelled = booking.rideStatus === "Cancelled";
+  const canCancel = !["Cancelled", "Completed", "Ongoing"].includes(booking.rideStatus);
+  const isOwner = currUser && booking.user && String(booking.user._id) === String(currUser._id);
+%>
+
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-8">
+
+    <div class="alert <%= isCancelled ? 'alert-danger' : 'alert-success' %> text-center">
+      <h3 class="mb-1">
+        <%= isCancelled ? "Booking Cancelled" : "Booking " + booking.rideStatus + "!" %>
+      </h3>
+      <div>Booking ID: <strong><%= booking.bookingId %></strong></div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body p-4">
+
+        <h5 class="mb-3">Trip details</h5>
+        <div class="row mb-2">
+          <div class="col-sm-4 text-muted">Cab</div>
+          <div class="col-sm-8">
+            <%= booking.cab ? booking.cab.vehicleName : "Cab removed" %>
+            <% if (booking.cab) { %>(<%= booking.cab.registrationNumber %>)<% } %>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4 text-muted">Trip type</div>
+          <div class="col-sm-8"><%= booking.tripType %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4 text-muted">Pickup</div>
+          <div class="col-sm-8"><%= booking.pickup.address %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4 text-muted">Drop</div>
+          <div class="col-sm-8"><%= booking.drop.address %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4 text-muted">Pickup time</div>
+          <div class="col-sm-8"><%= fmt(booking.departureTime) %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4 text-muted">Distance</div>
+          <div class="col-sm-8"><%= booking.distanceKm %> km</div>
+        </div>
+        <% if (booking.cab && booking.cab.driver) { %>
+          <div class="row mb-2">
+            <div class="col-sm-4 text-muted">Driver</div>
+            <div class="col-sm-8">
+              <%= booking.cab.driver.name %> · <%= booking.cab.driver.phone %>
+            </div>
+          </div>
+        <% } %>
+        <% if (isOwner && !isCancelled) { %>
+          <div class="row mb-2">
+            <div class="col-sm-4 text-muted">Ride OTP</div>
+            <div class="col-sm-8"><strong><%= booking.rideOtp %></strong> (tell this to the driver at pickup)</div>
+          </div>
+        <% } %>
+
+        <hr>
+
+        <h5 class="mb-3">Fare</h5>
+        <div class="d-flex justify-content-between mb-1">
+          <span>Base fare</span><span>₹<%= booking.fareDetails.baseFare %></span>
+        </div>
+        <div class="d-flex justify-content-between mb-1">
+          <span>Distance fare</span><span>₹<%= booking.fareDetails.distanceFare %></span>
+        </div>
+        <div class="d-flex justify-content-between mb-1">
+          <span>Taxes</span><span>₹<%= booking.fareDetails.tollAndTaxes %></span>
+        </div>
+        <div class="d-flex justify-content-between fw-bold fs-5 mt-2">
+          <span>Total</span><span>₹<%= booking.fareDetails.totalFare %></span>
+        </div>
+        <div class="text-muted mt-2">
+          Payment: <%= booking.payment.method %> · <%= booking.payment.status %>
+        </div>
+
+        <% if (isCancelled && booking.cancellationReason) { %>
+          <hr>
+          <div class="text-muted">
+            Cancelled by <%= booking.cancelledBy || "User" %>: <%= booking.cancellationReason %>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+      <a href="/bookings/cabs/my-bookings" class="btn btn-outline-primary">My cab bookings</a>
+      <a href="/cabs" class="btn btn-outline-secondary">Browse cabs</a>
+
+      <% if (canCancel) { %>
+        <form
+          action="/bookings/cabs/<%= booking._id %>/cancel?_method=PUT"
+          method="POST"
+          class="ms-auto d-flex gap-2"
+          onsubmit="return confirm('Are you sure you want to cancel this booking?');"
+        >
+          <input type="text" name="reason" class="form-control" placeholder="Reason (optional)" maxlength="200">
+          <button type="submit" class="btn btn-outline-danger">Cancel</button>
+        </form>
+      <% } %>
+    </div>
+
+  </div>
+</div>

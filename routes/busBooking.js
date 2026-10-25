@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const wrapAsync = require("../utils/wrapAsync");
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn, requirePhone } = require("../middleware");
 const busBookingController = require("../controllers/busBooking");
 
 // ===============================
@@ -11,6 +11,7 @@ const busBookingController = require("../controllers/busBooking");
 router.get(
   "/new/:busId",
   isLoggedIn,
+  requirePhone,
   wrapAsync(busBookingController.newBooking)
 );
 
@@ -20,6 +21,7 @@ router.get(
 router.post(
   "/:busId",
   isLoggedIn,
+  requirePhone,
   wrapAsync(busBookingController.createBooking)
 );
 

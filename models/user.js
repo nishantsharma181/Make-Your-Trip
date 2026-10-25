@@ -32,6 +32,14 @@ new mongoose.Schema({
 
     city:String,
 
+    // "admin" users are the organization: they can see every booking.
+    // (An email listed in the ADMIN_EMAILS env variable is also an admin.)
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default:"user"
+    },
+
     bookings:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"FlightBooking"

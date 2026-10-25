@@ -1,3 +1,4 @@
+require("dns").setServers(["8.8.8.8", "8.8.4.4"]);
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -19,7 +20,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // Error Handling & Models
 const ExpressError = require("./utils/ExpressError.js");
 const User = require("./models/user.js");
-const Flight = require("./models/flight.js");
 const Cab = require("./models/Cab.js");
 
 // Routes
@@ -33,6 +33,8 @@ const busRouter = require("./routes/buses.js");
 const busBookingRoutes = require("./routes/busBooking.js");
 const bikeRouter = require("./routes/bikes.js");
 const bikeBookingRoutes = require("./routes/bikeBooking.js");
+const adminRoutes = require("./routes/admin.js");
+const { userIsAdmin } = require("./middleware.js");
 
 // Database configuration
 const dbUrl = process.env.ATLASDB_URL;
@@ -40,6 +42,9 @@ const secret = process.env.SECRET;
 const DB_TIMEOUT_MS = 10_000;
 
 // App & View Configuration
+// Render (and most hosts) put the app behind a proxy, so trust it. This is
+// needed for secure session cookies to work on the live site.
+app.set("trust proxy", 1);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
@@ -68,9 +73,10 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
   },
 };
 
@@ -88,8 +94,11 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // Must match the address of the live site AND the "Authorized redirect
+      // URI" in Google Cloud Console. Set GOOGLE_CALLBACK_URL on Render.
       callbackURL:
-        "https://make-your-trip-90sr.onrender.com/auth/google/callback",
+        process.env.GOOGLE_CALLBACK_URL ||
+        "https://make-your-trip-j9mt.onrender.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -125,6 +134,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
+  res.locals.isAdmin = userIsAdmin(req.user);
   next();
 });
 
@@ -290,55 +300,10 @@ app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
-app.get("/demouser", async (req, res) => {
-  let fakeUser = new User({
-    email: "gnagwarakash555@gmail.com",
-    username: "Akash999",
-  });
-
-  let registeredUser = await User.register(fakeUser, "helloworld");
-
-  res.send(registeredUser);
-});
-
-app.get("/seed", async (req, res) => {
-  await Flight.deleteMany({});
-
-  await Flight.insertMany([
-    {
-      flightNumber: "AI101",
-      airline: "Air India",
-      source: "Delhi",
-      destination: "Mumbai",
-      departureTime: new Date("2026-09-20T09:00:00"),
-      arrivalTime: new Date("2026-09-20T11:15:00"),
-      price: 5500,
-      seatsAvailable: 45,
-    },
-    {
-      flightNumber: "6E202",
-      airline: "IndiGo",
-      source: "Delhi",
-      destination: "Bangalore",
-      departureTime: new Date("2026-09-20T12:00:00"),
-      arrivalTime: new Date("2026-09-20T14:30:00"),
-      price: 4800,
-      seatsAvailable: 70,
-    },
-    {
-      flightNumber: "UK303",
-      airline: "Vistara",
-      source: "Mumbai",
-      destination: "Goa",
-      departureTime: new Date("2026-09-21T08:00:00"),
-      arrivalTime: new Date("2026-09-21T09:10:00"),
-      price: 3200,
-      seatsAvailable: 30,
-    },
-  ]);
-
-  res.send("Flights Seeded Successfully");
-});
+// NOTE: the old public /demouser and /seed pages were removed.
+// /demouser created a user with a known password, and /seed deleted every
+// flight for anyone who opened the link. Sample flights can now be added by
+// the organization from the admin dashboard (POST /admin/seed-flights).
 
 // Main Routes
 app.use("/listings", listings);
@@ -356,6 +321,9 @@ app.use("/bookings/buses", busBookingRoutes);
 app.use("/bikes", bikeRouter);
 app.use("/bookings/bikes", bikeBookingRoutes);
 
+// Organization (admin) area
+app.use("/admin", adminRoutes);
+
 // 404 Handler
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
@@ -365,6 +333,13 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     err = new ExpressError(400, "Image must be 10 MB or smaller.");
+  }
+
+  // A bad id in the address (e.g. /flights/abc) is "not found", not a crash
+  if (err.name === "CastError") {
+    err = new ExpressError(404, "Page Not Found");
+  } else if (err.name === "ValidationError") {
+    err = new ExpressError(400, err.message);
   }
 
   console.error(`${req.method} ${req.originalUrl} failed:`, {
@@ -409,4 +384,7 @@ main()
   })
   .catch((err) => {
     console.error("Database Connection Failed:", err);
+    // Stop the process so the host shows the deploy as failed
+    // instead of keeping a server alive that cannot work.
+    process.exit(1);
   });

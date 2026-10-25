@@ -1,6 +1,7 @@
 const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError.js");
 const cloudinary = require("../cloudConfig.js");
+const escapeRegex = require("../utils/escapeRegex.js");
 const UPLOAD_TIMEOUT_MS = 120_000;
 
 const allowedCategories = [
@@ -56,6 +57,37 @@ module.exports.index = async (req, res) => {
   res.render("listings/index.ejs", {
     allListings,
     selectedCategory: isValidCategory ? category : "",
+  });
+};
+
+// Search bar in the navbar: looks in title, location, country, description, category
+module.exports.search = async (req, res) => {
+  const q = typeof req.query.q === "string" ? req.query.q.trim() : "";
+
+  if (!q) {
+    return res.redirect("/listings");
+  }
+
+  const pattern = new RegExp(escapeRegex(q), "i");
+
+  const allListings = await Listing.find({
+    $or: [
+      { title: pattern },
+      { location: pattern },
+      { country: pattern },
+      { description: pattern },
+      { category: pattern },
+    ],
+  });
+
+  if (allListings.length === 0) {
+    // Shown on this page right away (req.flash would only show on the next page)
+    res.locals.error = [`No stays found for "${q}".`];
+  }
+
+  res.render("listings/index.ejs", {
+    allListings,
+    selectedCategory: "",
   });
 };
 

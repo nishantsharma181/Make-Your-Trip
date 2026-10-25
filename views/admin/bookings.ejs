@@ -1,0 +1,151 @@
+<% layout("/layouts/boilerplate") %>
+
+<%
+  const money = (n) => "₹" + Number(n || 0).toLocaleString("en-IN");
+  const badge = (value) => ({
+    Cancelled: "danger",
+    Completed: "secondary",
+    Pending: "warning"
+  }[value] || "success");
+  const csvQuery = new URLSearchParams({ type: type, status: status, q: q }).toString();
+%>
+
+<div class="mb-5">
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <a href="/admin" class="text-decoration-none">
+        <i class="fa-solid fa-arrow-left"></i> Dashboard
+      </a>
+      <h1 class="mb-0 mt-1">All bookings</h1>
+    </div>
+    <a href="/admin/bookings.csv?<%= csvQuery %>" class="btn btn-outline-primary">
+      <i class="fa-solid fa-file-csv"></i> Download CSV
+    </a>
+  </div>
+
+  <!-- Filters -->
+  <form action="/admin/bookings" method="GET" class="row g-2 mb-4">
+    <div class="col-md-3">
+      <select name="type" class="form-select" aria-label="Booking type">
+        <option value="all" <%= type === "all" ? "selected" : "" %>>All types</option>
+        <% types.forEach((t) => { %>
+          <option value="<%= t.key %>" <%= type === t.key ? "selected" : "" %>><%= t.label %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select name="status" class="form-select" aria-label="Status">
+        <option value="">Any status</option>
+        <% statusChoices.forEach((s) => { %>
+          <option value="<%= s %>" <%= status === s ? "selected" : "" %>><%= s %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <input
+        type="search"
+        name="q"
+        value="<%= q %>"
+        class="form-control"
+        placeholder="Search name, email, phone, reference..."
+      >
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+  </form>
+
+  <div class="text-muted small mb-2">
+    Showing <%= rows.length %> booking(s), newest first (up to <%= limit %> per type).
+  </div>
+
+  <% if (rows.length === 0) { %>
+    <div class="text-center border rounded-3 p-5">
+      <h5>No bookings found</h5>
+      <p class="text-muted mb-0">Try a different filter.</p>
+    </div>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Type</th>
+            <th>Customer</th>
+            <th>Booking</th>
+            <th>Travel date</th>
+            <th>Amount</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Booked on</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% rows.forEach((row) => { %>
+            <tr>
+              <td class="text-nowrap"><%= row.ref %></td>
+              <td class="text-nowrap"><i class="fa-solid <%= row.icon %>"></i> <%= row.typeLabel %></td>
+
+              <td>
+                <div class="fw-semibold"><%= row.customer.name %></div>
+                <% if (row.customer.phone) { %>
+                  <div class="small"><a href="tel:<%= row.customer.phone %>"><%= row.customer.phone %></a></div>
+                <% } else { %>
+                  <div class="small text-muted">No phone</div>
+                <% } %>
+                <% if (row.customer.email) { %>
+                  <div class="small"><a href="mailto:<%= row.customer.email %>"><%= row.customer.email %></a></div>
+                <% } %>
+              </td>
+
+              <td style="min-width:240px;">
+                <div><%= row.summary %></div>
+                <div class="small text-muted"><%= row.details %></div>
+              </td>
+
+              <td class="text-nowrap"><%= fmtDate(row.when, true) %></td>
+              <td class="text-nowrap"><%= money(row.amount) %></td>
+
+              <td class="text-nowrap">
+                <span class="badge text-bg-<%= badge(row.payment) %>"><%= row.payment %></span>
+                <% if (row.payment !== "Paid" && row.status !== "Cancelled") { %>
+                  <form
+                    action="/admin/bookings/<%= row.type %>/<%= row.id %>/paid?_method=PUT"
+                    method="POST"
+                    class="mt-1"
+                  >
+                    <button type="submit" class="btn btn-sm btn-outline-success">Mark paid</button>
+                  </form>
+                <% } %>
+              </td>
+
+              <td class="text-nowrap">
+                <% if (row.status === "Cancelled") { %>
+                  <span class="badge text-bg-danger">Cancelled</span>
+                <% } else { %>
+                  <form
+                    action="/admin/bookings/<%= row.type %>/<%= row.id %>/status?_method=PUT"
+                    method="POST"
+                    class="d-flex gap-1"
+                    onsubmit="return this.status.value !== 'Cancelled' || confirm('Cancel this booking? This cannot be undone.');"
+                  >
+                    <select name="status" class="form-select form-select-sm" aria-label="Change status">
+                      <% row.options.forEach((option) => { %>
+                        <option value="<%= option %>" <%= row.status === option ? "selected" : "" %>><%= option %></option>
+                      <% }) %>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                  </form>
+                <% } %>
+              </td>
+
+              <td class="text-nowrap"><%= fmtDate(row.createdAt, true) %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+</div>

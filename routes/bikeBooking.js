@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const bikeBookings = require("../controllers/bikeBooking");
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn, requirePhone } = require("../middleware");
 
 
 // ===============================
@@ -23,6 +23,7 @@ router.get(
 router.get(
   "/new/:bikeId",
   isLoggedIn,
+  requirePhone,
   bikeBookings.renderBookingForm
 );
 
@@ -34,6 +35,7 @@ router.get(
 router.post(
   "/",
   isLoggedIn,
+  requirePhone,
   bikeBookings.createBooking
 );
 

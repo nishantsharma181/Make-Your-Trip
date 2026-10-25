@@ -13,6 +13,9 @@ const upload = multer({
 //Index Route
 router.get("/",wrapAsync(listingcontroller.index));
 
+//Search Route (used by the search bar in the navbar) - must stay above "/:id"
+router.get("/search", wrapAsync(listingcontroller.search));
+
 //New Route
 router.get("/new", isLoggedIn,listingcontroller.renderNewForm);
 

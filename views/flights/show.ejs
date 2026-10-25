@@ -120,16 +120,41 @@
 
       <!-- Booking CTA -->
       <div class="action-btn-container">
-        <% if (currUser) { %>
+        <% if (!currUser) { %>
+          <a href="/login" class="btn-pass-login">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login To Book
+          </a>
+        <% } else if (!currUser.phone) { %>
+          <a href="/profile/edit" class="btn-pass-login">
+            <i class="fa-solid fa-phone"></i> Add phone number to book
+          </a>
+        <% } else if (flight.seatsAvailable <= 0) { %>
+          <button type="button" class="btn-pass-book" disabled>
+            Sold Out
+          </button>
+        <% } else { %>
           <form action="/flights/book/<%= flight._id %>" method="POST" class="w-100">
+            <input
+              type="text"
+              name="passengerName"
+              class="form-control mb-2"
+              placeholder="Passenger name"
+              maxlength="100"
+              required
+            >
+            <input
+              type="number"
+              name="passengerAge"
+              class="form-control mb-2"
+              placeholder="Passenger age"
+              min="1"
+              max="120"
+              required
+            >
             <button type="submit" class="btn-pass-book">
               <i class="fa-solid fa-bolt"></i> Book Flight
             </button>
           </form>
-        <% } else { %>
-          <a href="/login" class="btn-pass-login">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login To Book
-          </a>
         <% } %>
       </div>
 

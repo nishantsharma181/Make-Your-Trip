@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate") %>
+
+<%
+  const fmt = (d) => d ? new Date(d).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    day: "numeric", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  }) : "-";
+  const badge = (status) => ({
+    Cancelled: "danger",
+    Completed: "secondary",
+    Pending: "warning"
+  }[status] || "success");
+%>
+
+<div class="mb-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="mb-1">My Cab Bookings</h1>
+      <p class="text-muted mb-0">Your upcoming and past cab rides</p>
+    </div>
+    <a href="/cabs" class="btn btn-primary">Book a cab</a>
+  </div>
+
+  <% if (!bookings || bookings.length === 0) { %>
+    <div class="text-center border rounded-3 p-5">
+      <h4>No cab bookings yet</h4>
+      <p class="text-muted">When you book a cab it will show up here.</p>
+      <a href="/cabs" class="btn btn-outline-primary">Find a cab</a>
+    </div>
+  <% } else { %>
+    <div class="row g-3">
+      <% bookings.forEach((booking) => { %>
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="mb-0"><%= booking.cab.vehicleName %></h5>
+                <span class="badge text-bg-<%= badge(booking.rideStatus) %>">
+                  <%= booking.rideStatus %>
+                </span>
+              </div>
+              <div class="text-muted mb-2"><%= booking.bookingId %> · <%= booking.tripType %></div>
+              <div><%= booking.pickup.address %> → <%= booking.drop.address %></div>
+              <div class="text-muted"><%= fmt(booking.departureTime) %></div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <strong>₹<%= booking.fareDetails.totalFare %></strong>
+                <a href="/bookings/cabs/<%= booking._id %>" class="btn btn-sm btn-outline-primary">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+</div>

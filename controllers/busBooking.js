@@ -50,42 +50,62 @@ module.exports.createBooking = async (req, res) => {
     return res.redirect(`/bookings/buses/new/${busId}`);
   }
 
-  if (seats > bus.seatsAvailable) {
+  // Travel date must be today or later
+  const travel = new Date(travelDate);
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
+  if (isNaN(travel.getTime()) || travel < today) {
+    req.flash("error", "Please choose a valid travel date.");
+    return res.redirect(`/bookings/buses/new/${busId}`);
+  }
+
+  // Take the seats in one atomic step, so the same seat can never be
+  // sold twice when two people book at the same moment.
+  const reserved = await Bus.findOneAndUpdate(
+    { _id: bus._id, isAvailable: true, seatsAvailable: { $gte: seats } },
+    { $inc: { seatsAvailable: -seats } },
+    { new: true }
+  );
+
+  if (!reserved) {
     req.flash(
       "error",
-      `Only ${bus.seatsAvailable} seats are available.`
+      `Only ${Math.max(bus.seatsAvailable, 0)} seats are available.`
     );
 
     return res.redirect(`/bookings/buses/new/${busId}`);
   }
 
-  const totalAmount = bus.price * seats;
+  let booking;
 
-  const booking = await BusBooking.create({
-    bus: bus._id,
-    user: req.user._id,
-    passengerName,
-    passengerAge: Number(passengerAge),
-    passengerGender,
-    travelDate,
-    seatsBooked: seats,
-    totalAmount,
-    boardingPoint,
-    droppingPoint,
-    bookingStatus: "Confirmed",
-    paymentStatus: "Pending"
-  });
-
-  bus.seatsAvailable -= seats;
-
-  if (bus.seatsAvailable === 0) {
-    bus.isAvailable = false;
+  try {
+    booking = await BusBooking.create({
+      bus: bus._id,
+      user: req.user._id,
+      passengerName,
+      passengerAge: Number(passengerAge),
+      passengerGender,
+      travelDate: travel,
+      seatsBooked: seats,
+      totalAmount: bus.price * seats,
+      boardingPoint,
+      droppingPoint,
+      bookingStatus: "Confirmed",
+      paymentStatus: "Pending"
+    });
+  } catch (err) {
+    // Booking was not saved, so give the seats back.
+    await Bus.updateOne({ _id: bus._id }, { $inc: { seatsAvailable: seats } });
+    throw err;
   }
 
-  await bus.save();
+  if (reserved.seatsAvailable === 0) {
+    await Bus.updateOne({ _id: bus._id }, { isAvailable: false });
+  }
 
   res.render("buses/bookingConfirmation", {
     booking,
-    bus
+    bus: reserved
   });
 };

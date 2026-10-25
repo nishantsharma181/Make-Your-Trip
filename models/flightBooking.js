@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const flightBookingSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
   },
 
   flight: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Flight"
+    ref: "Flight",
+    required: true
   },
 
   passengers: [{
@@ -17,6 +19,14 @@ const flightBookingSchema = new mongoose.Schema({
   }],
 
   totalAmount: Number,
+
+  // The organization marks this as "Paid" once the money is received
+  paymentStatus: {
+    type: String,
+    enum: ["Pending", "Paid"],
+    default: "Pending"
+  },
+
   status:{
     type:String,
     enum:["Booked","Cancelled"],
@@ -27,7 +37,9 @@ const flightBookingSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, { timestamps: true });
+
+flightBookingSchema.index({ user: 1, bookingDate: -1 });
 
 module.exports = mongoose.model(
   "FlightBooking",
