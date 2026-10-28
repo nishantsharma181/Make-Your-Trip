@@ -8,10 +8,30 @@ const busBookingSchema = new mongoose.Schema(
       required: true
     },
 
+    // Ab optional: guest booking mein login nahi hota
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: false
+    },
+
+    // Naya: guest ka contact (route mein check karenge)
+    contactPhone: {
+      type: String,
+      trim: true
+    },
+
+    contactEmail: {
+      type: String,
+      trim: true,
+      lowercase: true
+    },
+
+    // Naya: guest is ID se booking track karega
+    bookingCode: {
+      type: String,
+      unique: true,
+      sparse: true
     },
 
     passengerName: {
@@ -57,10 +77,11 @@ const busBookingSchema = new mongoose.Schema(
       required: true
     },
 
+    // Naya: Pending (admin ka intezaar), Rejected
     bookingStatus: {
       type: String,
-      enum: ["Confirmed", "Cancelled"],
-      default: "Confirmed"
+      enum: ["Pending", "Confirmed", "Rejected", "Cancelled"],
+      default: "Pending"
     },
 
     paymentStatus: {
