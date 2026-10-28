@@ -2,24 +2,23 @@ const express = require("express");
 const router = express.Router();
 
 const wrapAsync = require("../utils/wrapAsync");
-const { isLoggedIn } = require("../middleware");
+const { bookingLimiter } = require("../middleware");
 const busBookingController = require("../controllers/busBooking");
 
 // ===============================
-// Show Booking Form
+// Show Booking Form (bina login ke)
 // ===============================
 router.get(
   "/new/:busId",
-  isLoggedIn,
   wrapAsync(busBookingController.newBooking)
 );
 
 // ===============================
-// Create Bus Booking
+// Create Bus Booking (bina login ke, spam limiter ke saath)
 // ===============================
 router.post(
   "/:busId",
-  isLoggedIn,
+  bookingLimiter,
   wrapAsync(busBookingController.createBooking)
 );
 
