@@ -1,57 +1,63 @@
-
-
 const mongoose = require("mongoose");
 const passportLocalMongoose =
-require("passport-local-mongoose").default;
+  require("passport-local-mongoose").default;
 
-const userSchema =
-new mongoose.Schema({
-
-    email:{
-        type:String,
-        required:true,
-        unique:true
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
 
-    image:{
-        url:{
-            type:String,
-            default:
-            "https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001877.png"
-        },
+    image: {
+      url: {
+        type: String,
+        default:
+          "https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001877.png",
+      },
 
-        filename:String
+      filename: String,
     },
 
-    bio:{
-        type:String,
-        default:""
+    bio: {
+      type: String,
+      default: "",
     },
 
-    phone:String,
+    phone: String,
 
-    city:String,
+    city: String,
 
-    bookings:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"FlightBooking"
-    }],
+    // Naya: Google login ke liye
+    googleId: String,
 
-    listings:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Listing"
-    }]
+    // Naya: admin ya normal user
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
 
-},{
-    timestamps:true
-});
+    bookings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FlightBooking",
+      },
+    ],
 
-userSchema.plugin(
-    passportLocalMongoose
+    listings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Listing",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
 );
 
-module.exports =
-mongoose.model(
-    "User",
-    userSchema
-);
+userSchema.plugin(passportLocalMongoose);
+
+module.exports = mongoose.model("User", userSchema);
